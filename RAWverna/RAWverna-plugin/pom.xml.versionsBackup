@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>at.ac.tuwien</groupId>
+		<artifactId>RAWverna</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>RAWverna-plugin</artifactId>
+	<packaging>taverna-plugin</packaging>
+	<name>RAWverna Taverna plugin</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.sf.taverna.t2.maven.plugins</groupId>
+				<artifactId>maven-taverna-plugin</artifactId>
+				<version>0.1.1</version>
+				<extensions>true</extensions>
+				<configuration>
+					<provider>at.ac.tuwien</provider>
+					<tavernaVersion>${t2.workbench.version}</tavernaVersion>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>RAWverna-activity</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>RAWverna-activity-ui</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>

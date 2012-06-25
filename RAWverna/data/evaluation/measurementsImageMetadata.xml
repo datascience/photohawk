@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<measurementsDescriptor>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/gps</propertyId>
+		<name>image metadata gps</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0</propertyId>
+		<name>image metadata exif primary image data</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD</propertyId>
+		<name>image metadata exif picture taking conditions</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+		<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/iptc</propertyId>
+		<name>image metadata all iptc</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp</propertyId>
+		<name>image metadata all xmp</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/icc</propertyId>
+		<name>image metadata all icc</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/makernotes</propertyId>
+		<name>image metadata makernotes</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc</propertyId>
+		<name>image metadata all dublin core</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Title</propertyId>
+		<name>image metadata dublin core title</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Subject</propertyId>
+		<name>image metadata dublin core subject</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Description
+		</propertyId>
+		<name>image metadata dublin core description</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/ResourceType
+		</propertyId>
+		<name>image metadata dublin core resourcetype</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Source
+		</propertyId>
+		<name>image metadata dublin core source</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Relation
+		</propertyId>
+		<name>image metadata dublin core relation</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Coverage
+		</propertyId>
+		<name>image metadata dublin core coverage</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Creator
+		</propertyId>
+		<name>image metadata dublin core creator</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Rights
+		</propertyId>
+		<name>image metadata dublin core rights</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Date
+		</propertyId>
+		<name>image metadata dublin core date</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Format
+		</propertyId>
+		<name>image metadata dublin core format</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Identifier
+		</propertyId>
+		<name>image metadata dublin core identifier</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Provenance
+		</propertyId>
+		<name>image metadata dublin core provenance</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/xmp/dc/Audience
+		</propertyId>
+		<name>image metadata dublin core audience</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/ImageWidth</propertyId>
+		<name>image metadata exif idf0 imagewidth</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/ImageHeight</propertyId>
+		<name>image metadata exif idf0 imageheight</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/BitsPerSample</propertyId>
+		<name>image metadata exif idf0 bitspersample</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/Compression</propertyId>
+		<name>image metadata exif idf0 compression</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/PhotometricInterpretation</propertyId>
+		<name>image metadata exif idf0 photometricinterpretation</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/Make</propertyId>
+		<name>image metadata exif idf0 make</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/Model</propertyId>
+		<name>image metadata exif idf0 model</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/SamplesPerPixel</propertyId>
+		<name>image metadata exif idf0 samplesperpixel</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/ResolutionUnit</propertyId>
+		<name>image metadata exif idf0 resolutionunit</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/ImageDescription</propertyId>
+		<name>image metadata exif idf0 imagedescription</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/Software</propertyId>
+		<name>image metadata exif idf0 software</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/ifd0/Artist</propertyId>
+		<name>image metadata exif idf0 artist</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/ExposureTime</propertyId>
+		<name>image metadata exif exifIFD exposuretime</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/ShutterSpeedValue</propertyId>
+		<name>image metadata exif exifIFD shutterspeedvalue</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/FNumber</propertyId>
+		<name>image metadata exif exifIFD fnumber</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/ApertureValue</propertyId>
+		<name>image metadata exif exifIFD aperturevalue</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/ISO</propertyId>
+		<name>image metadata exif exifIFD iso</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/DateTimeOriginal</propertyId>
+		<name>image metadata exif exifIFD datetimeoriginal</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/MaxApertureValue</propertyId>
+		<name>image metadata exif exifIFD maxaperturevalue</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/ExposureProgram</propertyId>
+		<name>image metadata exif exifIFD exposureprogram</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/ExposureMode</propertyId>
+		<name>image metadata exif exifIFD exposuremode</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/SpectralSensitivity</propertyId>
+		<name>image metadata exif exifIFD spectralsensitivity</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/ISOSpeedRating</propertyId>
+		<name>image metadata exif exifIFD isospeedrating</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/OECF</propertyId>
+		<name>image metadata exif exifIFD oecf</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/BrightnessValue</propertyId>
+		<name>image metadata exif exifIFD brightnessvalue</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/ExposureBiasValue</propertyId>
+		<name>image metadata exif exifIFD exposurebiasvalue</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/SubjectDistance</propertyId>
+		<name>image metadata exif exifIFD subjectdistance</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/MeteringMode</propertyId>
+		<name>image metadata exif exifIFD meteringmode</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/LightSource</propertyId>
+		<name>image metadata exif exifIFD lightsource</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/Flash</propertyId>
+		<name>image metadata exif exifIFD flash</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/FocalLength</propertyId>
+		<name>image metadata exif exifIFD focallength</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/FocalLengthIn35mmFilm</propertyId>
+		<name>image metadata exif exifIFD focallengthin35mmfilm</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/ExposureIndex</propertyId>
+		<name>image metadata exif exifIFD exposureindex</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/SensingMethod</propertyId>
+		<name>image metadata exif exifIFD sensingmethod</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/CFAPattern</propertyId>
+		<name>image metadata exif exifIFD cfapattern</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/WhiteBalance</propertyId>
+		<name>image metadata exif exifIFD whitebalance</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/Contrast</propertyId>
+		<name>image metadata exif exifIFD contrast</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/Saturation</propertyId>
+		<name>image metadata exif exifIFD saturation</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/exifIFD/Sharpness</propertyId>
+		<name>image metadata exif exifIFD sharpness</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/gps</propertyId>
+		<name>image metadata gps</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/gps</propertyId>
+		<name>image metadata gps</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/gps</propertyId>
+		<name>image metadata gps</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	<property>
+		<category>outcome:object</category>
+		<propertyId>image/metadata/exif/gps</propertyId>
+		<name>image metadata gps</name>
+		<description>
+		</description>
+		<possibleMetrics>
+			<metric metricId="preserved" />
+			<metric metricId="equals" />
+		</possibleMetrics>
+	</property>
+	
+	<metrics>
+		<metric>
+			<metricId>equal</metricId>
+			<name>equal</name>
+			<description>Simple comparison of two values (A, B) of any type on
+				equality.</description>
+			<booleanScale>
+				<unit>equality</unit>
+			</booleanScale>
+		</metric>
+		<metric>
+			<metricId>preserved</metricId>
+			<name>preserved</name>
+			<description>Indicator if all values in source measurement do exist
+				in result measurement</description>
+			<booleanScale>
+				<unit>preserved</unit>
+			</booleanScale>
+		</metric>
+	</metrics>
+</measurementsDescriptor>

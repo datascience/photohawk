@@ -1,0 +1,51 @@
+<!-- describes all known measurable properties and metrics -->
+<measurementsDescriptor>
+	<!-- descriptions of measurable properties -->
+	<!-- important: once published, the uri's and their corresponding scales must not be changed -->
+	<!-- important: names and descriptions may change! (do not use them as indices) -->
+	<measurableProperties>
+	    <property>
+	   		<category>outcome:object</category>
+	   		<propertyId>image/dimension/width</propertyId>
+			<name>image width</name>
+			<description>Width of an image. Corresponds to the x-axis.</description>
+			<positiveIntegerScale>
+    			<unit>pixel</unit>
+            </positiveIntegerScale>
+			<possibleMetrics>
+				<metric metricId="equal"/>
+				<metric metricId="intDiff"/>
+			</possibleMetrics>
+		</property>
+		<property>
+	   		<category>outcome:object</category>
+			<propertyId>image/dimension/height</propertyId>
+			<name>image height</name>
+			<description>Height of an image. Corresponds to the y-axis.</description>
+			<positiveIntegerScale>
+    			<unit>pixel</unit>
+            </positiveIntegerScale>
+			<possibleMetrics>
+				<metric metricId="equal"/>
+				<metric metricId="intDiff"/>
+			</possibleMetrics>
+		</property>	
+	</measurableProperties>
+	<metrics>
+		<metric>
+			<metricId>equal</metricId>
+			<name>equal</name>
+			<description>Simple comparison of two values (A, B) of any type on equality.</description>
+			<booleanScale>
+                <unit>equality</unit>
+            </booleanScale>
+		</metric>
+
+		<metric>
+			<metricId>intDiff</metricId>
+			<name>int diff</name>
+			<description>difference B-A </description>
+			<integerScale/>
+		</metric>
+	</metrics>	
+</measurementsDescriptor>
