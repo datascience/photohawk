@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>at.ac.tuwien</groupId>
-		<artifactId>RAWverna</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<artifactId>RAWverna-taverna</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>RAWverna-activity</artifactId>
 	<name>RAWverna Taverna activity</name>
@@ -31,14 +31,8 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>RAWverna-image-evaluator</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
-		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>1.0.2</version>
-		</dependency>
 		<dependency>
 			<groupId>commons-digester</groupId>
 			<artifactId>commons-digester</artifactId>

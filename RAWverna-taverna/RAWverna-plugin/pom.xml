@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>at.ac.tuwien</groupId>
-		<artifactId>RAWverna</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<artifactId>RAWverna-taverna</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>RAWverna-plugin</artifactId>
 	<packaging>taverna-plugin</packaging>
@@ -30,12 +30,10 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>RAWverna-activity</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>RAWverna-activity-ui</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
