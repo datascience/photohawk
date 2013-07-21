@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>RAWverna</artifactId>
 		<groupId>at.ac.tuwien</groupId>
-		<version>0.0.1</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>RAWverna-image-evaluator</artifactId>
 	<packaging>jar</packaging>
@@ -17,5 +17,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
