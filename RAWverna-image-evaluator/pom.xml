@@ -2,45 +2,22 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>at.ac.tuwien</groupId>
+	<parent>
+		<groupId>at.ac.tuwien</groupId>
+		<artifactId>RAWverna</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+	</parent>
 	<artifactId>RAWverna-image-evaluator</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-			</plugin>
-		</plugins>
-	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>rawverna-plugin-site</id>
-			<name>RAWverna Plugin Site</name>
-			<url>file:///tmp/RAWverna/</url>
-		</repository>
-		<snapshotRepository>
-			<id>rawverna-test-plugin-site</id>
-			<name>RAWverna Test Plugin Site</name>
-			<url>file:///tmp/RAWverna-snapshot/</url>
-		</snapshotRepository>
-	</distributionManagement>
-
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+		</dependency>
+	</dependencies>
 </project>
