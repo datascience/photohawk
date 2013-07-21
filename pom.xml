@@ -8,6 +8,36 @@
 	<packaging>pom</packaging>
 	<name>RAWverna</name>
 
+	<modules>
+		<module>RAWverna-image-evaluator</module>
+		<module>RAWverna-taverna</module>
+	</modules>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>SB</id>
+			<name>Stephan Bauer</name>
+			<email>stephan.bauer@student.tuwien.ac.at</email>
+			<organization>IMP, IFS, UT Vienna</organization>
+			<organizationUrl>http://ifs.tuwien.ac.at/imp</organizationUrl>
+		</developer>
+		<developer>
+			<id>MP</id>
+			<name>Markus Planng</name>
+			<email>plangg@ifs.tuwien.ac.at</email>
+			<organization>IMP, IFS, UT Vienna</organization>
+			<organizationUrl>http://ifs.tuwien.ac.at/imp</organizationUrl>
+		</developer>
+	</developers>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -44,10 +74,4 @@
 			<url>file:///tmp/RAWverna-snapshot/</url>
 		</snapshotRepository>
 	</distributionManagement>
-
-	<modules>
-		<module>RAWverna-image-evaluator</module>
-		<module>RAWverna-taverna</module>
-	</modules>
-
 </project>
