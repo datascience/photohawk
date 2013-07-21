@@ -30,8 +30,8 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
  */
 public class MSEMetric extends Metric {
 
-	@SuppressWarnings("unchecked")
-	public MSEMetric(ColorConverter img1, ColorConverter img2, Point start, Point end) {
+	public MSEMetric(ColorConverter<?> img1, ColorConverter<?> img2,
+			Point start, Point end) {
 		super(img1, img2, start, end);
 	}
 
@@ -59,7 +59,8 @@ public class MSEMetric extends Metric {
 
 			for (int i = 0; i < val1.getNumberOfChannels(); i++) {
 				// System.out.println(val1[i] + " " + val2[i]);
-				double value = Math.abs(val1.getChannelValue(i) - val2.getChannelValue(i));
+				double value = Math.abs(val1.getChannelValue(i)
+						- val2.getChannelValue(i));
 				if (img1 instanceof HSBColorConverter && i == 2) {
 					if (value > 0.5) {
 						value = 1 - value;

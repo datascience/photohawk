@@ -23,27 +23,25 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.operation.TransientOperation;
 
 /**
- * This class implements a simple Equals Metric. It may be more efficient than checking AEMetric ==
- * 0.
+ * This class implements a simple Equals Metric. It may be more efficient than
+ * checking AEMetric == 0.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  * @version 1.0
  */
 public class EqualMetric extends Operation<Boolean, Boolean> {
 
-	@SuppressWarnings("unchecked")
-	private ColorConverter img1;
+	private ColorConverter<?> img1;
 
-	@SuppressWarnings("unchecked")
-	private ColorConverter img2;
+	private ColorConverter<?> img2;
 
 	private StaticColor threshold;
 
 	private Point start;
 	private Point end;
 
-	@SuppressWarnings("unchecked")
-	public EqualMetric(ColorConverter img1, ColorConverter img2, StaticColor threshold, Point start, Point end) {
+	public EqualMetric(ColorConverter<?> img1, ColorConverter<?> img2,
+			StaticColor threshold, Point start, Point end) {
 		this.img1 = img1;
 		this.img2 = img2;
 		this.threshold = threshold;
@@ -51,8 +49,8 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
 		this.end = end;
 	}
 
-	@SuppressWarnings("unchecked")
-	public EqualMetric(ColorConverter img1, ColorConverter img2, Point start, Point end) {
+	public EqualMetric(ColorConverter<?> img1, ColorConverter<?> img2,
+			Point start, Point end) {
 		this(img1, img2, img1.getNullColor(), start, end);
 	}
 
@@ -76,7 +74,8 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
 		return op;
 	}
 
-	public class EqualMetricTransientOperation extends TransientOperation<Boolean, Boolean> {
+	public class EqualMetricTransientOperation extends
+			TransientOperation<Boolean, Boolean> {
 
 		private boolean result;
 
@@ -107,7 +106,8 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
 
 			for (int i = 0; i < val1.getNumberOfChannels(); i++) {
 				// System.out.println(val1 + " <-> " + val2);
-				if (Math.abs(val1.getChannelValue(i) - val2.getChannelValue(i)) > threshold.getChannelValue(i)) {
+				if (Math.abs(val1.getChannelValue(i) - val2.getChannelValue(i)) > threshold
+						.getChannelValue(i)) {
 					result = false;
 				}
 			}

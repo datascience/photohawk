@@ -30,19 +30,17 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
  */
 public abstract class Metric extends Operation<Float, StaticColor> {
 
-	@SuppressWarnings("unchecked")
-	protected ColorConverter img1;
+	protected ColorConverter<?> img1;
 
-	@SuppressWarnings("unchecked")
-	protected ColorConverter img2;
+	protected ColorConverter<?> img2;
 
 	protected StaticColor threshold;
 
 	protected Point end;
 	protected Point start;
 
-	@SuppressWarnings("unchecked")
-	public Metric(ColorConverter img1, ColorConverter img2, Point start, Point end) {
+	public Metric(ColorConverter<?> img1, ColorConverter<?> img2, Point start,
+			Point end) {
 		this(img1, img2, img1.getNullColor(), start, end);
 	}
 
@@ -53,8 +51,8 @@ public abstract class Metric extends Operation<Float, StaticColor> {
 	 * @param img2
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public Metric(ColorConverter img1, ColorConverter img2, StaticColor threshold, Point start, Point end) {
+	public Metric(ColorConverter<?> img1, ColorConverter<?> img2,
+			StaticColor threshold, Point start, Point end) {
 		this.img1 = img1;
 		this.img2 = img2;
 		this.threshold = threshold;
@@ -69,18 +67,13 @@ public abstract class Metric extends Operation<Float, StaticColor> {
 			for (int y = start.y; y < end.y; y++) {
 				op.execute(x, y);
 			}
-			// DEBUG
-			/*-
-			if (x % 50 == 0) {
-				 System.out.println(x);
-			}
-			 */
 		}
 		op.complete();
 		return op;
 	}
 
-	public abstract class MetricTransientOperation extends TransientOperation<Float, StaticColor> {
+	public abstract class MetricTransientOperation extends
+			TransientOperation<Float, StaticColor> {
 
 		@Override
 		public int getGranularityX() {

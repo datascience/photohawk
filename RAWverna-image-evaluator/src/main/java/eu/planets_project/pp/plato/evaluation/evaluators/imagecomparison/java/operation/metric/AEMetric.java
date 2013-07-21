@@ -29,13 +29,13 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
  */
 public class AEMetric extends Metric {
 
-	@SuppressWarnings("unchecked")
-	public AEMetric(ColorConverter img1, ColorConverter img2, Point start, Point end) {
+	public AEMetric(ColorConverter<?> img1, ColorConverter<?> img2,
+			Point start, Point end) {
 		super(img1, img2, start, end);
 	}
 
-	@SuppressWarnings("unchecked")
-	public AEMetric(ColorConverter img1, ColorConverter img2, StaticColor threshold, Point start, Point end) {
+	public AEMetric(ColorConverter<?> img1, ColorConverter<?> img2,
+			StaticColor threshold, Point start, Point end) {
 		super(img1, img2, threshold, start, end);
 	}
 
@@ -67,7 +67,8 @@ public class AEMetric extends Metric {
 			boolean exceeded = false;
 			for (int i = 0; i < val1.getNumberOfChannels(); i++) {
 				// System.out.println(val1 + " <-> " + val2);
-				if (Math.abs(val1.getChannelValue(i) - val2.getChannelValue(i)) > threshold.getChannelValue(i)) {
+				if (Math.abs(val1.getChannelValue(i) - val2.getChannelValue(i)) > threshold
+						.getChannelValue(i)) {
 					exceeded = true;
 					channelResult[i]++;
 				}
@@ -82,7 +83,8 @@ public class AEMetric extends Metric {
 			int size = ((end.x - start.x) * (end.y - start.y));
 			realresult = result / (float) size;
 			for (int i = 0; i < channelResult.length; i++) {
-				realChannelResult.setChannelValue(i, channelResult[i] / (float) size);
+				realChannelResult.setChannelValue(i, channelResult[i]
+						/ (float) size);
 			}
 		}
 
