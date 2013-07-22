@@ -21,38 +21,54 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.co
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.ICCProfileColorConverter;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.StaticColor;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.util.ConvenientBufferedImageWrapper;
-import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.util.ImageException;
 
 /**
  * This class converts an Image into sRGB.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class SRGBColorConverter extends ICCProfileColorConverter implements ColorConverter<SRGBStaticColor> {
 
-    public SRGBColorConverter(ConvenientBufferedImageWrapper img) throws ImageException {
+    /**
+     * Creates a new SRGBColorConverter of the provided image.
+     * 
+     * @param img
+     *            the image
+     * @throws ImageException
+     */
+    public SRGBColorConverter(ConvenientBufferedImageWrapper img) {
         super(img, ICC_ColorSpace.getInstance(ICC_ColorSpace.CS_sRGB));
     }
 
+    /**
+     * Returns the color channels at the specified coordinates.
+     * 
+     * @param x
+     *            the x coordinate
+     * @param y
+     *            the y coordinate
+     * @return the color channels
+     */
     public SRGBStaticColor getColorChannels(int x, int y) {
         return new SRGBStaticColor(img.getSample(x, y));
     }
 
+    @Override
     public String[] getChannelDescription() {
-        return SRGBStaticColor.channelNames;
+        return SRGBStaticColor.CHANNEL_NAMES;
     }
 
+    @Override
     public String getChannelDescription(int idx) {
         return getChannelDescription()[idx];
+    }
+
+    @Override
+    public int getNumberOfChannels() {
+        return getChannelDescription().length;
     }
 
     public StaticColor getNullColor() {
         return new SRGBStaticColor(0, 0, 0);
     }
-
-    public int getNumberOfChannels() {
-        return 3;
-    }
-
 }

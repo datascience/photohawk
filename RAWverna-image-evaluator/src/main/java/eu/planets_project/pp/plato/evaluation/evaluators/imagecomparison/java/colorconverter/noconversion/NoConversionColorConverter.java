@@ -30,6 +30,14 @@ public class NoConversionColorConverter implements ColorConverter<NoConversionSt
 
     private ConvenientBufferedImageWrapper img;
 
+    /**
+     * Creates a new NoConversionColorConverter.
+     * 
+     * @param img
+     *            the image
+     * @param channelNames
+     *            an array of channel names
+     */
     public NoConversionColorConverter(ConvenientBufferedImageWrapper img, String[] channelNames) {
         this.img = img;
 
@@ -43,33 +51,40 @@ public class NoConversionColorConverter implements ColorConverter<NoConversionSt
 
     }
 
+    /**
+     * Creates a new NoConversionColorConverter with consecutive numbers as
+     * channel names.
+     * 
+     * @param img
+     *            the image
+     */
     @Deprecated
     public NoConversionColorConverter(ConvenientBufferedImageWrapper img) {
         this(img, null);
     }
 
+    @Override
     public NoConversionStaticColor getColorChannels(int x, int y) {
         return new NoConversionStaticColor(channelNames, img.getSample(x, y));
     }
 
+    @Override
     public String[] getChannelDescription() {
         return channelNames;
     }
 
+    @Override
     public String getChannelDescription(int idx) {
         return getChannelDescription()[idx];
     }
 
-    public StaticColor getNullColor() {
-        float[] val = new float[this.getNumberOfChannels()];
-        for (int i = 0; i < val.length; i++) {
-            val[i] = 0;
-        }
-        return new NoConversionStaticColor(channelNames, val);
-    }
-
+    @Override
     public int getNumberOfChannels() {
         return img.getSampleModel().getNumBands();
     }
 
+    @Override
+    public StaticColor getNullColor() {
+        return new NoConversionStaticColor(channelNames, new float[this.getNumberOfChannels()]);
+    }
 }

@@ -23,7 +23,6 @@ import java.awt.image.DataBuffer;
 import java.util.Arrays;
 
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.util.ConvenientBufferedImageWrapper;
-import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.util.ImageException;
 
 /**
  * This class provides a ColorConverter that uses a ICC_Profile for conversion.
@@ -32,27 +31,33 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  */
 public abstract class ICCProfileColorConverter implements FullColorConverter {
 
+    private static final int SIGNIFICANT_BITS = 16;
+
     protected final ConvenientBufferedImageWrapper img;
 
-    public ICCProfileColorConverter(ConvenientBufferedImageWrapper img, ColorSpace cs) throws ImageException {
+    /**
+     * Creates a new ICCProfileColorConverter.
+     * 
+     * @param img
+     *            the image
+     * @param cs
+     *            the color space
+     */
+    public ICCProfileColorConverter(ConvenientBufferedImageWrapper img, ColorSpace cs) {
         ColorConvertOp transform = new ColorConvertOp(null);
 
-        // int id = App.startMeasureTime("Start image colorspace");
         int[] bits = new int[img.getColorModel().getNumComponents()];
-        Arrays.fill(bits, 16);
+        Arrays.fill(bits, SIGNIFICANT_BITS);
         BufferedImage temp = transform.createCompatibleDestImage(img.getBufferedImage(), new ComponentColorModel(cs,
             bits, img.getColorModel().hasAlpha(), img.getColorModel().isAlphaPremultiplied(), img.getColorModel()
                 .getTransparency(), DataBuffer.TYPE_INT));
 
         temp = transform.filter(img.getBufferedImage(), temp);
 
-        // App.endMeasureTime(id, "Convert image colorspace");
         this.img = new ConvenientBufferedImageWrapper(temp);
-
     }
 
     public ConvenientBufferedImageWrapper getImage() {
         return img;
     }
-
 }

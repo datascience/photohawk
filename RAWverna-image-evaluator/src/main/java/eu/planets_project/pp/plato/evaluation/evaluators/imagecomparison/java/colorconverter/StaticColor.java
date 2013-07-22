@@ -22,12 +22,38 @@ package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.c
  */
 public interface StaticColor extends ColorSystem {
 
+    /**
+     * Returns the channel values.
+     * 
+     * @return an array of values
+     */
     float[] getChannelValues();
 
+    /**
+     * Returns the channel value of channel idx.
+     * 
+     * @param idx
+     *            the index of the channel
+     * @return the channel value
+     */
     float getChannelValue(int idx);
 
-    void setChannelValues(float[] values);
+    /**
+     * Sets the channel values.
+     * 
+     * @param channelValues
+     *            an array of channel values.
+     */
+    void setChannelValues(float[] channelValues);
 
-    void setChannelValue(int idx, float value);
+    /**
+     * Sets the channel value of channel idx.
+     * 
+     * @param idx
+     *            the index of the channel
+     * @param channelValue
+     *            the channel value
+     */
+    void setChannelValue(int idx, float channelValue);
 
 }

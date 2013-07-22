@@ -46,7 +46,55 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
     private BufferedImage bufferedImage;
     private Raster data;
 
-    private void setBufferedImage(BufferedImage img) throws ImageException {
+    /**
+     * Creates a new ConvenientBufferedImageWrapper for the provided image.
+     * 
+     * @param img
+     *            the image
+     */
+    public ConvenientBufferedImageWrapper(BufferedImage img) {
+        setBufferedImage(img);
+    }
+
+    /**
+     * Returns a sample at the provided coordinates.
+     * 
+     * @param x
+     *            the x coordinate
+     * @param y
+     *            the y coordinate
+     * @return an array representing the sample
+     */
+    public float[] getSample(int x, int y) {
+        float[] result = new float[getSampleModel().getNumBands()];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = getData().getSample(x, y, i) / (float) Math.pow(2, getColorModel().getComponentSize(i));
+        }
+
+        return result;
+    }
+
+    /**
+     * Returns a sample at the provided coordinates.
+     * 
+     * @param x
+     *            the x coordinate
+     * @param y
+     *            the y coordinate
+     * @return the sample as color
+     */
+    public Color getSampleAsColor(int x, int y) {
+        return new Color(getColorModel().getColorSpace(), getSample(x, y), 1.0f);
+    }
+
+    /**
+     * Sets the image of this object.
+     * 
+     * @param img
+     *            the image
+     */
+    private void setBufferedImage(BufferedImage img) {
         if (null == img) {
             throw new IllegalArgumentException("Image not readable");
         }
@@ -55,56 +103,15 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
             throw new IllegalArgumentException("Image size invalid");
         }
 
-        // No longer performed checks
-        /*-
-        ColorModel cm = img.getColorModel();
-        ColorSpace cs = cm.getColorSpace();
-
-        if (img.getSampleModel().getNumBands() != 3) {
-        	throw new ImageFormatException("Invalid amount of channels");
-        }
-         */
-
-        /*-
-        String[] names = new String[] { "red", "green", "blue" };
-        char[] prefixes = new char[] { 'r', 'g', 'b' };
-        for (int i = 0; i < 3; i++) {
-        	if (!cs.getName(i).toLowerCase().contains(names[i]) && !cs.getName(i).toLowerCase().trim().startsWith(String.valueOf(prefixes[i]))) {
-        		throw new ImageFormatException("Invalid channels");
-        	}
-        }
-         */
-
         this.bufferedImage = img;
-
         data = this.bufferedImage.getData();
-
     }
 
-    public ConvenientBufferedImageWrapper(BufferedImage img) throws ImageException {
-        setBufferedImage(img);
-    }
-
-    public float[] getSample(int x, int y) {
-
-        float[] result = new float[getSampleModel().getNumBands()];
-
-        for (int i = 0; i < result.length; i++) {
-            // System.out.println(getData().getSample(x, y, i));
-            result[i] = getData().getSample(x, y, i) / (float) Math.pow(2, getColorModel().getComponentSize(i));
-            // System.out.println(result[i]);
-        }
-
-        return result;
-
-    }
-
-    public Color getSRGBSample(int x, int y) {
-
-        return new Color(getColorModel().getColorSpace(), getSample(x, y), 1.0f);
-
-    }
-
+    /**
+     * Returns the image of this wrapper.
+     * 
+     * @return the image.
+     */
     public BufferedImage getBufferedImage() {
         return this.bufferedImage;
     }
@@ -112,7 +119,6 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
     /* ********* */
     /* DELEGATES */
     /* ********* */
-
     public synchronized Raster getData() {
         // Due to performance reasons
         return data;
@@ -329,5 +335,4 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
     public String toString() {
         return this.bufferedImage.toString();
     }
-
 }

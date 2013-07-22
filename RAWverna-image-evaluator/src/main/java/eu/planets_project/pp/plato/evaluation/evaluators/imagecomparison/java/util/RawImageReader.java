@@ -27,15 +27,28 @@ import eu.planets_project.pp.plato.util.CommandExecutor;
  * influence the conversion.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class RawImageReader {
+
+    /**
+     * Reads a RAW image using dcraw.
+     * 
+     * @param file
+     *            path to the file
+     * @param params
+     *            conversion parameters
+     * @return the image as BufferedImage
+     * @throws IOException
+     *             if the image could no be read
+     */
     public static BufferedImage read(String file, ConversionParameter params) throws IOException {
 
         BufferedImage img = null;
 
         try {
             CommandExecutor exec = new CommandExecutor();
+
+            // Check if dcraw can decode the file
             int exitstatus = exec.runCommand("dcraw -i " + file);
             if (exitstatus == 0) {
 
@@ -80,7 +93,6 @@ public class RawImageReader {
         }
 
         return img;
-
     }
 
     public static class ConversionParameter {

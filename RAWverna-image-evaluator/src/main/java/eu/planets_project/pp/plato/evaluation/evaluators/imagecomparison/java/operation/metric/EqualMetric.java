@@ -83,6 +83,7 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
         return new EqualMetricTransientOperation();
     }
 
+    @Override
     public TransientOperation<Boolean, Boolean> execute() {
         TransientOperation<Boolean, Boolean> op = prepare();
         op.init();

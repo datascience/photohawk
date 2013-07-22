@@ -27,38 +27,65 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.co
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  */
 public class HSBColorConverter implements ColorConverter<HSBStaticColor> {
-
+    private static final int COMPONENT_FACTOR = 255;
     private SRGBColorConverter img;
 
+    /**
+     * Creates a new HSBColorConverter.
+     * 
+     * @param img
+     *            the image
+     */
     public HSBColorConverter(SRGBColorConverter img) {
         this.img = img;
     }
 
+    /**
+     * Returns the color channels at the specified coordinates.
+     * 
+     * @param x
+     *            the x coordinate
+     * @param y
+     *            the y coordinate
+     * @return the color channels
+     */
     public HSBStaticColor getColorChannels(int x, int y) {
         float[] data = img.getColorChannels(x, y).getChannelValues();
-        float[] converted = Color.RGBtoHSB((int) (data[0] * 255), (int) (data[1] * 255), (int) (data[2] * 255), null);
+        float[] converted = Color.RGBtoHSB((int) (data[0] * COMPONENT_FACTOR), (int) (data[1] * COMPONENT_FACTOR),
+            (int) (data[2] * COMPONENT_FACTOR), null);
         return new HSBStaticColor(converted[2], converted[1], converted[0]);
     }
 
+    @Override
     public String[] getChannelDescription() {
-        return HSBStaticColor.channelNames;
+        return HSBStaticColor.CHANNEL_NAMES;
     }
 
+    @Override
     public String getChannelDescription(int idx) {
         return getChannelDescription()[idx];
     }
 
+    @Override
+    public int getNumberOfChannels() {
+        return getChannelDescription().length;
+    }
+
+    @Override
     public StaticColor getNullColor() {
         return new HSBStaticColor(0, 0, 0);
     }
 
-    public int getNumberOfChannels() {
-        return 3;
-    }
-
+    /**
+     * Normalizes the hue difference.
+     * 
+     * @param value
+     *            heu value
+     * @return the normalized value
+     */
     public static double normalizeHueDifference(double value) {
         if (value > 0.5) {
-            return (1 - value);
+            return 1 - value;
         } else {
             return value;
         }

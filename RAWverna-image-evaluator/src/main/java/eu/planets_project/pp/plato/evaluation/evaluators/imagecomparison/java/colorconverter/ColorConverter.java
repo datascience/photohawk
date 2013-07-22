@@ -26,8 +26,21 @@ package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.c
  */
 public interface ColorConverter<T extends StaticColor> extends ColorSystem {
 
+    /**
+     * Returns the color channels at the specified coordinates.
+     * 
+     * @param x
+     *            the x coordinate
+     * @param y
+     *            the y coordinate
+     * @return the color channel
+     */
     T getColorChannels(int x, int y);
 
+    /**
+     * Returns the null color.
+     * 
+     * @return the null color
+     */
     StaticColor getNullColor();
-
 }

@@ -15,62 +15,43 @@
  ******************************************************************************/
 package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.srgb;
 
-import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.StaticColor;
+import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.AbstractStaticColor;
 
 /**
  * A simple RGB Color.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
-public class SRGBStaticColor implements StaticColor {
+public class SRGBStaticColor extends AbstractStaticColor {
 
-    public static final String[] channelNames = new String[] {"R", "G", "B"};
+    public static final String[] CHANNEL_NAMES = new String[] {"R", "G", "B"};
 
-    private float[] values;
-
+    /**
+     * Creates a new SRGBStaticColor.
+     * 
+     * @param values
+     *            the color values.
+     */
     public SRGBStaticColor(float[] values) {
-        setChannelValues(values);
+        super(values);
     }
 
+    /**
+     * Creates a new SRGBStaticColor.
+     * 
+     * @param r
+     *            red value
+     * @param g
+     *            green value
+     * @param b
+     *            blue value
+     */
     public SRGBStaticColor(float r, float g, float b) {
         this(new float[] {r, g, b});
     }
 
-    public float getChannelValue(int idx) {
-        return values[idx];
-    }
-
-    public float[] getChannelValues() {
-        return values;
-    }
-
-    public void setChannelValues(float[] values) {
-        this.values = values;
-    }
-
-    public void setChannelValue(int idx, float value) {
-        values[idx] = value;
-    }
-
-    public String toString() {
-        String result = "";
-        for (int i = 0; i < values.length; i++) {
-            result += getChannelDescription(i) + ": " + values[i] + "\n";
-        }
-        return result;
-    }
-
+    @Override
     public String[] getChannelDescription() {
-        return SRGBStaticColor.channelNames;
+        return CHANNEL_NAMES;
     }
-
-    public String getChannelDescription(int idx) {
-        return getChannelDescription()[idx];
-    }
-
-    public int getNumberOfChannels() {
-        return 3;
-    }
-
 }

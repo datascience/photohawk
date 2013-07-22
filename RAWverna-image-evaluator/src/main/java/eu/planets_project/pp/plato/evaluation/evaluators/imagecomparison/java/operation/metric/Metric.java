@@ -38,16 +38,38 @@ public abstract class Metric extends Operation<Float, StaticColor> {
     protected Point end;
     protected Point start;
 
+    /**
+     * Creates a new metric with the specified parameters. The threshold is set
+     * to the {@link ColorConverter#getNullColor() null color} of img1.
+     * 
+     * @param img1
+     *            color converter of image 1
+     * @param img2
+     *            color converter of image 2
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
+     */
     public Metric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
         this(img1, img2, img1.getNullColor(), start, end);
     }
 
     /**
-     * Precondition: Images have equal size
+     * Creates a new metric with the specified parameters.
+     * 
+     * Precondition: Images have equal size.
      * 
      * @param img1
+     *            color converter of image 1
      * @param img2
-     * @return
+     *            color converter of image 2
+     * @param threshold
+     *            threshold of comparison
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
      */
     public Metric(ColorConverter<?> img1, ColorConverter<?> img2, StaticColor threshold, Point start, Point end) {
         this.img1 = img1;
@@ -57,6 +79,7 @@ public abstract class Metric extends Operation<Float, StaticColor> {
         this.end = end;
     }
 
+    @Override
     public TransientOperation<Float, StaticColor> execute() {
         TransientOperation<Float, StaticColor> op = prepare();
         op.init();
@@ -69,8 +92,10 @@ public abstract class Metric extends Operation<Float, StaticColor> {
         return op;
     }
 
+    /**
+     * Generic transient operation.
+     */
     public abstract class MetricTransientOperation extends TransientOperation<Float, StaticColor> {
-
         @Override
         public int getGranularityX() {
             return 1;
@@ -80,7 +105,5 @@ public abstract class Metric extends Operation<Float, StaticColor> {
         public int getGranularityY() {
             return 1;
         }
-
     }
-
 }

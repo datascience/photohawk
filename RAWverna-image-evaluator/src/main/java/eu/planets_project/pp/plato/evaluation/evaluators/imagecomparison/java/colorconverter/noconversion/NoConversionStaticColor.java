@@ -15,21 +15,27 @@
  ******************************************************************************/
 package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.noconversion;
 
-import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.StaticColor;
+import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.AbstractStaticColor;
 
 /**
  * A simple generic Color.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  */
-public class NoConversionStaticColor implements StaticColor {
+public class NoConversionStaticColor extends AbstractStaticColor {
 
     private final String[] channelNames;
 
-    private float[] values;
-
+    /**
+     * Creates a new NoConversionStaticColor.
+     * 
+     * @param channelNames
+     *            the channel names
+     * @param values
+     *            the channel values
+     */
     public NoConversionStaticColor(String[] channelNames, float[] values) {
-        setChannelValues(values);
+        super(values);
 
         if (null == channelNames) {
             channelNames = new String[getNumberOfChannels()];
@@ -38,48 +44,25 @@ public class NoConversionStaticColor implements StaticColor {
             }
         }
         this.channelNames = channelNames;
-
     }
 
+    /**
+     * Creates a new NoConversionStaticColor with consecutive numbers as channel
+     * names.
+     * 
+     * @param values
+     *            the channel values
+     */
     @Deprecated
     public NoConversionStaticColor(float[] values) {
         this(null, values);
-    }
-
-    public float getChannelValue(int idx) {
-        return values[idx];
-    }
-
-    public float[] getChannelValues() {
-        return values;
-    }
-
-    public void setChannelValues(float[] values) {
-        this.values = values;
-    }
-
-    public void setChannelValue(int idx, float value) {
-        values[idx] = value;
-    }
-
-    public String toString() {
-        String result = "";
-        for (int i = 0; i < values.length; i++) {
-            result += getChannelDescription(i) + ": " + values[i] + "\n";
-        }
-        return result;
     }
 
     public String[] getChannelDescription() {
         return channelNames;
     }
 
-    public String getChannelDescription(int idx) {
-        return getChannelDescription()[idx];
-    }
-
     public int getNumberOfChannels() {
-        return values.length;
+        return channelValues.length;
     }
-
 }

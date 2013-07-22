@@ -21,7 +21,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.co
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.ICCProfileColorConverter;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.StaticColor;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.util.ConvenientBufferedImageWrapper;
-import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.util.ImageException;
 
 /**
  * This ColorConverter can convert colors to CIE-XYZ.
@@ -30,27 +29,46 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  */
 public class CIEXYZColorConverter extends ICCProfileColorConverter implements ColorConverter<CIEXYZStaticColor> {
 
-    public CIEXYZColorConverter(ConvenientBufferedImageWrapper img) throws ImageException {
+    /**
+     * Creates a new CIEXYZColorConverter.
+     * 
+     * @param img
+     *            the image
+     */
+    public CIEXYZColorConverter(ConvenientBufferedImageWrapper img) {
         super(img, ICC_ColorSpace.getInstance(ICC_ColorSpace.CS_CIEXYZ));
     }
 
+    /**
+     * Returns the color channels at the specified coordinates.
+     * 
+     * @param x
+     *            the x coordinate
+     * @param y
+     *            the y coordinate
+     * @return the color channels
+     */
     public CIEXYZStaticColor getColorChannels(int x, int y) {
         return new CIEXYZStaticColor(img.getSample(x, y));
     }
 
-    public int getNumberOfChannels() {
-        return 3;
-    }
-
-    public StaticColor getNullColor() {
-        return new CIEXYZStaticColor(0, 0, 0);
-    }
-
+    @Override
     public String[] getChannelDescription() {
-        return CIEXYZStaticColor.channelNames;
+        return CIEXYZStaticColor.CHANNEL_NAMES;
     }
 
+    @Override
     public String getChannelDescription(int idx) {
         return getChannelDescription()[idx];
+    }
+
+    @Override
+    public int getNumberOfChannels() {
+        return getChannelDescription().length;
+    }
+
+    @Override
+    public StaticColor getNullColor() {
+        return new CIEXYZStaticColor(0, 0, 0);
     }
 }

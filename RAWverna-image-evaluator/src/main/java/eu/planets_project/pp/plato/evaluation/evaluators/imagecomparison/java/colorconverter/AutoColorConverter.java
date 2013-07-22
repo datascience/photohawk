@@ -23,7 +23,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.co
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.noconversion.NoConversionColorConverter;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.srgb.SRGBColorConverter;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.util.ConvenientBufferedImageWrapper;
-import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.util.ImageException;
 
 /**
  * This ColorConverter performs a migration only, if necessary. If both images
@@ -32,14 +31,13 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  */
-@SuppressWarnings("unchecked")
 public class AutoColorConverter implements ColorConverter {
 
     private ColorConverter converter;
 
     @SuppressWarnings("deprecation")
     public AutoColorConverter(ConvenientBufferedImageWrapper img, ConvenientBufferedImageWrapper match,
-        AlternativeColorConverter otherwise) throws ImageException {
+        AlternativeColorConverter otherwise) {
         boolean needConversion = false;
         needConversion = needConversion || !img.getColorModel().equals(match.getColorModel());
         ColorSpace imgCS = img.getColorModel().getColorSpace();
@@ -94,19 +92,16 @@ public class AutoColorConverter implements ColorConverter {
         return converter.getChannelDescription(idx);
     }
 
-    public StaticColor getNullColor() {
-        return converter.getNullColor();
-    }
-
     public int getNumberOfChannels() {
         return converter.getNumberOfChannels();
     }
 
-    public enum AlternativeColorConverter {
-
-        CIEXYZ,
-        SRGB
-
+    public StaticColor getNullColor() {
+        return converter.getNullColor();
     }
 
+    public enum AlternativeColorConverter {
+        CIEXYZ,
+        SRGB
+    }
 }
