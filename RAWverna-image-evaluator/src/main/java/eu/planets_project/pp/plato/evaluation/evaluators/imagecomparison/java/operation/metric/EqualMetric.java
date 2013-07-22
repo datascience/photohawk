@@ -27,7 +27,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
  * checking AEMetric == 0.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class EqualMetric extends Operation<Boolean, Boolean> {
 
@@ -40,6 +39,20 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
     private Point start;
     private Point end;
 
+    /**
+     * Creates a new EqualMetric with the provided parameters.
+     * 
+     * @param img1
+     *            color converter of image 1
+     * @param img2
+     *            color converter of image 2
+     * @param threshold
+     *            threshold of comparison
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
+     */
     public EqualMetric(ColorConverter<?> img1, ColorConverter<?> img2, StaticColor threshold, Point start, Point end) {
         this.img1 = img1;
         this.img2 = img2;
@@ -48,6 +61,19 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
         this.end = end;
     }
 
+    /**
+     * Creates a new EqualMetric with the provided parameters. The threshold is
+     * set to the {@link ColorConverter#getNullColor() null color} of img1.
+     * 
+     * @param img1
+     *            color converter of image 1
+     * @param img2
+     *            color converter of image 2
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
+     */
     public EqualMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
         this(img1, img2, img1.getNullColor(), start, end);
     }
@@ -72,6 +98,9 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
         return op;
     }
 
+    /**
+     * Transient operation that implements a simple Equal Metric.
+     */
     public class EqualMetricTransientOperation extends TransientOperation<Boolean, Boolean> {
 
         private boolean result;

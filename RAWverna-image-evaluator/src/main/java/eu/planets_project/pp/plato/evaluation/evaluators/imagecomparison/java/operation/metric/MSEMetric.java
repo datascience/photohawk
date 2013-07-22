@@ -26,18 +26,33 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
  * This class implements a simple Mean Squared Error Metric.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class MSEMetric extends Metric {
 
+    /**
+     * Creates a new MSEMetric with the provided parameters.
+     * 
+     * @param img1
+     *            color converter of image 1
+     * @param img2
+     *            color converter of image 2
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
+     */
     public MSEMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
         super(img1, img2, start, end);
     }
 
+    @Override
     public TransientOperation<Float, StaticColor> prepare() {
         return new MSEMetricTransientOperation();
     }
 
+    /**
+     * Transient operation that implements a simple Mean Squared Error Metric.
+     */
     public class MSEMetricTransientOperation extends MetricTransientOperation {
 
         private double realresult;
@@ -70,7 +85,7 @@ public class MSEMetric extends Metric {
 
         @Override
         public void complete() {
-            int size = ((end.x - start.x) * (end.y - start.y));
+            int size = (end.x - start.x) * (end.y - start.y);
             for (int i = 0; i < channelResult.length; i++) {
                 double value = channelResult[i] / (double) size;
                 realChannelResult.setChannelValue(i, (float) value);

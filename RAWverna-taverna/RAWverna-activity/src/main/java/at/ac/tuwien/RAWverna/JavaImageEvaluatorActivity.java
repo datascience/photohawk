@@ -32,18 +32,18 @@ public class JavaImageEvaluatorActivity extends MeasurementURIActivity<JavaImage
     implements AsynchronousActivity<JavaImageEvaluatorActivityConfigurationBean> {
 
     /**
-     * Logger
+     * Logger.
      */
     private static Logger logger = Logger.getLogger(JavaImageEvaluatorActivity.class);
 
     /**
-     * Port names
+     * Port names.
      */
     private static final String IN_IMAGE_1 = "image1";
     private static final String IN_IMAGE_2 = "image2";
 
     /**
-     * Configuration of this instance
+     * Configuration of this instance.
      */
     private JavaImageEvaluatorActivityConfigurationBean configBean;
 
@@ -63,7 +63,7 @@ public class JavaImageEvaluatorActivity extends MeasurementURIActivity<JavaImage
     }
 
     /**
-     * Reconfigure ports of activity
+     * Reconfigure ports of activity.
      */
     @Override
     protected void configurePorts() {

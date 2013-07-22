@@ -27,7 +27,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  * This ColorConverter can convert colors to CIE-XYZ.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class CIEXYZColorConverter extends ICCProfileColorConverter implements ColorConverter<CIEXYZStaticColor> {
 

@@ -31,7 +31,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  * Otherwise a conversion into the specified system is performed.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 @SuppressWarnings("unchecked")
 public class AutoColorConverter implements ColorConverter {

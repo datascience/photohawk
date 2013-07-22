@@ -19,8 +19,10 @@ package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.c
  * This interface describes a ColorConverter that can transform colro values
  * from one into another color system.
  * 
+ * @param <T>
+ *            Color type of this color converter
+ * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public interface ColorConverter<T extends StaticColor> extends ColorSystem {
 

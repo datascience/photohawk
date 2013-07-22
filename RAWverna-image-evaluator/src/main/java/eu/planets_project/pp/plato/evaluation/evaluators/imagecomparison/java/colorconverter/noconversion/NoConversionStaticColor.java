@@ -21,7 +21,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.co
  * A simple generic Color.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class NoConversionStaticColor implements StaticColor {
 

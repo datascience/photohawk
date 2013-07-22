@@ -23,7 +23,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  * This ColorConverter performs no color conversion.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class NoConversionColorConverter implements ColorConverter<NoConversionStaticColor> {
 

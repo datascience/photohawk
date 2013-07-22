@@ -16,13 +16,21 @@
 package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.operation;
 
 /**
- * This class represents a generic Operation.
+ * This class represents a generic operation.
+ * 
+ * @param <AggregatedResult>
+ *            type of the aggregated results
+ * @param <Result>
+ *            type of the result
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public abstract class Operation<AggregatedResult, Result> {
 
+    /**
+     * Prepares a transient operation of this operation and returns it.
+     * 
+     * @return the transient operation
+     */
     public abstract TransientOperation<AggregatedResult, Result> prepare();
-
 }

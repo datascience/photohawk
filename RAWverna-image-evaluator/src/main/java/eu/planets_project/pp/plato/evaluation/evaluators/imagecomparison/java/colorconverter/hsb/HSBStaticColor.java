@@ -21,7 +21,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.co
  * A simple HSB Color. Note that the channel order is changed to BSH.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class HSBStaticColor implements StaticColor {
 

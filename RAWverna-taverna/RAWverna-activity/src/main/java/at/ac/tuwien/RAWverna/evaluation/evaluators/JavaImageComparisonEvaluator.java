@@ -17,6 +17,7 @@ import at.ac.tuwien.RAWverna.model.model.values.BooleanValue;
 import at.ac.tuwien.RAWverna.model.model.values.FloatValue;
 import at.ac.tuwien.RAWverna.model.model.values.PositiveFloatValue;
 import at.ac.tuwien.RAWverna.model.model.values.Value;
+
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.AutoColorConverter;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.StaticColor;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.hsb.HSBColorConverter;
@@ -36,13 +37,9 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  * This class provides some image comparison metrics as evaluator.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class JavaImageComparisonEvaluator extends EvaluatorBase implements IObjectEvaluator {
 
-    /**
-     * Logger
-     */
     private static Logger logger = Logger.getLogger(JavaImageEvaluatorActivity.class);
 
     private static final String DESCRIPTOR_FILE = "data/evaluation/measurementsImageCompJava.xml";

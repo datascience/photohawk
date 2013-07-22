@@ -29,7 +29,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  * This class provides a ColorConverter that uses a ICC_Profile for conversion.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public abstract class ICCProfileColorConverter implements FullColorConverter {
 

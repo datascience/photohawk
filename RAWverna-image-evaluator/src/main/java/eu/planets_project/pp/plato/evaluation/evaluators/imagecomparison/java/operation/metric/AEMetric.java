@@ -25,22 +25,52 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
  * This class implements a simple Absolute Error Metric.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class AEMetric extends Metric {
 
-    public AEMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
-        super(img1, img2, start, end);
-    }
-
+    /**
+     * Creates a new AEMetric with the provided parameters.
+     * 
+     * @param img1
+     *            color converter of image 1
+     * @param img2
+     *            color converter of image 2
+     * @param threshold
+     *            threshold of comparison
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
+     */
     public AEMetric(ColorConverter<?> img1, ColorConverter<?> img2, StaticColor threshold, Point start, Point end) {
         super(img1, img2, threshold, start, end);
     }
 
+    /**
+     * Creates a new AEMetric with the provided parameters. The threshold is set
+     * to the {@link ColorConverter#getNullColor() null color} of img1.
+     * 
+     * @param img1
+     *            color converter of image 1
+     * @param img2
+     *            color converter of image 2
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
+     */
+    public AEMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
+        super(img1, img2, start, end);
+    }
+
+    @Override
     public TransientOperation<Float, StaticColor> prepare() {
         return new AEMetricTransientOperation();
     }
 
+    /**
+     * Transient operation that implements a simple Absolute Error Metric.
+     */
     public class AEMetricTransientOperation extends MetricTransientOperation {
 
         protected int result;
@@ -64,7 +94,6 @@ public class AEMetric extends Metric {
 
             boolean exceeded = false;
             for (int i = 0; i < val1.getNumberOfChannels(); i++) {
-                // System.out.println(val1 + " <-> " + val2);
                 if (Math.abs(val1.getChannelValue(i) - val2.getChannelValue(i)) > threshold.getChannelValue(i)) {
                     exceeded = true;
                     channelResult[i]++;
@@ -77,7 +106,7 @@ public class AEMetric extends Metric {
 
         @Override
         public void complete() {
-            int size = ((end.x - start.x) * (end.y - start.y));
+            int size = (end.x - start.x) * (end.y - start.y);
             realresult = result / (float) size;
             for (int i = 0; i < channelResult.length; i++) {
                 realChannelResult.setChannelValue(i, channelResult[i] / (float) size);

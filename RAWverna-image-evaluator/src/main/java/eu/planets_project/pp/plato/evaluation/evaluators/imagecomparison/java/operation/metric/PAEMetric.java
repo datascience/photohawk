@@ -26,18 +26,34 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
  * This class implements a simple Peak Absolute Error Metric.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class PAEMetric extends Metric {
 
+    /**
+     * Creates a new PAEMetric with the provided parameters. The threshold is
+     * set to the {@link ColorConverter#getNullColor() null color} of img1.
+     * 
+     * @param img1
+     *            color converter of image 1
+     * @param img2
+     *            color converter of image 2
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
+     */
     public PAEMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
         super(img1, img2, start, end);
     }
 
+    @Override
     public TransientOperation<Float, StaticColor> prepare() {
         return new PAEMetricTransientOperation();
     }
 
+    /**
+     * Transient operation that implements a simple Peak Absolute Error Metric.
+     */
     public class PAEMetricTransientOperation extends MetricTransientOperation {
 
         protected float realresult;

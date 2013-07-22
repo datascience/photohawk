@@ -26,7 +26,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
  * This class represents a generic Metric.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public abstract class Metric extends Operation<Float, StaticColor> {
 

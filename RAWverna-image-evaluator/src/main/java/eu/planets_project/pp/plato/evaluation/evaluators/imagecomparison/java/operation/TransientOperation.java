@@ -19,33 +19,77 @@ package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.o
  * This class represents an OperationExecution. It can be seen as state machine,
  * performing, calculating and storing result.
  * 
+ * @param <AggregatedResult>
+ *            the type of the aggregated result
+ * @param <Result>
+ *            the type of the result
+ * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public abstract class TransientOperation<AggregatedResult, Result> {
 
-    public TransientOperation() {
-    }
-
+    /**
+     * Initializes the operation.
+     */
     public abstract void init();
 
+    /**
+     * Executes the operation on the specified image block.
+     * 
+     * @param x
+     *            the x coordinates
+     * @param y
+     *            the y coordinates
+     */
     public void execute(int[] x, int[] y) {
         for (int i = 0; i < x.length; i++) {
             execute(x[i], y[i]);
         }
     }
 
+    /**
+     * Executes the operation at the specified coordinates.
+     * 
+     * @param x
+     *            the x coordinate
+     * @param y
+     *            the y coordinate
+     */
     public void execute(int x, int y) {
         throw new RuntimeException();
     }
 
+    /**
+     * Completes the operation.
+     */
     public abstract void complete();
 
+    /**
+     * Returns the aggregated result of the operation if the operation was
+     * completed.
+     * 
+     * @return the aggregated result
+     */
     public abstract AggregatedResult getAggregatedResult();
 
+    /**
+     * Returns the result of the operation if the operation was completed.
+     * 
+     * @return the result
+     */
     public abstract Result getResult();
 
+    /**
+     * Returns the x granularity of the operation.
+     * 
+     * @return the x granularity
+     */
     public abstract int getGranularityX();
 
+    /**
+     * Returns the y granularity of the operation.
+     * 
+     * @return the y granularity
+     */
     public abstract int getGranularityY();
 }

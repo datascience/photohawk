@@ -21,7 +21,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.co
  * A simple CIE XYZ Color.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
- * @version 1.0
  */
 public class CIEXYZStaticColor implements StaticColor {
 
