@@ -31,27 +31,27 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  */
 public class CIEXYZColorConverter extends ICCProfileColorConverter implements ColorConverter<CIEXYZStaticColor> {
 
-	public CIEXYZColorConverter(ConvenientBufferedImageWrapper img) throws ImageException {
-		super(img, ICC_ColorSpace.getInstance(ICC_ColorSpace.CS_CIEXYZ));
-	}
+    public CIEXYZColorConverter(ConvenientBufferedImageWrapper img) throws ImageException {
+        super(img, ICC_ColorSpace.getInstance(ICC_ColorSpace.CS_CIEXYZ));
+    }
 
-	public CIEXYZStaticColor getColorChannels(int x, int y) {
-		return new CIEXYZStaticColor(img.getSample(x, y));
-	}
+    public CIEXYZStaticColor getColorChannels(int x, int y) {
+        return new CIEXYZStaticColor(img.getSample(x, y));
+    }
 
-	public int getNumberOfChannels() {
-		return 3;
-	}
+    public int getNumberOfChannels() {
+        return 3;
+    }
 
-	public StaticColor getNullColor() {
-		return new CIEXYZStaticColor(0, 0, 0);
-	}
+    public StaticColor getNullColor() {
+        return new CIEXYZStaticColor(0, 0, 0);
+    }
 
-	public String[] getChannelDescription() {
-		return CIEXYZStaticColor.channelNames;
-	}
+    public String[] getChannelDescription() {
+        return CIEXYZStaticColor.channelNames;
+    }
 
-	public String getChannelDescription(int idx) {
-		return getChannelDescription()[idx];
-	}
+    public String getChannelDescription(int idx) {
+        return getChannelDescription()[idx];
+    }
 }

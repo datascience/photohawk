@@ -23,6 +23,6 @@ package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.o
  */
 public abstract class Operation<AggregatedResult, Result> {
 
-	public abstract TransientOperation<AggregatedResult, Result> prepare();
+    public abstract TransientOperation<AggregatedResult, Result> prepare();
 
 }

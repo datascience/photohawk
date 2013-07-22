@@ -25,12 +25,12 @@ import at.ac.tuwien.RAWverna.JavaImageEvaluatorActivity;
 
 public class JavaImageEvaluatorActivityContextViewFactory implements ContextualViewFactory<JavaImageEvaluatorActivity> {
 
-	public boolean canHandle(Object selection) {
-		return selection instanceof JavaImageEvaluatorActivity;
-	}
+    public boolean canHandle(Object selection) {
+        return selection instanceof JavaImageEvaluatorActivity;
+    }
 
-	public List<ContextualView> getViews(JavaImageEvaluatorActivity selection) {
-		return Arrays.<ContextualView> asList(new JavaImageEvaluatorContextualView(selection));
-	}
+    public List<ContextualView> getViews(JavaImageEvaluatorActivity selection) {
+        return Arrays.<ContextualView> asList(new JavaImageEvaluatorContextualView(selection));
+    }
 
 }

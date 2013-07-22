@@ -23,10 +23,10 @@ package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.c
  */
 public interface ColorSystem {
 
-	int getNumberOfChannels();
+    int getNumberOfChannels();
 
-	String[] getChannelDescription();
+    String[] getChannelDescription();
 
-	String getChannelDescription(int idx);
+    String getChannelDescription(int idx);
 
 }

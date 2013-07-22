@@ -33,26 +33,27 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  */
 public abstract class ICCProfileColorConverter implements FullColorConverter {
 
-	protected final ConvenientBufferedImageWrapper img;
+    protected final ConvenientBufferedImageWrapper img;
 
-	public ICCProfileColorConverter(ConvenientBufferedImageWrapper img, ColorSpace cs) throws ImageException {
-		ColorConvertOp transform = new ColorConvertOp(null);
+    public ICCProfileColorConverter(ConvenientBufferedImageWrapper img, ColorSpace cs) throws ImageException {
+        ColorConvertOp transform = new ColorConvertOp(null);
 
-		// int id = App.startMeasureTime("Start image colorspace");
-		int[] bits = new int[img.getColorModel().getNumComponents()];
-		Arrays.fill(bits, 16);
-		BufferedImage temp = transform.createCompatibleDestImage(img.getBufferedImage(), new ComponentColorModel(cs, bits, img.getColorModel().hasAlpha(), img.getColorModel().isAlphaPremultiplied(),
-				img.getColorModel().getTransparency(), DataBuffer.TYPE_INT));
+        // int id = App.startMeasureTime("Start image colorspace");
+        int[] bits = new int[img.getColorModel().getNumComponents()];
+        Arrays.fill(bits, 16);
+        BufferedImage temp = transform.createCompatibleDestImage(img.getBufferedImage(), new ComponentColorModel(cs,
+            bits, img.getColorModel().hasAlpha(), img.getColorModel().isAlphaPremultiplied(), img.getColorModel()
+                .getTransparency(), DataBuffer.TYPE_INT));
 
-		temp = transform.filter(img.getBufferedImage(), temp);
+        temp = transform.filter(img.getBufferedImage(), temp);
 
-		// App.endMeasureTime(id, "Convert image colorspace");
-		this.img = new ConvenientBufferedImageWrapper(temp);
+        // App.endMeasureTime(id, "Convert image colorspace");
+        this.img = new ConvenientBufferedImageWrapper(temp);
 
-	}
+    }
 
-	public ConvenientBufferedImageWrapper getImage() {
-		return img;
-	}
+    public ConvenientBufferedImageWrapper getImage() {
+        return img;
+    }
 
 }

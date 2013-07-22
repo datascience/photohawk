@@ -25,31 +25,27 @@ import at.ac.tuwien.RAWverna.RAWvernaActivity;
 import at.ac.tuwien.RAWverna.RAWvernaActivityConfigurationBean;
 
 @SuppressWarnings("serial")
-public class RAWvernaConfigureAction
-		extends
-		ActivityConfigurationAction<RAWvernaActivity,
-        RAWvernaActivityConfigurationBean> {
+public class RAWvernaConfigureAction extends
+    ActivityConfigurationAction<RAWvernaActivity, RAWvernaActivityConfigurationBean> {
 
-	public RAWvernaConfigureAction(RAWvernaActivity activity, Frame owner) {
-		super(activity);
-	}
+    public RAWvernaConfigureAction(RAWvernaActivity activity, Frame owner) {
+        super(activity);
+    }
 
-	@SuppressWarnings("unchecked")
-	public void actionPerformed(ActionEvent e) {
-		ActivityConfigurationDialog<RAWvernaActivity, RAWvernaActivityConfigurationBean> currentDialog = ActivityConfigurationAction
-				.getDialog(getActivity());
-		if (currentDialog != null) {
-			currentDialog.toFront();
-			return;
-		}
-		RAWvernaConfigurationPanel panel = new RAWvernaConfigurationPanel(
-				getActivity());
-		ActivityConfigurationDialog<RAWvernaActivity,
-        RAWvernaActivityConfigurationBean> dialog = new ActivityConfigurationDialog<RAWvernaActivity, RAWvernaActivityConfigurationBean>(
-				getActivity(), panel);
+    @SuppressWarnings("unchecked")
+    public void actionPerformed(ActionEvent e) {
+        ActivityConfigurationDialog<RAWvernaActivity, RAWvernaActivityConfigurationBean> currentDialog = ActivityConfigurationAction
+            .getDialog(getActivity());
+        if (currentDialog != null) {
+            currentDialog.toFront();
+            return;
+        }
+        RAWvernaConfigurationPanel panel = new RAWvernaConfigurationPanel(getActivity());
+        ActivityConfigurationDialog<RAWvernaActivity, RAWvernaActivityConfigurationBean> dialog = new ActivityConfigurationDialog<RAWvernaActivity, RAWvernaActivityConfigurationBean>(
+            getActivity(), panel);
 
-		ActivityConfigurationAction.setDialog(getActivity(), dialog);
+        ActivityConfigurationAction.setDialog(getActivity(), dialog);
 
-	}
+    }
 
 }

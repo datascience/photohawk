@@ -27,26 +27,26 @@ import at.ac.tuwien.RAWverna.JavaImageEvaluatorActivityConfigurationBean;
 
 @SuppressWarnings("serial")
 public class JavaFITSEvaluatorConfigureAction extends
-		ActivityConfigurationAction<JavaFITSEvaluatorActivity, JavaFITSEvaluatorActivityConfigurationBean> {
+    ActivityConfigurationAction<JavaFITSEvaluatorActivity, JavaFITSEvaluatorActivityConfigurationBean> {
 
-	public JavaFITSEvaluatorConfigureAction(JavaFITSEvaluatorActivity activity, Frame owner) {
-		super(activity);
-	}
+    public JavaFITSEvaluatorConfigureAction(JavaFITSEvaluatorActivity activity, Frame owner) {
+        super(activity);
+    }
 
-	@SuppressWarnings("unchecked")
-	public void actionPerformed(ActionEvent e) {
-		ActivityConfigurationDialog<JavaImageEvaluatorActivity, JavaImageEvaluatorActivityConfigurationBean> currentDialog = ActivityConfigurationAction
-				.getDialog(getActivity());
-		if (currentDialog != null) {
-			currentDialog.toFront();
-			return;
-		}
-		JavaFITSEvaluatorConfigurationPanel panel = new JavaFITSEvaluatorConfigurationPanel(getActivity());
-		ActivityConfigurationDialog<JavaFITSEvaluatorActivity, JavaFITSEvaluatorActivityConfigurationBean> dialog = new ActivityConfigurationDialog<JavaFITSEvaluatorActivity, JavaFITSEvaluatorActivityConfigurationBean>(
-				getActivity(), panel);
+    @SuppressWarnings("unchecked")
+    public void actionPerformed(ActionEvent e) {
+        ActivityConfigurationDialog<JavaImageEvaluatorActivity, JavaImageEvaluatorActivityConfigurationBean> currentDialog = ActivityConfigurationAction
+            .getDialog(getActivity());
+        if (currentDialog != null) {
+            currentDialog.toFront();
+            return;
+        }
+        JavaFITSEvaluatorConfigurationPanel panel = new JavaFITSEvaluatorConfigurationPanel(getActivity());
+        ActivityConfigurationDialog<JavaFITSEvaluatorActivity, JavaFITSEvaluatorActivityConfigurationBean> dialog = new ActivityConfigurationDialog<JavaFITSEvaluatorActivity, JavaFITSEvaluatorActivityConfigurationBean>(
+            getActivity(), panel);
 
-		ActivityConfigurationAction.setDialog(getActivity(), dialog);
+        ActivityConfigurationAction.setDialog(getActivity(), dialog);
 
-	}
+    }
 
 }

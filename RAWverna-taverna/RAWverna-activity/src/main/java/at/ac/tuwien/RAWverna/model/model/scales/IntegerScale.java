@@ -38,79 +38,77 @@ import at.ac.tuwien.RAWverna.model.validation.ValidationError;
 // message="Please enter a unit for the scale of type 'Integer'")
 public class IntegerScale extends Scale {
 
-	private static final long serialVersionUID = 8594390834250087870L;
+    private static final long serialVersionUID = 8594390834250087870L;
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#createValue()
-	 */
-	@Override
-	public Value createValue() {
-		Value v = new IntegerValue();
-		v.setScale(this);
-		return v;
-	}
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#createValue()
+     */
+    @Override
+    public Value createValue() {
+        Value v = new IntegerValue();
+        v.setScale(this);
+        return v;
+    }
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#getDisplayName()
-	 */
-	@Override
-	public String getDisplayName() {
-		return "Integer";
-	}
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#getDisplayName()
+     */
+    @Override
+    public String getDisplayName() {
+        return "Integer";
+    }
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#getType()
-	 */
-	@Override
-	public ScaleType getType() {
-		return ScaleType.value;
-	}
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#getType()
+     */
+    @Override
+    public ScaleType getType() {
+        return ScaleType.value;
+    }
 
-	@Override
-	public boolean isInteger() {
-		return true;
-	}
+    @Override
+    public boolean isInteger() {
+        return true;
+    }
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isCorrectlySpecified(java.lang.String,
-	 *      List)
-	 */
-	@Override
-	public boolean isCorrectlySpecified(String leafName,
-			List<ValidationError> errors) {
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isCorrectlySpecified(java.lang.String,
+     *      List)
+     */
+    @Override
+    public boolean isCorrectlySpecified(String leafName, List<ValidationError> errors) {
 
-		if (getUnit() == null || "".equals(getUnit())) {
-			errors.add(new ValidationError(
-					"Please enter a unit for the scale of type 'Integer' at leaf '"
-							+ leafName + "'", this));
-			return false;
-		}
+        if (getUnit() == null || "".equals(getUnit())) {
+            errors.add(new ValidationError("Please enter a unit for the scale of type 'Integer' at leaf '" + leafName
+                + "'", this));
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isEvaluated(at.ac.tuwien.RAWverna.model.model.values.Value)
-	 */
-	@Override
-	public boolean isEvaluated(Value value) {
-		boolean evaluated = false;
-		if ((value != null) && (value instanceof IntegerValue)) {
-			IntegerValue v = (IntegerValue) value;
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isEvaluated(at.ac.tuwien.RAWverna.model.model.values.Value)
+     */
+    @Override
+    public boolean isEvaluated(Value value) {
+        boolean evaluated = false;
+        if ((value != null) && (value instanceof IntegerValue)) {
+            IntegerValue v = (IntegerValue) value;
 
-			evaluated = v.isChanged();
-		}
-		return evaluated;
-	}
+            evaluated = v.isChanged();
+        }
+        return evaluated;
+    }
 
-	/**
-	 * An {@link IntegerScale} is not restricted.
-	 * 
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isRestricted()
-	 */
-	@Override
-	public boolean isRestricted() {
-		return false;
-	}
+    /**
+     * An {@link IntegerScale} is not restricted.
+     * 
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isRestricted()
+     */
+    @Override
+    public boolean isRestricted() {
+        return false;
+    }
 
 }

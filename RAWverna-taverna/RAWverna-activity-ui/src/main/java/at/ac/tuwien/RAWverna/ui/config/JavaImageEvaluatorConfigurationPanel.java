@@ -28,94 +28,94 @@ import at.ac.tuwien.RAWverna.ui.config.evaluation.MeasurementSelectorPanel;
 
 @SuppressWarnings("serial")
 public class JavaImageEvaluatorConfigurationPanel extends
-		ActivityConfigurationPanel<JavaImageEvaluatorActivity, JavaImageEvaluatorActivityConfigurationBean> {
+    ActivityConfigurationPanel<JavaImageEvaluatorActivity, JavaImageEvaluatorActivityConfigurationBean> {
 
-	private JavaImageEvaluatorActivity activity;
-	private JavaImageEvaluatorActivityConfigurationBean configBean;
+    private JavaImageEvaluatorActivity activity;
+    private JavaImageEvaluatorActivityConfigurationBean configBean;
 
-	private MeasurementSelectorPanel selector;
+    private MeasurementSelectorPanel selector;
 
-	public JavaImageEvaluatorConfigurationPanel(JavaImageEvaluatorActivity activity) {
-		this.activity = activity;
-		initGui();
-		refreshConfiguration();
-	}
+    public JavaImageEvaluatorConfigurationPanel(JavaImageEvaluatorActivity activity) {
+        this.activity = activity;
+        initGui();
+        refreshConfiguration();
+    }
 
-	protected void initGui() {
-		removeAll();
+    protected void initGui() {
+        removeAll();
 
-		selector = new MeasurementSelectorPanel(new JavaImageComparisonEvaluator());
-		add(selector);
+        selector = new MeasurementSelectorPanel(new JavaImageComparisonEvaluator());
+        add(selector);
 
-		// FIXME: Create GUI depending on activity configuration bean
-		// JLabel labelString = new JLabel("Mesaurement URI:");
-		// add(labelString);
-		// fieldmeasurementURI = new JTextField(60);
-		// add(fieldmeasurementURI);
-		// labelString.setLabelFor(fieldmeasurementURI);
-		//
-		// // Populate fields from activity configuration bean
-		// refreshConfiguration();
-	}
+        // FIXME: Create GUI depending on activity configuration bean
+        // JLabel labelString = new JLabel("Mesaurement URI:");
+        // add(labelString);
+        // fieldmeasurementURI = new JTextField(60);
+        // add(fieldmeasurementURI);
+        // labelString.setLabelFor(fieldmeasurementURI);
+        //
+        // // Populate fields from activity configuration bean
+        // refreshConfiguration();
+    }
 
-	/**
-	 * Check that user values in UI are valid
-	 */
-	@Override
-	public boolean checkValues() {
-		try {
-			for (String uri : selector.getSelectedValues()) {
-				URI.create(uri);
-			}
-		} catch (IllegalArgumentException ex) {
-			JOptionPane.showMessageDialog(this, ex.getCause().getMessage(), "Invalid URI", JOptionPane.ERROR_MESSAGE);
-			// Not valid, return false
-			return false;
-		}
-		// All valid, return true
-		return true;
-	}
+    /**
+     * Check that user values in UI are valid
+     */
+    @Override
+    public boolean checkValues() {
+        try {
+            for (String uri : selector.getSelectedValues()) {
+                URI.create(uri);
+            }
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getCause().getMessage(), "Invalid URI", JOptionPane.ERROR_MESSAGE);
+            // Not valid, return false
+            return false;
+        }
+        // All valid, return true
+        return true;
+    }
 
-	/**
-	 * Return configuration bean generated from user interface last time
-	 * noteConfiguration() was called.
-	 */
-	@Override
-	public JavaImageEvaluatorActivityConfigurationBean getConfiguration() {
-		// Should already have been made by noteConfiguration()
-		return configBean;
-	}
+    /**
+     * Return configuration bean generated from user interface last time
+     * noteConfiguration() was called.
+     */
+    @Override
+    public JavaImageEvaluatorActivityConfigurationBean getConfiguration() {
+        // Should already have been made by noteConfiguration()
+        return configBean;
+    }
 
-	/**
-	 * Check if the user has changed the configuration from the original
-	 */
-	@Override
-	public boolean isConfigurationChanged() {
-		Collection<String> originalMeasurementURIs = configBean.getMeasurementURIs();
+    /**
+     * Check if the user has changed the configuration from the original
+     */
+    @Override
+    public boolean isConfigurationChanged() {
+        Collection<String> originalMeasurementURIs = configBean.getMeasurementURIs();
 
-		// true (changed) unless all fields match the originals
-		return !(originalMeasurementURIs.equals(selector.getSelectedValues()));
-	}
+        // true (changed) unless all fields match the originals
+        return !(originalMeasurementURIs.equals(selector.getSelectedValues()));
+    }
 
-	/**
-	 * Prepare a new configuration bean from the UI, to be returned with
-	 * getConfiguration()
-	 */
-	@Override
-	public void noteConfiguration() {
-		configBean = new JavaImageEvaluatorActivityConfigurationBean();
+    /**
+     * Prepare a new configuration bean from the UI, to be returned with
+     * getConfiguration()
+     */
+    @Override
+    public void noteConfiguration() {
+        configBean = new JavaImageEvaluatorActivityConfigurationBean();
 
-		configBean.setMeasurementURIs(selector.getSelectedValues());
-	}
+        configBean.setMeasurementURIs(selector.getSelectedValues());
+    }
 
-	/**
-	 * Update GUI from a changed configuration bean (perhaps by undo/redo).
-	 * 
-	 */
-	@Override
-	public void refreshConfiguration() {
-		configBean = activity.getConfiguration();
+    /**
+     * Update GUI from a changed configuration bean (perhaps by undo/redo).
+     * 
+     */
+    @Override
+    public void refreshConfiguration() {
+        configBean = activity.getConfiguration();
 
-		selector.setSelectedValues(configBean.getMeasurementURIs());
-	}
+        selector.setSelectedValues(configBean.getMeasurementURIs());
+    }
 }

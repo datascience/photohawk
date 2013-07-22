@@ -18,18 +18,17 @@ package at.ac.tuwien.RAWverna.model.model.values;
 
 public class BooleanValue extends OrdinalValue {
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = 2289628831596905214L;
+    private static final long serialVersionUID = 2289628831596905214L;
 
-	public void bool(boolean b) {
-		setValue(b ? "Yes" : "No");
-	}
+    public void bool(boolean b) {
+        setValue(b ? "Yes" : "No");
+    }
 
-	@Override
-	public void parse(String text) {
-		bool("Yes".equalsIgnoreCase(text) || "true".equalsIgnoreCase(text)
-				|| "Y".equalsIgnoreCase(text));
-	}
+    @Override
+    public void parse(String text) {
+        bool("Yes".equalsIgnoreCase(text) || "true".equalsIgnoreCase(text) || "Y".equalsIgnoreCase(text));
+    }
 }

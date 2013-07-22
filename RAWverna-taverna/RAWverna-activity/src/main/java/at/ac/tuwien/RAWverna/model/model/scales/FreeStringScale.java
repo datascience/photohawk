@@ -44,56 +44,55 @@ import at.ac.tuwien.RAWverna.model.validation.ValidationError;
  */
 public class FreeStringScale extends Scale {
 
-	public FreeStringScale() {
-		list = new ArrayList<String>();
-	}
+    public FreeStringScale() {
+        list = new ArrayList<String>();
+    }
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = -3878622271778070882L;
+    private static final long serialVersionUID = -3878622271778070882L;
 
-	@Override
-	public Value createValue() {
-		FreeStringValue v = new FreeStringValue();
-		v.setScale(this);
-		return v;
-	}
+    @Override
+    public Value createValue() {
+        FreeStringValue v = new FreeStringValue();
+        v.setScale(this);
+        return v;
+    }
 
-	@Override
-	public String getDisplayName() {
-		return "Free Text";
-	}
+    @Override
+    public String getDisplayName() {
+        return "Free Text";
+    }
 
-	@Override
-	public ScaleType getType() {
-		return ScaleType.ordinal;
-	}
+    @Override
+    public ScaleType getType() {
+        return ScaleType.ordinal;
+    }
 
-	@Override
-	public boolean isCorrectlySpecified(String leafName,
-			List<ValidationError> errors) {
-		return true;
-	}
+    @Override
+    public boolean isCorrectlySpecified(String leafName, List<ValidationError> errors) {
+        return true;
+    }
 
-	@Override
-	public boolean isEvaluated(Value v) {
-		if (v == null || !(v instanceof FreeStringValue)) {
-			return false;
-		}
-		FreeStringValue sv = (FreeStringValue) v;
-		return (sv.getValue() != null && (!"".equals(sv.getValue())));
-	}
+    @Override
+    public boolean isEvaluated(Value v) {
+        if (v == null || !(v instanceof FreeStringValue)) {
+            return false;
+        }
+        FreeStringValue sv = (FreeStringValue) v;
+        return (sv.getValue() != null && (!"".equals(sv.getValue())));
+    }
 
-	@Override
-	public boolean isRestricted() {
-		return false;
-	}
+    @Override
+    public boolean isRestricted() {
+        return false;
+    }
 
-	public void setPossibleValues(HashSet<String> values) {
-		list.clear();
-		list.addAll(values);
-		Collections.sort(list);
-	}
+    public void setPossibleValues(HashSet<String> values) {
+        list.clear();
+        list.addAll(values);
+        Collections.sort(list);
+    }
 
 }

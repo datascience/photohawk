@@ -16,7 +16,6 @@
  ******************************************************************************/
 package at.ac.tuwien.RAWverna.model.model.values;
 
-
 public interface IOrdinalValue {
     public String getValue();
 }

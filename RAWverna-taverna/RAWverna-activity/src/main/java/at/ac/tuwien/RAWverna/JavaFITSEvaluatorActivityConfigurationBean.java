@@ -22,12 +22,11 @@ import at.ac.tuwien.RAWverna.measurementuri.MeasurementURIConfigurationBean;
 /**
  * Activity configuration bean for Java FITS evaluator.
  */
-public class JavaFITSEvaluatorActivityConfigurationBean extends
-		MeasurementURIConfigurationBean implements Serializable {
+public class JavaFITSEvaluatorActivityConfigurationBean extends MeasurementURIConfigurationBean implements Serializable {
 
-	/**
-	 * Generated serial version UID
-	 */
-	private static final long serialVersionUID = -7265190813829373018L;
+    /**
+     * Generated serial version UID
+     */
+    private static final long serialVersionUID = -7265190813829373018L;
 
 }

@@ -8,25 +8,23 @@ import at.ac.tuwien.RAWverna.measurementuri.MeasurementURIHealthChecker;
 /**
  * Health checker for Java FITS evaluator
  */
-public class JavaFITSEvaluatorActivityHealthChecker
-		extends
-		MeasurementURIHealthChecker<JavaFITSEvaluatorActivity, JavaFITSEvaluatorActivityConfigurationBean> {
+public class JavaFITSEvaluatorActivityHealthChecker extends
+    MeasurementURIHealthChecker<JavaFITSEvaluatorActivity, JavaFITSEvaluatorActivityConfigurationBean> {
 
-	@Override
-	public boolean canVisit(Object o) {
-		// Return True if we can visit the object. We could do
-		// deeper (but not time consuming) checks here, for instance
-		// if the health checker only deals with RAWvernaActivity where
-		// a certain configuration option is enabled.
-		return o instanceof JavaFITSEvaluatorActivity;
-	}
+    @Override
+    public boolean canVisit(Object o) {
+        // Return True if we can visit the object. We could do
+        // deeper (but not time consuming) checks here, for instance
+        // if the health checker only deals with RAWvernaActivity where
+        // a certain configuration option is enabled.
+        return o instanceof JavaFITSEvaluatorActivity;
+    }
 
-	@Override
-	public VisitReport visit(JavaFITSEvaluatorActivity activity,
-			List<Object> ancestry) {
-		VisitReport report = super.visit(activity, ancestry);
-		report.setMessage("JavaImageEvaluator report");
-		return report;
-	}
+    @Override
+    public VisitReport visit(JavaFITSEvaluatorActivity activity, List<Object> ancestry) {
+        VisitReport report = super.visit(activity, ancestry);
+        report.setMessage("JavaImageEvaluator report");
+        return report;
+    }
 
 }

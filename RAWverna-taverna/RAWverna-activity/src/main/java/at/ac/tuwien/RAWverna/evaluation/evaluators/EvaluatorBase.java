@@ -16,40 +16,39 @@ import at.ac.tuwien.RAWverna.model.evaluation.MeasurementsDescriptor;
  * 
  */
 public class EvaluatorBase implements IEvaluator {
-	protected MeasurementsDescriptor descriptor;
-	protected String descriptorStr;
+    protected MeasurementsDescriptor descriptor;
+    protected String descriptorStr;
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.evaluation.IEvaluator#getPossibleMeasurements()
-	 */
-	public String getPossibleMeasurements() {
-		return descriptorStr;
-	}
+    /**
+     * @see at.ac.tuwien.RAWverna.evaluation.IEvaluator#getPossibleMeasurements()
+     */
+    public String getPossibleMeasurements() {
+        return descriptorStr;
+    }
 
-	/**
-	 * loads measurements description from the given file. populates descriptor
-	 * and descriptor String
-	 * 
-	 * @param filename
-	 * @return
-	 */
-	protected boolean loadMeasurementsDescription(String name) {
-		try {
-			// InputStream description =
-			// Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
-			InputStream description = getClass().getClassLoader()
-					.getResourceAsStream(name);
-			if (description != null) {
-				InputStreamReader in = new InputStreamReader(description);
-				descriptorStr = new Scanner(in).useDelimiter("\\A").next();
-				descriptor = new MeasurementsDescriptor();
-				descriptor.addMeasurementInfos(new StringReader(descriptorStr));
-				return true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+    /**
+     * loads measurements description from the given file. populates descriptor
+     * and descriptor String
+     * 
+     * @param filename
+     * @return
+     */
+    protected boolean loadMeasurementsDescription(String name) {
+        try {
+            // InputStream description =
+            // Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
+            InputStream description = getClass().getClassLoader().getResourceAsStream(name);
+            if (description != null) {
+                InputStreamReader in = new InputStreamReader(description);
+                descriptorStr = new Scanner(in).useDelimiter("\\A").next();
+                descriptor = new MeasurementsDescriptor();
+                descriptor.addMeasurementInfos(new StringReader(descriptorStr));
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

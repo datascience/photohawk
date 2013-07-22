@@ -18,9 +18,9 @@ package at.ac.tuwien.RAWverna.model.model.values;
 
 public class YanValue extends OrdinalValue {
 
-	/**
+    /**
      * 
      */
-	private static final long serialVersionUID = -1113476200623870124L;
+    private static final long serialVersionUID = -1113476200623870124L;
 
 }

@@ -25,6 +25,6 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  */
 public interface FullColorConverter {
 
-	ConvenientBufferedImageWrapper getImage();
+    ConvenientBufferedImageWrapper getImage();
 
 }

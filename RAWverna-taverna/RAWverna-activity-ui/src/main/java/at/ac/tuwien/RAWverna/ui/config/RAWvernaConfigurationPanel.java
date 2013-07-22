@@ -27,107 +27,102 @@ import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityCon
 import at.ac.tuwien.RAWverna.RAWvernaActivity;
 import at.ac.tuwien.RAWverna.RAWvernaActivityConfigurationBean;
 
-
 @SuppressWarnings("serial")
-public class RAWvernaConfigurationPanel
-		extends
-		ActivityConfigurationPanel<RAWvernaActivity, 
-        RAWvernaActivityConfigurationBean> {
+public class RAWvernaConfigurationPanel extends
+    ActivityConfigurationPanel<RAWvernaActivity, RAWvernaActivityConfigurationBean> {
 
-	private RAWvernaActivity activity;
-	private RAWvernaActivityConfigurationBean configBean;
-	
-	private JTextField fieldString;
-	private JTextField fieldURI;
+    private RAWvernaActivity activity;
+    private RAWvernaActivityConfigurationBean configBean;
 
-	public RAWvernaConfigurationPanel(RAWvernaActivity activity) {
-		this.activity = activity;
-		initGui();
-	}
+    private JTextField fieldString;
+    private JTextField fieldURI;
 
-	protected void initGui() {
-		removeAll();
-		setLayout(new GridLayout(0, 2));
+    public RAWvernaConfigurationPanel(RAWvernaActivity activity) {
+        this.activity = activity;
+        initGui();
+    }
 
-		// FIXME: Create GUI depending on activity configuration bean
-		JLabel labelString = new JLabel("Example string:");
-		add(labelString);
-		fieldString = new JTextField(20);
-		add(fieldString);
-		labelString.setLabelFor(fieldString);
+    protected void initGui() {
+        removeAll();
+        setLayout(new GridLayout(0, 2));
 
-		JLabel labelURI = new JLabel("Example URI:");
-		add(labelURI);
-		fieldURI = new JTextField(25);
-		add(fieldURI);
-		labelURI.setLabelFor(fieldURI);
+        // FIXME: Create GUI depending on activity configuration bean
+        JLabel labelString = new JLabel("Example string:");
+        add(labelString);
+        fieldString = new JTextField(20);
+        add(fieldString);
+        labelString.setLabelFor(fieldString);
 
-		// Populate fields from activity configuration bean
-		refreshConfiguration();
-	}
+        JLabel labelURI = new JLabel("Example URI:");
+        add(labelURI);
+        fieldURI = new JTextField(25);
+        add(fieldURI);
+        labelURI.setLabelFor(fieldURI);
 
-	/**
-	 * Check that user values in UI are valid
-	 */
-	@Override
-	public boolean checkValues() {
-		try {
-			URI.create(fieldURI.getText());
-		} catch (IllegalArgumentException ex) {
-			JOptionPane.showMessageDialog(this, ex.getCause().getMessage(),
-					"Invalid URI", JOptionPane.ERROR_MESSAGE);
-			// Not valid, return false
-			return false;
-		}
-		// All valid, return true
-		return true;
-	}
+        // Populate fields from activity configuration bean
+        refreshConfiguration();
+    }
 
-	/**
-	 * Return configuration bean generated from user interface last time
-	 * noteConfiguration() was called.
-	 */
-	@Override
-	public RAWvernaActivityConfigurationBean getConfiguration() {
-		// Should already have been made by noteConfiguration()
-		return configBean;
-	}
+    /**
+     * Check that user values in UI are valid
+     */
+    @Override
+    public boolean checkValues() {
+        try {
+            URI.create(fieldURI.getText());
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getCause().getMessage(), "Invalid URI", JOptionPane.ERROR_MESSAGE);
+            // Not valid, return false
+            return false;
+        }
+        // All valid, return true
+        return true;
+    }
 
-	/**
-	 * Check if the user has changed the configuration from the original
-	 */
-	@Override
-	public boolean isConfigurationChanged() {
-		String originalString = configBean.getExampleString();
-		String originalUri = configBean.getExampleUri().toASCIIString();
-		// true (changed) unless all fields match the originals
-		return ! (originalString.equals(fieldString.getText())
-				&& originalUri.equals(fieldURI.getText()));
-	}
+    /**
+     * Return configuration bean generated from user interface last time
+     * noteConfiguration() was called.
+     */
+    @Override
+    public RAWvernaActivityConfigurationBean getConfiguration() {
+        // Should already have been made by noteConfiguration()
+        return configBean;
+    }
 
-	/**
-	 * Prepare a new configuration bean from the UI, to be returned with
-	 * getConfiguration()
-	 */
-	@Override
-	public void noteConfiguration() {
-		configBean = new RAWvernaActivityConfigurationBean();
-		
-		// FIXME: Update bean fields from your UI elements
-		configBean.setExampleString(fieldString.getText());
-		configBean.setExampleUri(URI.create(fieldURI.getText()));
-	}
+    /**
+     * Check if the user has changed the configuration from the original
+     */
+    @Override
+    public boolean isConfigurationChanged() {
+        String originalString = configBean.getExampleString();
+        String originalUri = configBean.getExampleUri().toASCIIString();
+        // true (changed) unless all fields match the originals
+        return !(originalString.equals(fieldString.getText()) && originalUri.equals(fieldURI.getText()));
+    }
 
-	/**
-	 * Update GUI from a changed configuration bean (perhaps by undo/redo).
-	 * 
-	 */
-	@Override
-	public void refreshConfiguration() {
-		configBean = activity.getConfiguration();
-		
-		// FIXME: Update UI elements from your bean fields
-		fieldString.setText(configBean.getExampleString());
-		fieldURI.setText(configBean.getExampleUri().toASCIIString());
-	}
+    /**
+     * Prepare a new configuration bean from the UI, to be returned with
+     * getConfiguration()
+     */
+    @Override
+    public void noteConfiguration() {
+        configBean = new RAWvernaActivityConfigurationBean();
+
+        // FIXME: Update bean fields from your UI elements
+        configBean.setExampleString(fieldString.getText());
+        configBean.setExampleUri(URI.create(fieldURI.getText()));
+    }
+
+    /**
+     * Update GUI from a changed configuration bean (perhaps by undo/redo).
+     * 
+     */
+    @Override
+    public void refreshConfiguration() {
+        configBean = activity.getConfiguration();
+
+        // FIXME: Update UI elements from your bean fields
+        fieldString.setText(configBean.getExampleString());
+        fieldURI.setText(configBean.getExampleUri().toASCIIString());
+    }
 }

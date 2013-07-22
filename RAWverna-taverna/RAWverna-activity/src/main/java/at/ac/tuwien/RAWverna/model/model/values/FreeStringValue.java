@@ -18,33 +18,33 @@ package at.ac.tuwien.RAWverna.model.model.values;
 
 public class FreeStringValue extends Value implements IOrdinalValue {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String value;
+    private String value;
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public String toString() {
-		if (value == null) {
-			return "";
-		}
-		return value;
-	}
+    public String toString() {
+        if (value == null) {
+            return "";
+        }
+        return value;
+    }
 
-	@Override
-	public String getFormattedValue() {
-		return value;
-	}
+    @Override
+    public String getFormattedValue() {
+        return value;
+    }
 
-	@Override
-	public void parse(String text) {
-		setValue(text);
-	}
+    @Override
+    public void parse(String text) {
+        setValue(text);
+    }
 
 }

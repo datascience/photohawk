@@ -26,57 +26,57 @@ import net.sf.taverna.t2.servicedescriptions.ServiceDescriptionProvider;
 
 public class JavaImageEvaluatorServiceProvider implements ServiceDescriptionProvider {
 
-	private static final URI providerId = URI
-			.create("http://tuwien.ac.at/2011/RAWverna/service-provider/JavaImageEvaluator");
+    private static final URI providerId = URI
+        .create("http://tuwien.ac.at/2011/RAWverna/service-provider/JavaImageEvaluator");
 
-	/**
-	 * Do the actual search for services. Return using the callBack parameter.
-	 */
-	@SuppressWarnings("unchecked")
-	public void findServiceDescriptionsAsync(FindServiceDescriptionsCallBack callBack) {
-		// Use callback.status() for long-running searches
-		// callBack.status("Resolving example services");
-		
-		List<ServiceDescription> results = new ArrayList<ServiceDescription>();
+    /**
+     * Do the actual search for services. Return using the callBack parameter.
+     */
+    @SuppressWarnings("unchecked")
+    public void findServiceDescriptionsAsync(FindServiceDescriptionsCallBack callBack) {
+        // Use callback.status() for long-running searches
+        // callBack.status("Resolving example services");
 
-		JavaImageEvaluatorServiceDesc service = new JavaImageEvaluatorServiceDesc();
-		// Populate the service description bean
-		service.setServiceName(getName());
+        List<ServiceDescription> results = new ArrayList<ServiceDescription>();
 
-		// Optional: set description
-		service.setDescription("Java evaluator for image comparison");
-		results.add(service);
+        JavaImageEvaluatorServiceDesc service = new JavaImageEvaluatorServiceDesc();
+        // Populate the service description bean
+        service.setServiceName(getName());
 
-		// partialResults() can also be called several times from inside
-		// for-loop if the full search takes a long time
-		callBack.partialResults(results);
+        // Optional: set description
+        service.setDescription("Java evaluator for image comparison");
+        results.add(service);
 
-		// No more results will be coming
-		callBack.finished();
-	}
+        // partialResults() can also be called several times from inside
+        // for-loop if the full search takes a long time
+        callBack.partialResults(results);
 
-	/**
-	 * Icon for service provider
-	 */
-	public Icon getIcon() {
-		return RAWvernaServiceIcon.getIcon();
-	}
+        // No more results will be coming
+        callBack.finished();
+    }
 
-	/**
-	 * Name of service provider, appears in right click for 'Remove service
-	 * provider'
-	 */
-	public String getName() {
-		return "Java image evaluator";
-	}
+    /**
+     * Icon for service provider
+     */
+    public Icon getIcon() {
+        return RAWvernaServiceIcon.getIcon();
+    }
 
-	@Override
-	public String toString() {
-		return getName();
-	}
+    /**
+     * Name of service provider, appears in right click for 'Remove service
+     * provider'
+     */
+    public String getName() {
+        return "Java image evaluator";
+    }
 
-	public String getId() {
-		return providerId.toASCIIString();
-	}
+    @Override
+    public String toString() {
+        return getName();
+    }
+
+    public String getId() {
+        return providerId.toASCIIString();
+    }
 
 }

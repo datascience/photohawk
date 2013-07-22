@@ -40,117 +40,109 @@ import at.ac.tuwien.RAWverna.model.validation.ValidationError;
 // message="Please enter a unit for the scale of type 'Positive Number'")
 public class PositiveFloatScale extends RestrictedScale {
 
-	private static final long serialVersionUID = -4467039282244923690L;
+    private static final long serialVersionUID = -4467039282244923690L;
 
-	public String getDisplayName() {
-		return "Positive Number";
-	}
+    public String getDisplayName() {
+        return "Positive Number";
+    }
 
-	@Override
-	public ScaleType getType() {
-		return ScaleType.restricted;
-	}
+    @Override
+    public ScaleType getType() {
+        return ScaleType.restricted;
+    }
 
-	public PositiveFloatValue createValue() {
-		PositiveFloatValue v = new PositiveFloatValue();
-		v.setScale(this);
-		return v;
-	}
+    public PositiveFloatValue createValue() {
+        PositiveFloatValue v = new PositiveFloatValue();
+        v.setScale(this);
+        return v;
+    }
 
-	/**
-	 * The maximum value for DOUBLE in Derby is 1.79769E+308. Node: 1.79769E+308
-	 * is smaller than Double.MAX_VALUE. (see
-	 * http://db.apache.org/derby/manuals/
-	 * reference/sqlj134.html#SPTSII-SQLJ-DOUBLEPRECISION)
-	 */
-	private double upperBound = Scale.MAX_VALUE;
+    /**
+     * The maximum value for DOUBLE in Derby is 1.79769E+308. Node: 1.79769E+308
+     * is smaller than Double.MAX_VALUE. (see
+     * http://db.apache.org/derby/manuals/
+     * reference/sqlj134.html#SPTSII-SQLJ-DOUBLEPRECISION)
+     */
+    private double upperBound = Scale.MAX_VALUE;
 
-	@Override
-	public String getRestriction() {
-		if (this.upperBound == Scale.MAX_VALUE) {
-			return "";
-		} else {
-			return Double.toString(this.upperBound);
-		}
-	}
+    @Override
+    public String getRestriction() {
+        if (this.upperBound == Scale.MAX_VALUE) {
+            return "";
+        } else {
+            return Double.toString(this.upperBound);
+        }
+    }
 
-	@Override
-	public String getReadableRestriction() {
-		if (this.upperBound == Scale.MAX_VALUE) {
-			return "";
-		} else {
-			return "up to " + this.upperBound;
-		}
-	}
+    @Override
+    public String getReadableRestriction() {
+        if (this.upperBound == Scale.MAX_VALUE) {
+            return "";
+        } else {
+            return "up to " + this.upperBound;
+        }
+    }
 
-	@Override
-	public void setRestriction(String restriction) {
-		if (restriction != null && !"".equals(restriction)) {
-			Logger.getLogger(this.getClass()).debug(
-					"setting restriction: " + restriction);
-			try {
-				setUpperBound(Double.parseDouble(restriction));
+    @Override
+    public void setRestriction(String restriction) {
+        if (restriction != null && !"".equals(restriction)) {
+            Logger.getLogger(this.getClass()).debug("setting restriction: " + restriction);
+            try {
+                setUpperBound(Double.parseDouble(restriction));
 
-			} catch (NumberFormatException e) {
-				Logger.getLogger(this.getClass()).warn(
-						"ignoring invalid restriction "
-								+ "setting in PositiveFloatScale: "
-								+ restriction);
-			}
-		} else {
-			setUpperBound(Scale.MAX_VALUE);
-		}
-	}
+            } catch (NumberFormatException e) {
+                Logger.getLogger(this.getClass()).warn(
+                    "ignoring invalid restriction " + "setting in PositiveFloatScale: " + restriction);
+            }
+        } else {
+            setUpperBound(Scale.MAX_VALUE);
+        }
+    }
 
-	public double getUpperBound() {
-		return upperBound;
-	}
+    public double getUpperBound() {
+        return upperBound;
+    }
 
-	public void setUpperBound(double upper) {
-		this.upperBound = upper;
-	}
+    public void setUpperBound(double upper) {
+        this.upperBound = upper;
+    }
 
-	@Override
-	public boolean isCorrectlySpecified(String leafName,
-			List<ValidationError> errors) {
+    @Override
+    public boolean isCorrectlySpecified(String leafName, List<ValidationError> errors) {
 
-		if (false == super.isCorrectlySpecified(leafName, errors)) {
-			return false;
-		}
+        if (false == super.isCorrectlySpecified(leafName, errors)) {
+            return false;
+        }
 
-		// we additionally check for the unit
-		if (getUnit() == null || "".equals(getUnit())) {
-			errors.add(new ValidationError(
-					"Please enter a unit for the scale of type 'Positive Number' at leaf '"
-							+ leafName + "'", this));
-			return false;
-		}
+        // we additionally check for the unit
+        if (getUnit() == null || "".equals(getUnit())) {
+            errors.add(new ValidationError("Please enter a unit for the scale of type 'Positive Number' at leaf '"
+                + leafName + "'", this));
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	protected boolean restrictionIsValid(String leafName,
-			List<ValidationError> errors) {
-		if (this.upperBound <= 0.0) {
-			errors.add(new ValidationError(
-					"The upper bound specified for leaf \"" + leafName
-							+ "\" is not greater than zero!", this));
-			return false;
-		}
-		return true;
-	}
+    @Override
+    protected boolean restrictionIsValid(String leafName, List<ValidationError> errors) {
+        if (this.upperBound <= 0.0) {
+            errors.add(new ValidationError("The upper bound specified for leaf \"" + leafName
+                + "\" is not greater than zero!", this));
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public boolean isEvaluated(Value value) {
-		boolean evaluated = false;
-		if ((value != null) && (value instanceof PositiveFloatValue)) {
-			PositiveFloatValue v = (PositiveFloatValue) value;
+    @Override
+    public boolean isEvaluated(Value value) {
+        boolean evaluated = false;
+        if ((value != null) && (value instanceof PositiveFloatValue)) {
+            PositiveFloatValue v = (PositiveFloatValue) value;
 
-			evaluated = value.isChanged()
-					&& (v.getValue() <= getUpperBound() && v.getValue() >= 0);
-		}
-		return evaluated;
-	}
+            evaluated = value.isChanged() && (v.getValue() <= getUpperBound() && v.getValue() >= 0);
+        }
+        return evaluated;
+    }
 
 }

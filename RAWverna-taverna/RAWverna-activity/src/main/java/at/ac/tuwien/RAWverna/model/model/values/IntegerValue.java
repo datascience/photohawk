@@ -18,30 +18,30 @@ package at.ac.tuwien.RAWverna.model.model.values;
 
 public class IntegerValue extends Value implements INumericValue {
 
-	private static final long serialVersionUID = 1837519006765943657L;
+    private static final long serialVersionUID = 1837519006765943657L;
 
-	private int value;
+    private int value;
 
-	public double value() {
-		return value;
-	}
+    public double value() {
+        return value;
+    }
 
-	@Override
-	public String toString() {
-		return Integer.toString(value);
-	}
+    @Override
+    public String toString() {
+        return Integer.toString(value);
+    }
 
-	public int getValue() {
-		return value;
-	}
+    public int getValue() {
+        return value;
+    }
 
-	public void setValue(int value) {
-		this.value = value;
-	}
+    public void setValue(int value) {
+        this.value = value;
+    }
 
-	@Override
-	public void parse(String text) {
-		setValue(Integer.parseInt(text));
-	}
+    @Override
+    public void parse(String text) {
+        setValue(Integer.parseInt(text));
+    }
 
 }

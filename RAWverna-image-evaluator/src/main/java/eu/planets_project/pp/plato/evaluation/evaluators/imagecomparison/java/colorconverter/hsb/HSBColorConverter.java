@@ -29,40 +29,40 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.co
  */
 public class HSBColorConverter implements ColorConverter<HSBStaticColor> {
 
-	private SRGBColorConverter img;
+    private SRGBColorConverter img;
 
-	public HSBColorConverter(SRGBColorConverter img) {
-		this.img = img;
-	}
+    public HSBColorConverter(SRGBColorConverter img) {
+        this.img = img;
+    }
 
-	public HSBStaticColor getColorChannels(int x, int y) {
-		float[] data = img.getColorChannels(x, y).getChannelValues();
-		float[] converted = Color.RGBtoHSB((int) (data[0] * 255), (int) (data[1] * 255), (int) (data[2] * 255), null);
-		return new HSBStaticColor(converted[2], converted[1], converted[0]);
-	}
+    public HSBStaticColor getColorChannels(int x, int y) {
+        float[] data = img.getColorChannels(x, y).getChannelValues();
+        float[] converted = Color.RGBtoHSB((int) (data[0] * 255), (int) (data[1] * 255), (int) (data[2] * 255), null);
+        return new HSBStaticColor(converted[2], converted[1], converted[0]);
+    }
 
-	public String[] getChannelDescription() {
-		return HSBStaticColor.channelNames;
-	}
+    public String[] getChannelDescription() {
+        return HSBStaticColor.channelNames;
+    }
 
-	public String getChannelDescription(int idx) {
-		return getChannelDescription()[idx];
-	}
+    public String getChannelDescription(int idx) {
+        return getChannelDescription()[idx];
+    }
 
-	public StaticColor getNullColor() {
-		return new HSBStaticColor(0, 0, 0);
-	}
+    public StaticColor getNullColor() {
+        return new HSBStaticColor(0, 0, 0);
+    }
 
-	public int getNumberOfChannels() {
-		return 3;
-	}
+    public int getNumberOfChannels() {
+        return 3;
+    }
 
-	public static double normalizeHueDifference(double value) {
-		if (value > 0.5) {
-			return (1 - value);
-		} else {
-			return value;
-		}
-	}
+    public static double normalizeHueDifference(double value) {
+        if (value > 0.5) {
+            return (1 - value);
+        } else {
+            return value;
+        }
+    }
 
 }

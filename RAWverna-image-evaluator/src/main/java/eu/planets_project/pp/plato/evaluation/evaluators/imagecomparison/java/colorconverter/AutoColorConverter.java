@@ -26,9 +26,9 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.util.ImageException;
 
 /**
- * This ColorConverter performs a migration only, if necessary. If both images have the same color
- * system and space, there is no conversion performed. Otherwise a conversion into the specified
- * system is performed.
+ * This ColorConverter performs a migration only, if necessary. If both images
+ * have the same color system and space, there is no conversion performed.
+ * Otherwise a conversion into the specified system is performed.
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  * @version 1.0
@@ -36,76 +36,78 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
 @SuppressWarnings("unchecked")
 public class AutoColorConverter implements ColorConverter {
 
-	private ColorConverter converter;
+    private ColorConverter converter;
 
-	@SuppressWarnings("deprecation")
-	public AutoColorConverter(ConvenientBufferedImageWrapper img, ConvenientBufferedImageWrapper match, AlternativeColorConverter otherwise) throws ImageException {
-		boolean needConversion = false;
-		needConversion = needConversion || !img.getColorModel().equals(match.getColorModel());
-		ColorSpace imgCS = img.getColorModel().getColorSpace();
-		ColorSpace matchCS = match.getColorModel().getColorSpace();
+    @SuppressWarnings("deprecation")
+    public AutoColorConverter(ConvenientBufferedImageWrapper img, ConvenientBufferedImageWrapper match,
+        AlternativeColorConverter otherwise) throws ImageException {
+        boolean needConversion = false;
+        needConversion = needConversion || !img.getColorModel().equals(match.getColorModel());
+        ColorSpace imgCS = img.getColorModel().getColorSpace();
+        ColorSpace matchCS = match.getColorModel().getColorSpace();
 
-		needConversion = needConversion || imgCS.getType() != matchCS.getType();
-		needConversion = needConversion || imgCS.getNumComponents() != matchCS.getNumComponents();
-		needConversion = needConversion || !imgCS.getClass().isAssignableFrom(matchCS.getClass());
-		needConversion = needConversion || !matchCS.getClass().isAssignableFrom(imgCS.getClass());
-		if (imgCS instanceof ICC_ColorSpace && matchCS instanceof ICC_ColorSpace) {
-			ICC_Profile imgProf = ((ICC_ColorSpace) imgCS).getProfile();
-			ICC_Profile matchProf = ((ICC_ColorSpace) matchCS).getProfile();
-			needConversion = needConversion || imgProf.getColorSpaceType() != matchProf.getColorSpaceType();
-			needConversion = needConversion || imgProf.getMajorVersion() != matchProf.getMajorVersion();
-			needConversion = needConversion || imgProf.getMinorVersion() != matchProf.getMinorVersion();
-			needConversion = needConversion || imgProf.getPCSType() != matchProf.getPCSType();
-			needConversion = needConversion || imgProf.getProfileClass() != matchProf.getProfileClass();
-			byte[] imgProfByte = imgProf.getData();
-			byte[] matchProfByte = matchProf.getData();
-			for (int i = 0; i < imgProfByte.length; i++) {
-				if (i >= matchProfByte.length) {
-					needConversion = true;
-					break;
-				} else {
-					needConversion = needConversion || imgProfByte[i] != matchProfByte[i];
-				}
-			}
-		} else {
-			needConversion = true;
-		}
+        needConversion = needConversion || imgCS.getType() != matchCS.getType();
+        needConversion = needConversion || imgCS.getNumComponents() != matchCS.getNumComponents();
+        needConversion = needConversion || !imgCS.getClass().isAssignableFrom(matchCS.getClass());
+        needConversion = needConversion || !matchCS.getClass().isAssignableFrom(imgCS.getClass());
+        if (imgCS instanceof ICC_ColorSpace && matchCS instanceof ICC_ColorSpace) {
+            ICC_Profile imgProf = ((ICC_ColorSpace) imgCS).getProfile();
+            ICC_Profile matchProf = ((ICC_ColorSpace) matchCS).getProfile();
+            needConversion = needConversion || imgProf.getColorSpaceType() != matchProf.getColorSpaceType();
+            needConversion = needConversion || imgProf.getMajorVersion() != matchProf.getMajorVersion();
+            needConversion = needConversion || imgProf.getMinorVersion() != matchProf.getMinorVersion();
+            needConversion = needConversion || imgProf.getPCSType() != matchProf.getPCSType();
+            needConversion = needConversion || imgProf.getProfileClass() != matchProf.getProfileClass();
+            byte[] imgProfByte = imgProf.getData();
+            byte[] matchProfByte = matchProf.getData();
+            for (int i = 0; i < imgProfByte.length; i++) {
+                if (i >= matchProfByte.length) {
+                    needConversion = true;
+                    break;
+                } else {
+                    needConversion = needConversion || imgProfByte[i] != matchProfByte[i];
+                }
+            }
+        } else {
+            needConversion = true;
+        }
 
-		if (needConversion) {
-			if (otherwise.equals(AlternativeColorConverter.CIEXYZ)) {
-				converter = new CIEXYZColorConverter(img);
-			} else if (otherwise.equals(AlternativeColorConverter.SRGB)) {
-				converter = new SRGBColorConverter(img);
-			}
-		} else {
-			converter = new NoConversionColorConverter(img);
-		}
-	}
+        if (needConversion) {
+            if (otherwise.equals(AlternativeColorConverter.CIEXYZ)) {
+                converter = new CIEXYZColorConverter(img);
+            } else if (otherwise.equals(AlternativeColorConverter.SRGB)) {
+                converter = new SRGBColorConverter(img);
+            }
+        } else {
+            converter = new NoConversionColorConverter(img);
+        }
+    }
 
-	public StaticColor getColorChannels(int x, int y) {
-		return converter.getColorChannels(x, y);
-	}
+    public StaticColor getColorChannels(int x, int y) {
+        return converter.getColorChannels(x, y);
+    }
 
-	public String[] getChannelDescription() {
-		return converter.getChannelDescription();
-	}
+    public String[] getChannelDescription() {
+        return converter.getChannelDescription();
+    }
 
-	public String getChannelDescription(int idx) {
-		return converter.getChannelDescription(idx);
-	}
+    public String getChannelDescription(int idx) {
+        return converter.getChannelDescription(idx);
+    }
 
-	public StaticColor getNullColor() {
-		return converter.getNullColor();
-	}
+    public StaticColor getNullColor() {
+        return converter.getNullColor();
+    }
 
-	public int getNumberOfChannels() {
-		return converter.getNumberOfChannels();
-	}
+    public int getNumberOfChannels() {
+        return converter.getNumberOfChannels();
+    }
 
-	public enum AlternativeColorConverter {
+    public enum AlternativeColorConverter {
 
-		CIEXYZ, SRGB
+        CIEXYZ,
+        SRGB
 
-	}
+    }
 
 }

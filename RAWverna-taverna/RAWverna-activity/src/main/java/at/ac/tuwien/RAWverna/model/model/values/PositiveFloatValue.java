@@ -20,44 +20,44 @@ import at.ac.tuwien.RAWverna.model.model.util.FloatFormatter;
 
 public class PositiveFloatValue extends Value implements INumericValue {
 
-	private static final long serialVersionUID = -1170922225142475324L;
+    private static final long serialVersionUID = -1170922225142475324L;
 
-	private FloatFormatter formatter;
+    private FloatFormatter formatter;
 
-	private double value;
+    private double value;
 
-	public double getValue() {
-		return value;
-	}
+    public double getValue() {
+        return value;
+    }
 
-	public void setValue(double value) {
-		// also save invalid values, they are checked later with isChanged()
-		this.value = value;
-	}
+    public void setValue(double value) {
+        // also save invalid values, they are checked later with isChanged()
+        this.value = value;
+    }
 
-	public double value() {
-		return value;
-	}
+    public double value() {
+        return value;
+    }
 
-	@Override
-	public String toString() {
-		if (formatter == null) {
-			formatter = new FloatFormatter();
-		}
-		return formatter.formatFloatPrecisly(value);
-	}
+    @Override
+    public String toString() {
+        if (formatter == null) {
+            formatter = new FloatFormatter();
+        }
+        return formatter.formatFloatPrecisly(value);
+    }
 
-	@Override
-	public String getFormattedValue() {
-		if (formatter == null) {
-			formatter = new FloatFormatter();
-		}
-		return formatter.formatFloat(value);
-	}
+    @Override
+    public String getFormattedValue() {
+        if (formatter == null) {
+            formatter = new FloatFormatter();
+        }
+        return formatter.formatFloat(value);
+    }
 
-	@Override
-	public void parse(String text) {
-		setValue(Double.parseDouble(text));
-	}
+    @Override
+    public void parse(String text) {
+        setValue(Double.parseDouble(text));
+    }
 
 }

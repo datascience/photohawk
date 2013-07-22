@@ -38,74 +38,72 @@ import at.ac.tuwien.RAWverna.model.validation.ValidationError;
 // message="Please enter a unit for the scale of type 'Number'")
 public class FloatScale extends Scale {
 
-	private static final long serialVersionUID = -1933589584196479881L;
+    private static final long serialVersionUID = -1933589584196479881L;
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#createValue()
-	 */
-	@Override
-	public Value createValue() {
-		Value v = new FloatValue();
-		v.setScale(this);
-		return v;
-	}
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#createValue()
+     */
+    @Override
+    public Value createValue() {
+        Value v = new FloatValue();
+        v.setScale(this);
+        return v;
+    }
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#getDisplayName()
-	 */
-	@Override
-	public String getDisplayName() {
-		return "Number";
-	}
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#getDisplayName()
+     */
+    @Override
+    public String getDisplayName() {
+        return "Number";
+    }
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#getType()
-	 */
-	@Override
-	public ScaleType getType() {
-		return ScaleType.value;
-	}
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#getType()
+     */
+    @Override
+    public ScaleType getType() {
+        return ScaleType.value;
+    }
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isCorrectlySpecified(java.lang.String,
-	 *      List)
-	 */
-	@Override
-	public boolean isCorrectlySpecified(String leafName,
-			List<ValidationError> errors) {
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isCorrectlySpecified(java.lang.String,
+     *      List)
+     */
+    @Override
+    public boolean isCorrectlySpecified(String leafName, List<ValidationError> errors) {
 
-		if (getUnit() == null || "".equals(getUnit())) {
-			errors.add(new ValidationError(
-					"Please enter a unit for the scale of type 'Number' at leaf '"
-							+ leafName + "'", this));
-			return false;
-		}
+        if (getUnit() == null || "".equals(getUnit())) {
+            errors.add(new ValidationError("Please enter a unit for the scale of type 'Number' at leaf '" + leafName
+                + "'", this));
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isEvaluated(at.ac.tuwien.RAWverna.model.model.values.Value)
-	 */
-	@Override
-	public boolean isEvaluated(Value value) {
-		boolean evaluated = false;
-		if ((value != null) && (value instanceof FloatValue)) {
-			FloatValue v = (FloatValue) value;
+    /**
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isEvaluated(at.ac.tuwien.RAWverna.model.model.values.Value)
+     */
+    @Override
+    public boolean isEvaluated(Value value) {
+        boolean evaluated = false;
+        if ((value != null) && (value instanceof FloatValue)) {
+            FloatValue v = (FloatValue) value;
 
-			evaluated = v.isChanged();
-		}
-		return evaluated;
-	}
+            evaluated = v.isChanged();
+        }
+        return evaluated;
+    }
 
-	/**
-	 * An {@link FloatScale} is not restricted.
-	 * 
-	 * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isRestricted()
-	 */
-	@Override
-	public boolean isRestricted() {
-		return false;
-	}
+    /**
+     * An {@link FloatScale} is not restricted.
+     * 
+     * @see at.ac.tuwien.RAWverna.model.model.scales.Scale#isRestricted()
+     */
+    @Override
+    public boolean isRestricted() {
+        return false;
+    }
 
 }

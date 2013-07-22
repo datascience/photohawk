@@ -15,101 +15,90 @@ import at.ac.tuwien.RAWverna.measurementuri.MeasurementURIActivity;
 import at.ac.tuwien.RAWverna.model.model.util.MeasurementInfoUri;
 import at.ac.tuwien.RAWverna.model.model.values.Value;
 
-public class JavaFITSEvaluatorActivity extends
-		MeasurementURIActivity<JavaFITSEvaluatorActivityConfigurationBean>
-		implements
-		AsynchronousActivity<JavaFITSEvaluatorActivityConfigurationBean> {
+public class JavaFITSEvaluatorActivity extends MeasurementURIActivity<JavaFITSEvaluatorActivityConfigurationBean>
+    implements AsynchronousActivity<JavaFITSEvaluatorActivityConfigurationBean> {
 
-	/**
-	 * Port names
-	 */
-	static final String IN_FITS_1 = "fitsXML1";
-	static final String IN_FITS_2 = "fitsXML2";
+    /**
+     * Port names
+     */
+    static final String IN_FITS_1 = "fitsXML1";
+    static final String IN_FITS_2 = "fitsXML2";
 
-	/**
-	 * Configuration of this instance
-	 */
-	private JavaFITSEvaluatorActivityConfigurationBean configBean;
+    /**
+     * Configuration of this instance
+     */
+    private JavaFITSEvaluatorActivityConfigurationBean configBean;
 
-	@Override
-	public void configure(JavaFITSEvaluatorActivityConfigurationBean configBean)
-			throws ActivityConfigurationException {
-		// Store for getConfiguration(), but you could also make
-		// getConfiguration() return a new bean from other sources
-		this.configBean = configBean;
+    @Override
+    public void configure(JavaFITSEvaluatorActivityConfigurationBean configBean) throws ActivityConfigurationException {
+        // Store for getConfiguration(), but you could also make
+        // getConfiguration() return a new bean from other sources
+        this.configBean = configBean;
 
-		// Get measurements from config
-		setMeasurementUris(configBean);
+        // Get measurements from config
+        setMeasurementUris(configBean);
 
-		// (Re)create input/output ports depending on configuration
-		configurePorts();
-	}
+        // (Re)create input/output ports depending on configuration
+        configurePorts();
+    }
 
-	@Override
-	protected void configurePorts() {
-		// Measurement URI ports
-		super.configurePorts();
+    @Override
+    protected void configurePorts() {
+        // Measurement URI ports
+        super.configurePorts();
 
-		// Input ports
-		addInput(IN_FITS_1, 0, true, null, String.class);
-		addInput(IN_FITS_2, 0, true, null, String.class);
-	}
+        // Input ports
+        addInput(IN_FITS_1, 0, true, null, String.class);
+        addInput(IN_FITS_2, 0, true, null, String.class);
+    }
 
-	@Override
-	public void executeAsynch(final Map<String, T2Reference> inputs,
-			final AsynchronousActivityCallback callback) {
-		// Don't execute service directly now, request to be run ask to be run
-		// from thread pool and return asynchronously
-		callback.requestRun(new Runnable() {
+    @Override
+    public void executeAsynch(final Map<String, T2Reference> inputs, final AsynchronousActivityCallback callback) {
+        // Don't execute service directly now, request to be run ask to be run
+        // from thread pool and return asynchronously
+        callback.requestRun(new Runnable() {
 
-			public void run() {
-				logger.info("Activity started");
+            public void run() {
+                logger.info("Activity started");
 
-				InvocationContext context = callback.getContext();
-				ReferenceService referenceService = context
-						.getReferenceService();
+                InvocationContext context = callback.getContext();
+                ReferenceService referenceService = context.getReferenceService();
 
-				// Resolve inputs
-				String fits1 = (String) referenceService.renderIdentifier(
-						inputs.get(IN_FITS_1), String.class, context);
-				String fits2 = (String) referenceService.renderIdentifier(
-						inputs.get(IN_FITS_2), String.class, context);
+                // Resolve inputs
+                String fits1 = (String) referenceService.renderIdentifier(inputs.get(IN_FITS_1), String.class, context);
+                String fits2 = (String) referenceService.renderIdentifier(inputs.get(IN_FITS_2), String.class, context);
 
-				if (logger.isInfoEnabled()) {
-					logger.info("Image paths: " + fits1 + ", " + fits2);
-				}
+                if (logger.isInfoEnabled()) {
+                    logger.info("Image paths: " + fits1 + ", " + fits2);
+                }
 
-				// Evaluate FITS
-				JavaFITSEvaluator evaluator = new JavaFITSEvaluator();
-				HashMap<MeasurementInfoUri, Value> results = new HashMap<MeasurementInfoUri, Value>();
+                // Evaluate FITS
+                JavaFITSEvaluator evaluator = new JavaFITSEvaluator();
+                HashMap<MeasurementInfoUri, Value> results = new HashMap<MeasurementInfoUri, Value>();
 
-				try {
-					results = evaluator.evaluate(fits1, fits2,
-							measurementInfoUris);
-				} catch (EvaluatorException e) {
-					logger.error("Error evaluating " + IN_FITS_2 + " and "
-							+ IN_FITS_2, e);
-					callback.fail(
-							"JavaImageEvalutatorActivity: Error evaluating "
-									+ IN_FITS_2 + " and " + IN_FITS_2, e);
-					return;
-				}
+                try {
+                    results = evaluator.evaluate(fits1, fits2, measurementInfoUris);
+                } catch (EvaluatorException e) {
+                    logger.error("Error evaluating " + IN_FITS_2 + " and " + IN_FITS_2, e);
+                    callback
+                        .fail("JavaImageEvalutatorActivity: Error evaluating " + IN_FITS_2 + " and " + IN_FITS_2, e);
+                    return;
+                }
 
-				// Register outputs
-				Map<String, T2Reference> outputs = registerOutputs(callback,
-						results);
+                // Register outputs
+                Map<String, T2Reference> outputs = registerOutputs(callback, results);
 
-				// Return map of output data, with empty index array as this is
-				// the only and final result (this index parameter is used if
-				// pipelining output)
-				callback.receiveResult(outputs, new int[0]);
-			}
-		});
-	}
+                // Return map of output data, with empty index array as this is
+                // the only and final result (this index parameter is used if
+                // pipelining output)
+                callback.receiveResult(outputs, new int[0]);
+            }
+        });
+    }
 
-	@Override
-	public JavaFITSEvaluatorActivityConfigurationBean getConfiguration() {
-		return this.configBean;
-	}
+    @Override
+    public JavaFITSEvaluatorActivityConfigurationBean getConfiguration() {
+        return this.configBean;
+    }
 
 }

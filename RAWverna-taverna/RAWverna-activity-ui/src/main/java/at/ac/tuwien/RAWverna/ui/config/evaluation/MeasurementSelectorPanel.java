@@ -34,77 +34,74 @@ import at.ac.tuwien.RAWverna.model.model.measurement.Metric;
 
 public class MeasurementSelectorPanel extends Panel {
 
-	private JList list = null;
+    private JList list = null;
 
-	/**
-	 * Generated serial version UID
-	 */
-	private static final long serialVersionUID = -6785606479823259035L;
+    /**
+     * Generated serial version UID
+     */
+    private static final long serialVersionUID = -6785606479823259035L;
 
-	private MeasurementsDescriptor descriptor;
+    private MeasurementsDescriptor descriptor;
 
-	public MeasurementSelectorPanel(IEvaluator evaluator) {
+    public MeasurementSelectorPanel(IEvaluator evaluator) {
 
-		String descriptorStr = evaluator.getPossibleMeasurements();
-		descriptor = new MeasurementsDescriptor();
-		descriptor.addMeasurementInfos(new StringReader(descriptorStr));
+        String descriptorStr = evaluator.getPossibleMeasurements();
+        descriptor = new MeasurementsDescriptor();
+        descriptor.addMeasurementInfos(new StringReader(descriptorStr));
 
-		createPanel();
-	}
+        createPanel();
+    }
 
-	private void createPanel() {
+    private void createPanel() {
 
-		Collection<MeasurableProperty> properties = descriptor
-				.getPossibleMeasurements();
-		ArrayList<String> uriStrings = new ArrayList<String>();
+        Collection<MeasurableProperty> properties = descriptor.getPossibleMeasurements();
+        ArrayList<String> uriStrings = new ArrayList<String>();
 
-		MeasurementInfo helperInfo = new MeasurementInfo();
-		for (MeasurableProperty p : properties) {
-			helperInfo.setProperty(p);
+        MeasurementInfo helperInfo = new MeasurementInfo();
+        for (MeasurableProperty p : properties) {
+            helperInfo.setProperty(p);
 
-			if (p.getPossibleMetrics() == null
-					|| p.getPossibleMetrics().size() <= 0) {
-				helperInfo.setMetric(null);
-				uriStrings.add(helperInfo.getUri());
-			} else {
-				for (Metric m : p.getPossibleMetrics()) {
-					helperInfo.setMetric(m);
-					uriStrings.add(helperInfo.getUri());
-				}
-			}
-		}
+            if (p.getPossibleMetrics() == null || p.getPossibleMetrics().size() <= 0) {
+                helperInfo.setMetric(null);
+                uriStrings.add(helperInfo.getUri());
+            } else {
+                for (Metric m : p.getPossibleMetrics()) {
+                    helperInfo.setMetric(m);
+                    uriStrings.add(helperInfo.getUri());
+                }
+            }
+        }
 
-		list = new JList(uriStrings.toArray());
-		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		list.setLayoutOrientation(JList.VERTICAL);
-		list.setVisibleRowCount(-1);
+        list = new JList(uriStrings.toArray());
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        list.setLayoutOrientation(JList.VERTICAL);
+        list.setVisibleRowCount(-1);
 
-		JScrollPane listScroller = new JScrollPane(list);
-		listScroller.setPreferredSize(new Dimension(400, 600));
-		listScroller.setAlignmentX(LEFT_ALIGNMENT);
+        JScrollPane listScroller = new JScrollPane(list);
+        listScroller.setPreferredSize(new Dimension(400, 600));
+        listScroller.setAlignmentX(LEFT_ALIGNMENT);
 
-		add(listScroller);
-	}
+        add(listScroller);
+    }
 
-	public Collection<String> getSelectedValues() {
-		return Arrays.asList(Arrays.copyOf(list.getSelectedValues(),
-				list.getSelectedValues().length, String[].class));
-	}
+    public Collection<String> getSelectedValues() {
+        return Arrays.asList(Arrays.copyOf(list.getSelectedValues(), list.getSelectedValues().length, String[].class));
+    }
 
-	public void setSelectedValues(Collection<String> values) {
-		list.clearSelection();
-		// for (String v : values) {
-		// int index = ((DefaultListModel) list.getModel()).indexOf(v);
-		// if (index >= 0) {
-		// list.addSelectionInterval(index,
-		// }
-		// }
+    public void setSelectedValues(Collection<String> values) {
+        list.clearSelection();
+        // for (String v : values) {
+        // int index = ((DefaultListModel) list.getModel()).indexOf(v);
+        // if (index >= 0) {
+        // list.addSelectionInterval(index,
+        // }
+        // }
 
-		for (int i = 0; i < list.getModel().getSize(); i++) {
-			if (values.contains(list.getModel().getElementAt(i))) {
-				list.addSelectionInterval(i, i);
-			}
+        for (int i = 0; i < list.getModel().getSize(); i++) {
+            if (values.contains(list.getModel().getElementAt(i))) {
+                list.addSelectionInterval(i, i);
+            }
 
-		}
-	}
+        }
+    }
 }

@@ -26,31 +26,31 @@ import at.ac.tuwien.RAWverna.model.model.values.BooleanValue;
  */
 public class BooleanScale extends OrdinalScale {
 
-	private static final long serialVersionUID = -65662892936008713L;
+    private static final long serialVersionUID = -65662892936008713L;
 
-	public String getDisplayName() {
-		return "Boolean";
-	}
+    public String getDisplayName() {
+        return "Boolean";
+    }
 
-	public BooleanScale() {
-		super.setRestriction("Yes/No");
-		// this is a Boolean-value, the restrictions above must not be changed
-		immutableRestriction = true;
-	}
+    public BooleanScale() {
+        super.setRestriction("Yes/No");
+        // this is a Boolean-value, the restrictions above must not be changed
+        immutableRestriction = true;
+    }
 
-	/*
-	 * this restriction cannot be changed
-	 */
-	@Override
-	public void setRestriction(String restriction) {
-	}
+    /*
+     * this restriction cannot be changed
+     */
+    @Override
+    public void setRestriction(String restriction) {
+    }
 
-	/**
+    /**
      * 
      */
-	public BooleanValue createValue() {
-		BooleanValue bv = new BooleanValue();
-		bv.setScale(this);
-		return bv;
-	}
+    public BooleanValue createValue() {
+        BooleanValue bv = new BooleanValue();
+        bv.setScale(this);
+        return bv;
+    }
 }

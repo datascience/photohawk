@@ -14,38 +14,36 @@ import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivity;
  * configuration
  */
 public abstract class MeasurementURIHealthChecker<A extends AsynchronousActivity<C>, C extends MeasurementURIConfigurationBean>
-		implements HealthChecker<A> {
+    implements HealthChecker<A> {
 
-	@Override
-	public boolean isTimeConsuming() {
-		// Return true if the health checker does a network lookup
-		// or similar time consuming checks, in which case
-		// it would only be performed when using File->Validate workflow
-		// or File->Run.
-		return false;
-	}
+    @Override
+    public boolean isTimeConsuming() {
+        // Return true if the health checker does a network lookup
+        // or similar time consuming checks, in which case
+        // it would only be performed when using File->Validate workflow
+        // or File->Run.
+        return false;
+    }
 
-	@Override
-	public VisitReport visit(A activity, List<Object> ancestry) {
-		// Get configuration
-		C config = activity.getConfiguration();
+    @Override
+    public VisitReport visit(A activity, List<Object> ancestry) {
+        // Get configuration
+        C config = activity.getConfiguration();
 
-		// Create List of subreports
-		List<VisitReport> subReports = new ArrayList<VisitReport>();
+        // Create List of subreports
+        List<VisitReport> subReports = new ArrayList<VisitReport>();
 
-		// Warn if no measurements selected
-		if (config.getMeasurementURIs().size() == 0) {
-			subReports.add(new VisitReport(HealthCheck.getInstance(), activity,
-					"No measurements specified", HealthCheck.NO_CONFIGURATION,
-					Status.WARNING));
-		}
+        // Warn if no measurements selected
+        if (config.getMeasurementURIs().size() == 0) {
+            subReports.add(new VisitReport(HealthCheck.getInstance(), activity, "No measurements specified",
+                HealthCheck.NO_CONFIGURATION, Status.WARNING));
+        }
 
-		// The default explanation here will be used if the subreports list is
-		// empty
-		Status status = VisitReport.getWorstStatus(subReports);
-		return new VisitReport(HealthCheck.getInstance(), activity,
-				"MeasurementURI report", HealthCheck.NO_PROBLEM, status,
-				subReports);
-	}
+        // The default explanation here will be used if the subreports list is
+        // empty
+        Status status = VisitReport.getWorstStatus(subReports);
+        return new VisitReport(HealthCheck.getInstance(), activity, "MeasurementURI report", HealthCheck.NO_PROBLEM,
+            status, subReports);
+    }
 
 }

@@ -33,7 +33,7 @@
 			<metric metricId="equals" />
 		</possibleMetrics>
 	</property>
-		<property>
+	<property>
 		<category>outcome:object</category>
 		<propertyId>image/metadata/iptc</propertyId>
 		<name>image metadata all iptc</name>
@@ -727,7 +727,7 @@
 			<metric metricId="equals" />
 		</possibleMetrics>
 	</property>
-	
+
 	<metrics>
 		<metric>
 			<metricId>equal</metricId>

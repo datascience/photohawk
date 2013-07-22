@@ -30,61 +30,58 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.op
  */
 public abstract class Metric extends Operation<Float, StaticColor> {
 
-	protected ColorConverter<?> img1;
+    protected ColorConverter<?> img1;
 
-	protected ColorConverter<?> img2;
+    protected ColorConverter<?> img2;
 
-	protected StaticColor threshold;
+    protected StaticColor threshold;
 
-	protected Point end;
-	protected Point start;
+    protected Point end;
+    protected Point start;
 
-	public Metric(ColorConverter<?> img1, ColorConverter<?> img2, Point start,
-			Point end) {
-		this(img1, img2, img1.getNullColor(), start, end);
-	}
+    public Metric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
+        this(img1, img2, img1.getNullColor(), start, end);
+    }
 
-	/**
-	 * Precondition: Images have equal size
-	 * 
-	 * @param img1
-	 * @param img2
-	 * @return
-	 */
-	public Metric(ColorConverter<?> img1, ColorConverter<?> img2,
-			StaticColor threshold, Point start, Point end) {
-		this.img1 = img1;
-		this.img2 = img2;
-		this.threshold = threshold;
-		this.start = start;
-		this.end = end;
-	}
+    /**
+     * Precondition: Images have equal size
+     * 
+     * @param img1
+     * @param img2
+     * @return
+     */
+    public Metric(ColorConverter<?> img1, ColorConverter<?> img2, StaticColor threshold, Point start, Point end) {
+        this.img1 = img1;
+        this.img2 = img2;
+        this.threshold = threshold;
+        this.start = start;
+        this.end = end;
+    }
 
-	public TransientOperation<Float, StaticColor> execute() {
-		TransientOperation<Float, StaticColor> op = prepare();
-		op.init();
-		for (int x = start.x; x < end.x; x++) {
-			for (int y = start.y; y < end.y; y++) {
-				op.execute(x, y);
-			}
-		}
-		op.complete();
-		return op;
-	}
+    public TransientOperation<Float, StaticColor> execute() {
+        TransientOperation<Float, StaticColor> op = prepare();
+        op.init();
+        for (int x = start.x; x < end.x; x++) {
+            for (int y = start.y; y < end.y; y++) {
+                op.execute(x, y);
+            }
+        }
+        op.complete();
+        return op;
+    }
 
-	public abstract class MetricTransientOperation extends
-			TransientOperation<Float, StaticColor> {
+    public abstract class MetricTransientOperation extends TransientOperation<Float, StaticColor> {
 
-		@Override
-		public int getGranularityX() {
-			return 1;
-		}
+        @Override
+        public int getGranularityX() {
+            return 1;
+        }
 
-		@Override
-		public int getGranularityY() {
-			return 1;
-		}
+        @Override
+        public int getGranularityY() {
+            return 1;
+        }
 
-	}
+    }
 
 }

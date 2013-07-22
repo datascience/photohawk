@@ -24,12 +24,12 @@ import at.ac.tuwien.RAWverna.JavaFITSEvaluatorActivity;
 
 public class JavaFITSEvaluatorActivityContextViewFactory implements ContextualViewFactory<JavaFITSEvaluatorActivity> {
 
-	public boolean canHandle(Object selection) {
-		return selection instanceof JavaFITSEvaluatorActivity;
-	}
+    public boolean canHandle(Object selection) {
+        return selection instanceof JavaFITSEvaluatorActivity;
+    }
 
-	public List<ContextualView> getViews(JavaFITSEvaluatorActivity selection) {
-		return Arrays.<ContextualView> asList(new JavaFITSEvaluatorContextualView(selection));
-	}
+    public List<ContextualView> getViews(JavaFITSEvaluatorActivity selection) {
+        return Arrays.<ContextualView> asList(new JavaFITSEvaluatorContextualView(selection));
+    }
 
 }

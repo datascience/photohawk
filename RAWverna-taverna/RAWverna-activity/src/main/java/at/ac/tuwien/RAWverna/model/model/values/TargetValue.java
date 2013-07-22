@@ -23,39 +23,39 @@ package at.ac.tuwien.RAWverna.model.model.values;
  */
 public class TargetValue extends Value implements Comparable<TargetValue> {
 
-	protected String displayName = "Target value";
+    protected String displayName = "Target value";
 
-	private static final long serialVersionUID = 5014527595089555687L;
+    private static final long serialVersionUID = 5014527595089555687L;
 
-	public TargetValue() {
-	}
+    public TargetValue() {
+    }
 
-	private double value;
+    private double value;
 
-	public double getValue() {
-		return value;
-	}
+    public double getValue() {
+        return value;
+    }
 
-	public void setValue(double value) {
-		this.value = value;
-	}
+    public void setValue(double value) {
+        this.value = value;
+    }
 
-	@Override
-	public String toString() {
-		return Double.toString(value);
-	}
+    @Override
+    public String toString() {
+        return Double.toString(value);
+    }
 
-	public double value() {
-		return value;
-	}
+    public double value() {
+        return value;
+    }
 
-	public int compareTo(TargetValue v) {
-		return Double.valueOf(this.getValue()).compareTo(v.getValue());
-	}
+    public int compareTo(TargetValue v) {
+        return Double.valueOf(this.getValue()).compareTo(v.getValue());
+    }
 
-	@Override
-	public void parse(String text) {
-		setValue(Double.parseDouble(text));
-	}
+    @Override
+    public void parse(String text) {
+        setValue(Double.parseDouble(text));
+    }
 
 }

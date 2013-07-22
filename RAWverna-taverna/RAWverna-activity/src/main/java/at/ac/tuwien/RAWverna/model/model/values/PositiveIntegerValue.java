@@ -18,31 +18,31 @@ package at.ac.tuwien.RAWverna.model.model.values;
 
 public class PositiveIntegerValue extends Value implements INumericValue {
 
-	private static final long serialVersionUID = -8824495369506076325L;
+    private static final long serialVersionUID = -8824495369506076325L;
 
-	private int value;
+    private int value;
 
-	public int getValue() {
-		return value;
-	}
+    public int getValue() {
+        return value;
+    }
 
-	public void setValue(int value) {
-		// also save invalid values, they are checked later with isEvaluated()
-		this.value = value;
-	}
+    public void setValue(int value) {
+        // also save invalid values, they are checked later with isEvaluated()
+        this.value = value;
+    }
 
-	@Override
-	public String toString() {
-		return Integer.toString(value);
-	}
+    @Override
+    public String toString() {
+        return Integer.toString(value);
+    }
 
-	public double value() {
-		return value;
-	}
+    public double value() {
+        return value;
+    }
 
-	@Override
-	public void parse(String text) {
-		setValue(Integer.parseInt(text));
-	}
+    @Override
+    public void parse(String text) {
+        setValue(Integer.parseInt(text));
+    }
 
 }

@@ -20,32 +20,32 @@ import at.ac.tuwien.RAWverna.model.model.values.YanValue;
 
 public class YanScale extends OrdinalScale {
 
-	private static final long serialVersionUID = 595959962684173519L;
+    private static final long serialVersionUID = 595959962684173519L;
 
-	public String getDisplayName() {
-		return "Yes, Acceptable, No";
-	}
+    public String getDisplayName() {
+        return "Yes, Acceptable, No";
+    }
 
-	public YanValue createValue() {
-		YanValue v = new YanValue();
-		v.setScale(this);
-		return v;
-	}
+    public YanValue createValue() {
+        YanValue v = new YanValue();
+        v.setScale(this);
+        return v;
+    }
 
-	public YanScale() {
-		/*
-		 * list.add("Yes"); list.add("Acceptable"); list.add("No");
-		 */
-		super.setRestriction("Yes/Acceptable/No");
-		// this is a Yan-value, the restrictions above must not be changed
-		immutableRestriction = true;
-	}
+    public YanScale() {
+        /*
+         * list.add("Yes"); list.add("Acceptable"); list.add("No");
+         */
+        super.setRestriction("Yes/Acceptable/No");
+        // this is a Yan-value, the restrictions above must not be changed
+        immutableRestriction = true;
+    }
 
-	/*
-	 * this restriction cannot be changed
-	 */
-	@Override
-	public void setRestriction(String restriction) {
-	}
+    /*
+     * this restriction cannot be changed
+     */
+    @Override
+    public void setRestriction(String restriction) {
+    }
 
 }

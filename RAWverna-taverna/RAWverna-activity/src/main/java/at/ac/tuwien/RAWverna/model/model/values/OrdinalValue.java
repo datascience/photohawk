@@ -18,43 +18,42 @@ package at.ac.tuwien.RAWverna.model.model.values;
 
 public class OrdinalValue extends Value implements IOrdinalValue {
 
-	private static final long serialVersionUID = 8774873647428936457L;
+    private static final long serialVersionUID = 8774873647428936457L;
 
-	private String value;
+    private String value;
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	@Override
-	public String toString() {
-		return value;
-	}
+    @Override
+    public String toString() {
+        return value;
+    }
 
-	@Override
-	public String getFormattedValue() {
-		return value;
-	}
+    @Override
+    public String getFormattedValue() {
+        return value;
+    }
 
-	@Override
-	public void parse(String text) {
-		setValue(text);
-	}
+    @Override
+    public void parse(String text) {
+        setValue(text);
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == this) {
-			return true;
-		}
-		if (o instanceof OrdinalValue) {
-			OrdinalValue ov = (OrdinalValue) o;
-			return (getValue() != null ? (getValue().equals(ov.getValue()))
-					: ov.getValue() == null);
-		}
-		return false;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o instanceof OrdinalValue) {
+            OrdinalValue ov = (OrdinalValue) o;
+            return (getValue() != null ? (getValue().equals(ov.getValue())) : ov.getValue() == null);
+        }
+        return false;
+    }
 }

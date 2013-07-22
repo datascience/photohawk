@@ -20,7 +20,6 @@ import java.io.Serializable;
 
 import at.ac.tuwien.RAWverna.model.model.values.Value;
 
-
 /**
  * The SCHEME defines the type of measurement - for actions: e.g. minimee, pcdl,
  * (pronom-sfw?),... - for outcomes: e.g. xcl, fits, generic? (filesize) The
@@ -55,106 +54,106 @@ import at.ac.tuwien.RAWverna.model.model.values.Value;
  */
 public class MeasurementInfoUri implements Serializable {
 
-	private static final long serialVersionUID = -5268927993963102759L;
+    private static final long serialVersionUID = -5268927993963102759L;
 
-	/**
-	 * defines a protocol which shall be used for evaluation of values - for
-	 * actions: e.g. minimee, planets - for outcome: e.g. xcl, fits, ..
-	 * ?(filesize)
-	 */
-	private String scheme;
+    /**
+     * defines a protocol which shall be used for evaluation of values - for
+     * actions: e.g. minimee, planets - for outcome: e.g. xcl, fits, ..
+     * ?(filesize)
+     */
+    private String scheme;
 
-	/**
-	 * the key of a specific property
-	 */
-	private String path;
+    /**
+     * the key of a specific property
+     */
+    private String path;
 
-	private String fragment;
+    private String fragment;
 
-	public MeasurementInfoUri() {
-	}
+    public MeasurementInfoUri() {
+    }
 
-	public MeasurementInfoUri(String uri) {
-		setAsURI(uri);
-	}
+    public MeasurementInfoUri(String uri) {
+        setAsURI(uri);
+    }
 
-	public String getAsURI() {
-		if (scheme == null) {
-			return null;
-		}
-		String uri = scheme + "://";
+    public String getAsURI() {
+        if (scheme == null) {
+            return null;
+        }
+        String uri = scheme + "://";
 
-		if (path != null) {
-			uri = uri + path;
-		}
-		if (fragment != null) {
-			uri = uri + "#" + fragment;
-		}
-		return uri;
-	}
+        if (path != null) {
+            uri = uri + path;
+        }
+        if (fragment != null) {
+            uri = uri + "#" + fragment;
+        }
+        return uri;
+    }
 
-	public void setAsURI(String uri) {
-		if (uri == null) {
-			return;
-		}
-		String s = null;
-		String p = null;
-		String f = null;
+    public void setAsURI(String uri) {
+        if (uri == null) {
+            return;
+        }
+        String s = null;
+        String p = null;
+        String f = null;
 
-		String rest = uri;
-		String[] tmp = rest.split("://");
+        String rest = uri;
+        String[] tmp = rest.split("://");
 
-		if (tmp.length == 2) {
-			s = tmp[0];
-			rest = tmp[1];
+        if (tmp.length == 2) {
+            s = tmp[0];
+            rest = tmp[1];
 
-			int i = rest.indexOf("#");
-			if (i > -1) {
-				p = rest.substring(0, i);
-				if (i < rest.length() - 1) {
-					f = rest.substring(i + 1);
-				}
-			} else {
-				p = rest;
-			}
+            int i = rest.indexOf("#");
+            if (i > -1) {
+                p = rest.substring(0, i);
+                if (i < rest.length() - 1) {
+                    f = rest.substring(i + 1);
+                }
+            } else {
+                p = rest;
+            }
 
-		} else if ((tmp.length == 1) && (uri.endsWith("://"))) {
-			s = tmp[0];
-		}
+        } else if ((tmp.length == 1) && (uri.endsWith("://"))) {
+            s = tmp[0];
+        }
 
-		scheme = s;
-		path = p;
-		fragment = f;
+        scheme = s;
+        path = p;
+        fragment = f;
 
-	}
+    }
 
-	public void assign(MeasurementInfoUri m) {
-		scheme = m.getScheme();
-		path = m.getPath();
-		fragment = m.getFragment();
-	}
+    public void assign(MeasurementInfoUri m) {
+        scheme = m.getScheme();
+        path = m.getPath();
+        fragment = m.getFragment();
+    }
 
-	public String getScheme() {
-		return scheme;
-	}
+    public String getScheme() {
+        return scheme;
+    }
 
-	public void setScheme(String scheme) {
-		this.scheme = scheme;
-	}
+    public void setScheme(String scheme) {
+        this.scheme = scheme;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public String getFragment() {
-		return fragment;
-	}
+    public String getFragment() {
+        return fragment;
+    }
 
-	public void setFragment(String fragment) {
-		this.fragment = fragment;
-	}
+    public void setFragment(String fragment) {
+        this.fragment = fragment;
+    }
 }

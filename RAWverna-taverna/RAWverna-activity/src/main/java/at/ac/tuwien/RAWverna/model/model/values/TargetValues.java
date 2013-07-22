@@ -20,14 +20,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Contains a list of {@link at.ac.tuwien.RAWverna.model.model.values.TargetValue} and
- * aggregation methods {@link #average()} and {@link #worst()}.
- *
+ * Contains a list of
+ * {@link at.ac.tuwien.RAWverna.model.model.values.TargetValue} and aggregation
+ * methods {@link #average()} and {@link #worst()}.
+ * 
  * @author Hannes Kulovits
  */
-public class TargetValues implements Serializable{
+public class TargetValues implements Serializable {
 
     private static final long serialVersionUID = 301277576213442803L;
 
@@ -58,8 +58,8 @@ public class TargetValues implements Serializable{
     }
 
     /**
-     * Returns the min value over the sample records' results
-     * - we only support this operation after transformation.
+     * Returns the min value over the sample records' results - we only support
+     * this operation after transformation.
      */
     public double worst() {
         if (list.isEmpty()) {
@@ -74,10 +74,9 @@ public class TargetValues implements Serializable{
         return min;
     }
 
-
     /**
-     * returns the average over the sample records' results
-     * - we only support this operation after transformation.
+     * returns the average over the sample records' results - we only support
+     * this operation after transformation.
      */
     public double average() {
         if (list.isEmpty()) {

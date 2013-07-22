@@ -31,28 +31,28 @@ import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.ut
  */
 public class SRGBColorConverter extends ICCProfileColorConverter implements ColorConverter<SRGBStaticColor> {
 
-	public SRGBColorConverter(ConvenientBufferedImageWrapper img) throws ImageException {
-		super(img, ICC_ColorSpace.getInstance(ICC_ColorSpace.CS_sRGB));
-	}
+    public SRGBColorConverter(ConvenientBufferedImageWrapper img) throws ImageException {
+        super(img, ICC_ColorSpace.getInstance(ICC_ColorSpace.CS_sRGB));
+    }
 
-	public SRGBStaticColor getColorChannels(int x, int y) {
-		return new SRGBStaticColor(img.getSample(x, y));
-	}
+    public SRGBStaticColor getColorChannels(int x, int y) {
+        return new SRGBStaticColor(img.getSample(x, y));
+    }
 
-	public String[] getChannelDescription() {
-		return SRGBStaticColor.channelNames;
-	}
+    public String[] getChannelDescription() {
+        return SRGBStaticColor.channelNames;
+    }
 
-	public String getChannelDescription(int idx) {
-		return getChannelDescription()[idx];
-	}
+    public String getChannelDescription(int idx) {
+        return getChannelDescription()[idx];
+    }
 
-	public StaticColor getNullColor() {
-		return new SRGBStaticColor(0, 0, 0);
-	}
+    public StaticColor getNullColor() {
+        return new SRGBStaticColor(0, 0, 0);
+    }
 
-	public int getNumberOfChannels() {
-		return 3;
-	}
+    public int getNumberOfChannels() {
+        return 3;
+    }
 
 }

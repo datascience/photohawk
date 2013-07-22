@@ -1,23 +1,24 @@
 <!-- describes all known measurable properties and metrics -->
 <measurementsDescriptor>
 	<!-- descriptions of measurable properties -->
-	<!-- important: once published, the uri's and their corresponding scales must not be changed -->
+	<!-- important: once published, the uri's and their corresponding scales 
+		must not be changed -->
 	<!-- important: names and descriptions may change! (do not use them as indices) -->
 	<measurableProperties>
 		<property>
-	   		<category>outcome:object</category>		
+			<category>outcome:object</category>
 			<propertyId>image/similarity</propertyId>
 			<name>image similarity</name>
 			<description>Indicator how similar source and result are.</description>
 			<possibleMetrics>
-				<metric metricId="equal"/>
-				<metric metricId="aeRelative"/>
-				<metric metricId="paeRelative"/>
-				<metric metricId="maeRelative"/>
-				<metric metricId="mseRelative"/>
-				<metric metricId="ssimSimpleHue"/>
-				<metric metricId="ssimSimpleSaturation"/>
-				<metric metricId="ssimSimple"/>
+				<metric metricId="equal" />
+				<metric metricId="aeRelative" />
+				<metric metricId="paeRelative" />
+				<metric metricId="maeRelative" />
+				<metric metricId="mseRelative" />
+				<metric metricId="ssimSimpleHue" />
+				<metric metricId="ssimSimpleSaturation" />
+				<metric metricId="ssimSimple" />
 			</possibleMetrics>
 		</property>
 	</measurableProperties>
@@ -25,12 +26,13 @@
 		<metric>
 			<metricId>equal</metricId>
 			<name>equal</name>
-			<description>Simple comparison of two values (A, B) of any type on equality.</description>
+			<description>Simple comparison of two values (A, B) of any type on
+				equality.</description>
 			<booleanScale>
-                <unit>equality</unit>
-            </booleanScale>
+				<unit>equality</unit>
+			</booleanScale>
 		</metric>
-	
+
 		<metric>
 			<metricId>aeRelative</metricId>
 			<name>relative AE</name>
@@ -44,49 +46,61 @@
 			<name>relative PAE</name>
 			<description>Peak Absolute Error</description>
 			<positiveFloatScale>
-                <unit>relative PAE</unit>
-            </positiveFloatScale>
+				<unit>relative PAE</unit>
+			</positiveFloatScale>
 		</metric>
-		
+
 		<metric>
 			<metricId>maeRelative</metricId>
 			<name>relative MAE</name>
 			<description>Mean absolute error (average channel error distance)</description>
 			<positiveFloatScale>
-                <unit>relative MAE</unit>
-            </positiveFloatScale>
+				<unit>relative MAE</unit>
+			</positiveFloatScale>
 		</metric>
 		<metric>
 			<metricId>mseRelative</metricId>
 			<name>relative MSE</name>
-			<description>Mean squared error (averaged squared error distance) as ratio of the bitdepth.</description>
+			<description>Mean squared error (averaged squared error distance) as
+				ratio of the bitdepth.</description>
 			<positiveFloatScale>
-                <unit>relative MSE</unit>
-            </positiveFloatScale>
+				<unit>relative MSE</unit>
+			</positiveFloatScale>
 		</metric>
 		<metric>
 			<metricId>ssimSimple</metricId>
 			<name>simple SSIM</name>
-			<description>Structural similarity Index using a gaussian window of 11x11 and a simple downscaled image to approximately 1024 px width/height. The calculation is performed on the brigthness channel of the HSB converted image.</description>
+			<description>Structural similarity Index using a gaussian window of
+				11x11 and a simple downscaled image to approximately 1024 px
+				width/height. The calculation is performed on the brigthness channel
+				of the HSB converted image.</description>
 			<floatScale>
-                <unit>SSIM</unit>
-            </floatScale>
+				<unit>SSIM</unit>
+			</floatScale>
 		</metric>
 		<metric>
 			<metricId>ssimSimpleSaturation</metricId>
 			<name>simple SSIM of saturation</name>
-			<description>Structural similarity Index using a gaussian window of 11x11 and a simple downscaled image to approximately 1024 px width/height. The calculation is performed on the saturation channel of the HSB converted image.</description>
+			<description>Structural similarity Index using a gaussian window of
+				11x11 and a simple downscaled image to approximately 1024 px
+				width/height. The calculation is performed on the saturation channel
+				of the HSB converted image.</description>
 			<floatScale>
-                <unit>SSIM</unit>
-            </floatScale>
+				<unit>SSIM</unit>
+			</floatScale>
 		</metric>
 		<metric>
 			<metricId>ssimSimpleHue</metricId>
 			<name>simple SSIM of hue</name>
-			<description>Modified Structural similarity Index using a gaussian window of 11x11 and a simple downscaled image to approximately 1024 px width/height. The calculation is performed on the saturation channel of the HSB converted image. The calculation of the "luminance comparison" is modified in order to fit the cyclic scale of the hue.</description>
+			<description>Modified Structural similarity Index using a gaussian
+				window of 11x11 and a simple downscaled image to approximately 1024
+				px width/height. The calculation is performed on the saturation
+				channel of the HSB converted image. The calculation of the
+				"luminance comparison" is modified in order to fit the cyclic scale
+				of the hue.</description>
 			<floatScale>
-                <unit>hue SSIM</unit>
-            </floatScale>
+				<unit>hue SSIM</unit>
+			</floatScale>
 		</metric>
 	</metrics>
 </measurementsDescriptor>

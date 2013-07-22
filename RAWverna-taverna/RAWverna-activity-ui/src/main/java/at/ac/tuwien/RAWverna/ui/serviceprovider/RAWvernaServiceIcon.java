@@ -24,24 +24,24 @@ import at.ac.tuwien.RAWverna.RAWvernaActivity;
 
 public class RAWvernaServiceIcon implements ActivityIconSPI {
 
-	private static Icon icon;
+    private static Icon icon;
 
-	public int canProvideIconScore(Activity<?> activity) {
-		if (activity instanceof RAWvernaActivity) {
-			return DEFAULT_ICON;
-		}
-		return NO_ICON;
-	}
+    public int canProvideIconScore(Activity<?> activity) {
+        if (activity instanceof RAWvernaActivity) {
+            return DEFAULT_ICON;
+        }
+        return NO_ICON;
+    }
 
-	public Icon getIcon(Activity<?> activity) {
-		return getIcon();
-	}
-	
-	public static Icon getIcon() {
-		if (icon == null) {
-			icon = new ImageIcon(RAWvernaServiceIcon.class.getResource("/exampleIcon.png"));
-		}
-		return icon;
-	}
+    public Icon getIcon(Activity<?> activity) {
+        return getIcon();
+    }
+
+    public static Icon getIcon() {
+        if (icon == null) {
+            icon = new ImageIcon(RAWvernaServiceIcon.class.getResource("/exampleIcon.png"));
+        }
+        return icon;
+    }
 
 }

@@ -18,9 +18,10 @@ package at.ac.tuwien.RAWverna.model.model.scales;
 
 /**
  * Enumeration of possible <b>categories or types of scales</b>.
+ * 
  * @author cbu
  */
-public enum ScaleType{
+public enum ScaleType {
     ordinal,
     restricted,
     value
