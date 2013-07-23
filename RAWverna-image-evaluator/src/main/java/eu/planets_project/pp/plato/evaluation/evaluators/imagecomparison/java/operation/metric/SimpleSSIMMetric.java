@@ -108,9 +108,8 @@ public class SimpleSSIMMetric extends Metric {
      * Prepares the provided image for structured similarity metric.
      * 
      * If the image width or height is larger than the provided width or height,
-     * scales the image down to the provided width and height using
-     * {@link java.awt.image.AffineTransformOp#TYPE_BICUBIC bicubic
-     * interpolation}.
+     * creates a new image with the specified width and height and positions the
+     * image in the center.
      * 
      * Then scales the image's smaller side to the provided targetSize keeping
      * the aspect ratio using
@@ -134,7 +133,7 @@ public class SimpleSSIMMetric extends Metric {
         BufferedImage result = img;
 
         if (img.getWidth() > width || img.getHeight() > height) {
-            LOGGER.info("Scaling image to widht {}, height {}.", width, height);
+            LOGGER.info("Scaling image to width {}, height {}.", width, height);
             AffineTransformOp temp = new AffineTransformOp(AffineTransform.getScaleInstance(
                 width / (double) img.getWidth(), height / (double) img.getHeight()), AffineTransformOp.TYPE_BICUBIC);
             BufferedImage result1 = temp.createCompatibleDestImage(img, new ComponentColorModel(img.getColorModel()

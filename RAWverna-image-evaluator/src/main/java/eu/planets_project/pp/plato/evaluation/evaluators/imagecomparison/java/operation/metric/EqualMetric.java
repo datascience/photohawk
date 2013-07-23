@@ -132,7 +132,6 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
             StaticColor val2 = img2.getColorChannels(x, y);
 
             for (int i = 0; i < val1.getNumberOfChannels(); i++) {
-                // System.out.println(val1 + " <-> " + val2);
                 if (Math.abs(val1.getChannelValue(i) - val2.getChannelValue(i)) > threshold.getChannelValue(i)) {
                     result = false;
                 }
@@ -158,6 +157,5 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
         public int getGranularityY() {
             return 1;
         }
-
     }
 }

@@ -34,5 +34,10 @@ public abstract class Operation<AggregatedResult, Result> {
      */
     public abstract TransientOperation<AggregatedResult, Result> prepare();
 
+    /**
+     * Executes an operation and returns the resulting transient operation.
+     * 
+     * @return the executed transient operation
+     */
     public abstract TransientOperation<AggregatedResult, Result> execute();
 }
