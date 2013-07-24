@@ -122,7 +122,7 @@ public class ScalePreprocessor implements Preprocessor {
         AffineTransform scale = AffineTransform.getScaleInstance(sx, sy);
         Graphics2D graphics = result.createGraphics();
         graphics.setTransform(scale);
-        graphics.drawImage(result, 0, 0, null);
+        graphics.drawImage(img, 0, 0, null);
 
         return result;
     }

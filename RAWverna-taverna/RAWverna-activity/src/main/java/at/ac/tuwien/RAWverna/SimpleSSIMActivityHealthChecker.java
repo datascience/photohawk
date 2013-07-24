@@ -15,32 +15,34 @@
  ******************************************************************************/
 package at.ac.tuwien.RAWverna;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.taverna.t2.visit.VisitReport;
-import at.ac.tuwien.RAWverna.measurementuri.MeasurementURIHealthChecker;
+import net.sf.taverna.t2.visit.VisitReport.Status;
+import net.sf.taverna.t2.workflowmodel.health.HealthCheck;
+import net.sf.taverna.t2.workflowmodel.health.HealthChecker;
 
 /**
- * Health checker for Java image evaluator activity.
+ * Health checker for SimpleSSIMActivityHealthChecker.
  */
-public class SimpleSSIMActivityHealthChecker extends
-    MeasurementURIHealthChecker<SimpleSSIMActivity, JavaImageEvaluatorActivityConfigurationBean> {
+public class SimpleSSIMActivityHealthChecker implements HealthChecker<SimpleSSIMActivity> {
+
+    @Override
+    public boolean isTimeConsuming() {
+        return false;
+    }
 
     @Override
     public boolean canVisit(Object o) {
-        // Return True if we can visit the object. We could do
-        // deeper (but not time consuming) checks here, for instance
-        // if the health checker only deals with
-        // JavaImageEvaluatorActivityHealthChecker where
-        // a certain configuration option is enabled.
         return o instanceof SimpleSSIMActivity;
     }
 
     @Override
     public VisitReport visit(SimpleSSIMActivity activity, List<Object> ancestry) {
-        VisitReport report = super.visit(activity, ancestry);
-        report.setMessage("SimpleSSIMActivity report");
-        return report;
+        List<VisitReport> subReports = new ArrayList<VisitReport>();
+        Status status = VisitReport.getWorstStatus(subReports);
+        return new VisitReport(HealthCheck.getInstance(), activity, "MeasurementURI report", HealthCheck.NO_PROBLEM,
+            status, subReports);
     }
-
 }

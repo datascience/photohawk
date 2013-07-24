@@ -29,12 +29,6 @@ public class ScaleToNearestFactorPreprocessor extends ScalePreprocessor {
 
     private static final float THRESHOLD = 0.95f;
 
-    protected BufferedImage img1;
-    protected BufferedImage img2;
-
-    protected BufferedImage result1;
-    protected BufferedImage result2;
-
     /**
      * Creates a new scale preprocessor.
      * 

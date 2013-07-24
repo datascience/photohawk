@@ -13,25 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.preprocessing;
+package at.ac.tuwien.RAWverna;
 
-import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 /**
- * Preprocessor that resizes images to the smaller width and height of the
- * images respecitively.
+ * Activity configuration bean for SimpleSSIMActivity.
  */
-public class ShrinkResizePreprocessor extends ResizePreprocessor {
-
-    /**
-     * Creates a new resize preprocessor.
-     * 
-     * @param img1
-     *            image 1
-     * @param img2
-     *            image 2
-     */
-    public ShrinkResizePreprocessor(BufferedImage img1, BufferedImage img2) {
-        super(img1, img2, Math.min(img1.getWidth(), img2.getWidth()), Math.min(img1.getHeight(), img2.getHeight()));
-    }
+public class SimpleSSIMActivityConfigurationBean implements Serializable {
+    private static final long serialVersionUID = -7424460713469977670L;
 }

@@ -34,6 +34,7 @@ import org.apache.logging.log4j.Logger;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.ColorConverter;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.StaticColor;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.colorconverter.hsb.HSBColorConverter;
+import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.operation.OperationException;
 import eu.planets_project.pp.plato.evaluation.evaluators.imagecomparison.java.operation.TransientOperation;
 
 /**
@@ -214,7 +215,7 @@ public class SimpleSSIMMetric extends Metric {
      * @param blocksize
      *            the blocksize
      */
-    private SimpleSSIMMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end, int blocksize) {
+    public SimpleSSIMMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end, int blocksize) {
         super(img1, img2, start, end);
         this.blocksize = blocksize;
     }
@@ -268,7 +269,7 @@ public class SimpleSSIMMetric extends Metric {
         @Override
         public void init() {
             if (doThreaded) {
-                LOGGER.debug("Threaded execution enabled, creating pool.");
+                LOGGER.debug("Threaded execution enabled, creating pool");
                 this.pool = Executors.newFixedThreadPool(DEFAULT_THREADPOOL_SIZE);
                 this.service = new ExecutorCompletionService<Double[]>(pool);
             }
@@ -282,9 +283,10 @@ public class SimpleSSIMMetric extends Metric {
         @Override
         public void complete() {
             if (doThreaded) {
-                LOGGER.debug("Threaded execution enabled, shutting down pool.");
+                LOGGER.debug("Shutting down thread pool");
                 pool.shutdown();
 
+                LOGGER.debug("Retrieving results from threads");
                 for (int i = 0; i < blocks; i++) {
                     try {
                         Double[] data = service.take().get();
@@ -292,11 +294,11 @@ public class SimpleSSIMMetric extends Metric {
                             ssimTotal[counter] += data[counter];
                         }
                     } catch (InterruptedException e) {
-                        // TODO: Logging
-                        // log.error(e);
+                        LOGGER.error("Retrieving result of block [{}] interrupted", i, e);
+                        throw new OperationException("Retrieving result of block " + i + " interrupted");
                     } catch (ExecutionException e) {
-                        // TODO: Logging
-                        // log.error(e);
+                        LOGGER.error("Execution of block [{}] had an exception", i, e);
+                        throw new OperationException("Execution of block " + i + " had an exception");
                     }
                 }
             }
@@ -306,7 +308,6 @@ public class SimpleSSIMMetric extends Metric {
                 realssimTotalFloat[counter] = (float) (ssimTotal[counter] / blocks);
             }
             this.realssimTotal.setChannelValues(realssimTotalFloat);
-
         }
 
         @Override
@@ -330,16 +331,15 @@ public class SimpleSSIMMetric extends Metric {
                         ssimTotal[counter] += data[counter];
                     }
                 } catch (Exception e) {
-                    // TODO: Logging
-                    // log.error(e);
-                    return;
+                    LOGGER.error("Error running calculating block [{}]", blocks);
+                    throw new OperationException("Error running calculating block " + blocks, e);
                 }
             }
 
         }
 
         public Float getAggregatedResult() {
-            // Consider changing this
+            // TODO: Consider changing this
             return realssimTotal.getChannelValue(0);
         }
 
