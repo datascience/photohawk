@@ -48,12 +48,13 @@ public class CommonServiceProvider implements ServiceDescriptionProvider {
         List<ServiceDescription<?>> results = new ArrayList<ServiceDescription<?>>();
 
         SimpleSSIMServiceDesc ssimService = new SimpleSSIMServiceDesc();
-        ssimService.setPath(PATH);
         results.add(ssimService);
 
         EqualServiceDesc equalService = new EqualServiceDesc();
-        equalService.setPath(PATH);
         results.add(equalService);
+
+        AEServiceDesc aeService = new AEServiceDesc();
+        results.add(aeService);
 
         // partialResults() can also be called several times from inside
         // for-loop if the full search takes a long time

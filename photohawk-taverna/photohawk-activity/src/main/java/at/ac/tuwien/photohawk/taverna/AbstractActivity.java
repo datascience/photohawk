@@ -18,12 +18,16 @@ package at.ac.tuwien.photohawk.taverna;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.MemoryCacheImageInputStream;
+
+import org.apache.log4j.Logger;
 
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.reference.ReferenceService;
@@ -34,7 +38,8 @@ import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityConfigurationE
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
 
-import org.apache.log4j.Logger;
+import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
+import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 
 public abstract class AbstractActivity<T> extends AbstractAsynchronousActivity<T> implements AsynchronousActivity<T> {
 
@@ -165,6 +170,41 @@ public abstract class AbstractActivity<T> extends AbstractAsynchronousActivity<T
         }
 
         return image;
+    }
 
+    /**
+     * Registers the outputs.
+     * 
+     * @param callback
+     *            callback of the activity
+     * @param op
+     *            results
+     * @return a map of output port names and output references
+     */
+    protected Map<String, T2Reference> registerOutputs(final AsynchronousActivityCallback callback,
+        final TransientOperation<Float, StaticColor> op, final String aggregatedName, final String channelsName,
+        final String channelNamesName) {
+        logger.debug("Registering outputs");
+
+        InvocationContext context = callback.getContext();
+        ReferenceService referenceService = context.getReferenceService();
+        Map<String, T2Reference> outputs = new HashMap<String, T2Reference>();
+
+        // Aggregated result
+        Float aggregatedResult = op.getAggregatedResult();
+        T2Reference aggregatedRef = referenceService.register(aggregatedResult.toString(), 0, true, context);
+        outputs.put(aggregatedName, aggregatedRef);
+
+        // Channels
+        StaticColor result = op.getResult();
+        float[] resultValues = result.getChannelValues();
+        T2Reference channelsRef = referenceService.register(resultValues, 1, true, context);
+        outputs.put(channelsName, channelsRef);
+
+        String[] resultDescriptions = result.getChannelDescription();
+        T2Reference channelDescriptionRef = referenceService.register(resultDescriptions, 1, true, context);
+        outputs.put(channelNamesName, channelDescriptionRef);
+
+        return outputs;
     }
 }

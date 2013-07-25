@@ -17,39 +17,37 @@ package at.ac.tuwien.photohawk.taverna;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import net.sf.taverna.t2.invocation.InvocationContext;
+import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
 
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
-import at.ac.tuwien.photohawk.evaluation.colorconverter.hsb.HSBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
-import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
-import at.ac.tuwien.photohawk.evaluation.preprocessing.ScaleToNearestFactorPreprocessor;
-import at.ac.tuwien.photohawk.evaluation.preprocessing.ShrinkResizePreprocessor;
+import at.ac.tuwien.photohawk.evaluation.operation.metric.AEMetric;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 
 /**
  * Activity that runs SSIM.
  */
-public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfigurationBean> implements
-    AsynchronousActivity<SimpleSSIMActivityConfigurationBean> {
+public class AEErrorActivity extends AbstractActivity<CommonActivityConfigurationBean> implements
+    AsynchronousActivity<CommonActivityConfigurationBean> {
 
-    private static Logger logger = Logger.getLogger(SimpleSSIMActivity.class);
+    private static Logger logger = Logger.getLogger(AEErrorActivity.class);
 
     /**
      * Port names.
      */
-    private static final String OUT_AGGREGATED = "SSIM";
-    private static final String OUT_CHANNELS = "SSIM_Channels";
+    private static final String OUT_AGGREGATED = "AE";
+    private static final String OUT_CHANNELS = "AE_Channels";
     private static final String OUT_CHANNEL_NAMES = "SSIM_ChannelNames";
-
-    private static final int DEFAULT_SCALE_TARGET_SIZE = 512;
 
     /**
      * Reconfigure ports of activity.
@@ -74,7 +72,7 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
                 logger.info("Loading image on port " + IN_IMAGE_1);
                 BufferedImage image1 = wrapInputImage(callback, inputs.get(IN_IMAGE_1));
                 if (null == image1) {
-                    callback.fail("SSIM: Could not read image on port " + IN_IMAGE_1);
+                    callback.fail("Equals: Could not read image on port " + IN_IMAGE_1);
                     logger.error("Could not read image on port " + IN_IMAGE_1);
                     return;
                 }
@@ -83,46 +81,31 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
                 logger.info("Loading image on port " + IN_IMAGE_2);
                 BufferedImage image2 = wrapInputImage(callback, inputs.get(IN_IMAGE_2));
                 if (null == image2) {
-                    callback.fail("SSIM: Could not read image on port " + IN_IMAGE_2);
+                    callback.fail("Equals: Could not read image on port " + IN_IMAGE_2);
                     logger.error("Could not read image on port " + IN_IMAGE_2);
                     return;
                 }
 
-                // Convert to SRGB
-                SRGBColorConverter srgbImage1 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(image1));
-                SRGBColorConverter srgbImage2 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(image2));
-                image1 = srgbImage1.getImage().getBufferedImage();
-                image2 = srgbImage2.getImage().getBufferedImage();
+                Map<String, T2Reference> outputs = null;
+                if (image1.getWidth() != image2.getWidth() || image1.getHeight() != image2.getHeight()) {
+                    logger.debug("Images have different size");
+                    InvocationContext context = callback.getContext();
+                    ReferenceService referenceService = context.getReferenceService();
+                    outputs = new HashMap<String, T2Reference>();
 
-                // Resize
-                ShrinkResizePreprocessor shrink = new ShrinkResizePreprocessor(image1, image2);
-                shrink.process();
-                image1 = shrink.getResult1();
-                image2 = shrink.getResult2();
-                shrink = null;
+                    T2Reference aggregatedRef = referenceService.register(new Boolean(false), 0, true, context);
+                    outputs.put(OUT_AGGREGATED, aggregatedRef);
+                } else {
+                    SRGBColorConverter c1 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(image1));
+                    SRGBColorConverter c2 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(image2));
 
-                // Scale
-                ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(image1, image1,
-                    DEFAULT_SCALE_TARGET_SIZE);
-                scale.process();
-                image1 = scale.getResult1();
-                image2 = scale.getResult2();
-                scale = null;
+                    // Evaluate
+                    AEMetric ae = new AEMetric(c1, c2, new Point(0, 0),
+                        new Point(image1.getWidth(), image1.getHeight()));
 
-                // Evaluate
-                ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(image1);
-                HSBColorConverter c1 = new HSBColorConverter(new SRGBColorConverter(wrapped1));
-                ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(image2);
-                HSBColorConverter c2 = new HSBColorConverter(new SRGBColorConverter(wrapped2));
-
-                // TODO: What happens if one image is smaller than the
-                // SCALE_TARGET_SIZE?
-                SimpleSSIMMetric ssim = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(image1.getWidth(),
-                    image1.getHeight()));
-
-                TransientOperation<Float, StaticColor> op = ssim.execute();
-                Map<String, T2Reference> outputs = registerOutputs(callback, op, OUT_AGGREGATED, OUT_CHANNELS,
-                    OUT_CHANNEL_NAMES);
+                    TransientOperation<Float, StaticColor> op = ae.execute();
+                    outputs = registerOutputs(callback, op, OUT_AGGREGATED, OUT_CHANNELS, OUT_CHANNEL_NAMES);
+                }
 
                 // Return map of output data, with empty index array as this is
                 // the only and final result (this index parameter is used if
