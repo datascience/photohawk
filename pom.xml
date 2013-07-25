@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>at.ac.tuwien</groupId>
-	<artifactId>RAWverna</artifactId>
+	<artifactId>photohawk</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>RAWverna</name>
+	<name>Photohawk</name>
 
 	<modules>
-		<module>RAWverna-image-evaluator</module>
-		<module>RAWverna-taverna</module>
+		<module>photohawk-image-evaluator</module>
+		<module>photohawk-taverna</module>
 	</modules>
 
 	<licenses>
@@ -64,14 +64,14 @@
 
 	<distributionManagement>
 		<repository>
-			<id>rawverna-plugin-site</id>
+			<id>photohawk-plugin-site</id>
 			<name>RAWverna Plugin Site</name>
-			<url>file:///tmp/RAWverna/</url>
+			<url>file:///tmp/photohawk/</url>
 		</repository>
 		<snapshotRepository>
-			<id>rawverna-test-plugin-site</id>
+			<id>photohawk-test-plugin-site</id>
 			<name>RAWverna Test Plugin Site</name>
-			<url>file:///tmp/RAWverna-snapshot/</url>
+			<url>file:///tmp/photohawk-SNAPSHOT/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
