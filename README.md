@@ -34,3 +34,7 @@ Note that a hosted version is currently available at [http://ifs.tuwien.ac.at/~p
     a. Tick the checkbox next to `Photohawk Taverna plugin`
     b. Click Install
 4. Restart Taverna
+
+*****
+
+[![Build Status](https://travis-ci.org/datascience/photohawk.png)](https://travis-ci.org/datascience/photohawk)
