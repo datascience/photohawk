@@ -87,7 +87,7 @@ public class EqualMetric extends Operation<Boolean, Boolean> {
     @Override
     public TransientOperation<Boolean, Boolean> execute() {
         TransientOperation<Boolean, Boolean> op = prepare();
-        op.init();
+        op.init();        
         for (int x = start.x; x < end.x; x++) {
             for (int y = start.y; y < end.y; y++) {
                 op.execute(x, y);

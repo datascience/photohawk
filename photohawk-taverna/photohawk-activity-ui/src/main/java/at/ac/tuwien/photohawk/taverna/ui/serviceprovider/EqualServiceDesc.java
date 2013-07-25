@@ -17,28 +17,29 @@ package at.ac.tuwien.photohawk.taverna.ui.serviceprovider;
 
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 
-import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivity;
-import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivityConfigurationBean;
+import at.ac.tuwien.photohawk.taverna.CommonActivityConfigurationBean;
+import at.ac.tuwien.photohawk.taverna.EqualActivity;
 
 /**
- * Service description for SSIM.
+ * Service description for Equal.
  */
-public class SimpleSSIMServiceDesc extends AbstractServiceDesc<SimpleSSIMActivityConfigurationBean> {
+public class EqualServiceDesc extends AbstractServiceDesc<CommonActivityConfigurationBean> {
 
-    private static final String SERVICE_NAME = "SSIM";
+    private static final String SERVICE_NAME = "Equal";
 
-    public SimpleSSIMServiceDesc() {
+    public EqualServiceDesc() {
         super(SERVICE_NAME);
     }
 
     @Override
-    public Class<? extends Activity<SimpleSSIMActivityConfigurationBean>> getActivityClass() {
-        return SimpleSSIMActivity.class;
+    public Class<? extends Activity<CommonActivityConfigurationBean>> getActivityClass() {
+        return EqualActivity.class;
     }
 
     @Override
-    public SimpleSSIMActivityConfigurationBean getActivityConfiguration() {
-        SimpleSSIMActivityConfigurationBean bean = new SimpleSSIMActivityConfigurationBean();
+    public CommonActivityConfigurationBean getActivityConfiguration() {
+        CommonActivityConfigurationBean bean = new CommonActivityConfigurationBean();
         return bean;
     }
+
 }

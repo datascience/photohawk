@@ -20,13 +20,13 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
-
-import org.apache.log4j.Logger;
 
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.hsb.HSBColorConverter;
@@ -77,7 +77,7 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
                 logger.info("Loading image on port " + IN_IMAGE_1);
                 BufferedImage image1 = wrapInputImage(callback, inputs.get(IN_IMAGE_1));
                 if (null == image1) {
-                    callback.fail("JavaImageEvalutatorActivity: 2 Could not read image on port " + IN_IMAGE_1);
+                    callback.fail("SSIM: Could not read image on port " + IN_IMAGE_1);
                     logger.error("Could not read image on port " + IN_IMAGE_1);
                     return;
                 }
@@ -86,7 +86,7 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
                 logger.info("Loading image on port " + IN_IMAGE_2);
                 BufferedImage image2 = wrapInputImage(callback, inputs.get(IN_IMAGE_2));
                 if (null == image2) {
-                    callback.fail("JavaImageEvalutatorActivity: 2 Could not read image on port " + IN_IMAGE_2);
+                    callback.fail("SSIM: Could not read image on port " + IN_IMAGE_2);
                     logger.error("Could not read image on port " + IN_IMAGE_2);
                     return;
                 }

@@ -51,6 +51,10 @@ public class CommonServiceProvider implements ServiceDescriptionProvider {
         ssimService.setPath(PATH);
         results.add(ssimService);
 
+        EqualServiceDesc equalService = new EqualServiceDesc();
+        equalService.setPath(PATH);
+        results.add(equalService);
+
         // partialResults() can also be called several times from inside
         // for-loop if the full search takes a long time
         callBack.partialResults(results);

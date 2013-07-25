@@ -24,9 +24,9 @@ import net.sf.taverna.t2.workflowmodel.health.HealthCheck;
 import net.sf.taverna.t2.workflowmodel.health.HealthChecker;
 
 /**
- * Health checker for SimpleSSIMActivity.
+ * Health checker for EqualActivity.
  */
-public class SimpleSSIMActivityHealthChecker implements HealthChecker<SimpleSSIMActivity> {
+public class EqualActivityHealthChecker implements HealthChecker<EqualActivity> {
 
     @Override
     public boolean isTimeConsuming() {
@@ -39,10 +39,10 @@ public class SimpleSSIMActivityHealthChecker implements HealthChecker<SimpleSSIM
     }
 
     @Override
-    public VisitReport visit(SimpleSSIMActivity activity, List<Object> ancestry) {
+    public VisitReport visit(EqualActivity activity, List<Object> ancestry) {
         List<VisitReport> subReports = new ArrayList<VisitReport>();
         Status status = VisitReport.getWorstStatus(subReports);
-        return new VisitReport(HealthCheck.getInstance(), activity, "SSIM report", HealthCheck.NO_PROBLEM, status,
+        return new VisitReport(HealthCheck.getInstance(), activity, "Equal report", HealthCheck.NO_PROBLEM, status,
             subReports);
     }
 }

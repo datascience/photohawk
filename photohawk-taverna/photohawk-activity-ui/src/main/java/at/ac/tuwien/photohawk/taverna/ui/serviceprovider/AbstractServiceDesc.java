@@ -15,6 +15,7 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.taverna.ui.serviceprovider;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +30,13 @@ import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
  *            type of configuration bean
  */
 public abstract class AbstractServiceDesc<T> extends ServiceDescription<T> {
+
+    private String serviceName;
+
+    public AbstractServiceDesc(String serviceName) {
+        super();
+        this.serviceName = serviceName;
+    }
 
     private List<String> path = Arrays.<String> asList(CommonServiceProvider.PROVIDER_NAME);
 
@@ -46,4 +54,16 @@ public abstract class AbstractServiceDesc<T> extends ServiceDescription<T> {
         return CommonServiceIcon.getIcon();
     }
 
+    @Override
+    public String getName() {
+        return serviceName;
+    }
+
+    @Override
+    protected List<? extends Object> getIdentifyingData() {
+        List<Object> data = new ArrayList<Object>(2);
+        data.add(CommonServiceProvider.PROVIDER_NAME);
+        data.add(serviceName);
+        return data;
+    }
 }
