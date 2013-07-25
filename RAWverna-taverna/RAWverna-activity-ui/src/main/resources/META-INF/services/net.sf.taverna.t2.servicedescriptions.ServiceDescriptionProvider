@@ -1,3 +1,3 @@
-at.ac.tuwien.RAWverna.ui.serviceprovider.JavaImageEvaluatorServiceProvider
-at.ac.tuwien.RAWverna.ui.serviceprovider.JavaFITSEvaluatorServiceProvider
-at.ac.tuwien.RAWverna.ui.serviceprovider.CommonServiceProvider
+at.ac.tuwien.photohawk.taverna.ui.serviceprovider.JavaImageEvaluatorServiceProvider
+at.ac.tuwien.photohawk.taverna.ui.serviceprovider.JavaFITSEvaluatorServiceProvider
+at.ac.tuwien.photohawk.taverna.ui.serviceprovider.CommonServiceProvider

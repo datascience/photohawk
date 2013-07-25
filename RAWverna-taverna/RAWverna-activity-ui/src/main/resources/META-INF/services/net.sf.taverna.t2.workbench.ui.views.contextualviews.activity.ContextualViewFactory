@@ -1,2 +1,2 @@
-at.ac.tuwien.RAWverna.ui.view.JavaImageEvaluatorActivityContextViewFactory
-at.ac.tuwien.RAWverna.ui.view.JavaFITSEvaluatorActivityContextViewFactory
+at.ac.tuwien.photohawk.taverna.ui.view.JavaImageEvaluatorActivityContextViewFactory
+at.ac.tuwien.photohawk.taverna.ui.view.JavaFITSEvaluatorActivityContextViewFactory
