@@ -12,16 +12,16 @@ import org.junit.Test;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.ColorConverter;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBStaticColor;
-import at.ac.tuwien.photohawk.evaluation.operation.metric.AEMetric;
+import at.ac.tuwien.photohawk.evaluation.operation.metric.MAEMetric;
 
-public class AEMetricTest extends AbstractMetricTest {
+public class MAEMetricTest extends AbstractMetricTest {
 
     @Test
     public void executeTest_equal_zeroPattern() {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
 
-        AEMetric metric = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric = new MAEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op = metric.execute();
 
         checkOperation(op, 0.0f);
@@ -32,7 +32,7 @@ public class AEMetricTest extends AbstractMetricTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
 
-        AEMetric metric = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric = new MAEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op = metric.execute();
 
         checkOperation(op, 0.0f);
@@ -43,12 +43,14 @@ public class AEMetricTest extends AbstractMetricTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
 
-        AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        float expectedResult = 1.0f;
+
+        MAEMetric metric1 = new MAEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
         checkOperation(op1, 1.0f);
 
-        AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric2 = new MAEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
         checkOperation(op2, 1.0f);
@@ -59,12 +61,12 @@ public class AEMetricTest extends AbstractMetricTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), DIAGONAL_ONE_PATTERN1);
 
-        AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric1 = new MAEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
         checkOperation(op1, 0.2f);
 
-        AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric2 = new MAEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
         checkOperation(op2, 0.2f);
@@ -75,12 +77,13 @@ public class AEMetricTest extends AbstractMetricTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), TOP2_ONE_PATTERN);
 
-        AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric1 = new MAEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
         checkOperation(op1, 0.4f);
 
-        AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric2 = new MAEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
         checkOperation(op2, 0.4f);
@@ -91,12 +94,12 @@ public class AEMetricTest extends AbstractMetricTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), DIAGONAL_ONE_PATTERN1);
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), DIAGONAL_ONE_PATTERN2);
 
-        AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric1 = new MAEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
         checkOperation(op1, 0.32f);
 
-        AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric2 = new MAEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
         checkOperation(op2, 0.32f);
@@ -107,15 +110,15 @@ public class AEMetricTest extends AbstractMetricTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 2));
 
-        AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric1 = new MAEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 1.0f, 0.0f, 1.0f, 1.0f);
+        checkOperation(op1, 0.5f, 0.0f, 0.5f, 1.0f);
 
-        AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric2 = new MAEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 1.0f, 0.0f, 1.0f, 1.0f);
+        checkOperation(op2, 0.5f, 0.0f, 0.5f, 1.0f);
     }
 
     @Test
@@ -123,14 +126,14 @@ public class AEMetricTest extends AbstractMetricTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 4));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 5));
 
-        AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric1 = new MAEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 1.0f, 1.0f, 0.0f, 1.0f);
+        checkOperation(op1, 0.53333f, 0.8f, 0.0f, 0.8f);
 
-        AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        MAEMetric metric2 = new MAEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 1.0f, 1.0f, 0.0f, 1.0f);
+        checkOperation(op2, 0.53333f, 0.8f, 0.0f, 0.8f);
     }
 }

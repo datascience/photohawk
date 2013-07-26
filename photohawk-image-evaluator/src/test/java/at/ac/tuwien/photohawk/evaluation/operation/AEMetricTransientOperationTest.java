@@ -21,8 +21,8 @@ public class AEMetricTransientOperationTest {
 
     @Test
     public void executeTest_allChannelsEqual() {
-        ColorConverter<SRGBStaticColor> img1 = ColorCoverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
-        ColorConverter<SRGBStaticColor> img2 = ColorCoverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
+        ColorConverter<SRGBStaticColor> img1 = ColorConverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
+        ColorConverter<SRGBStaticColor> img2 = ColorConverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
 
         SRGBStaticColor threshold = new SRGBStaticColor(new float[] {0.0f, 0.0f, 0.0f});
 
@@ -43,8 +43,8 @@ public class AEMetricTransientOperationTest {
 
     @Test
     public void executeTest_allChannelsOverThreshold() {
-        ColorConverter<SRGBStaticColor> img1 = ColorCoverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
-        ColorConverter<SRGBStaticColor> img2 = ColorCoverterHelper.mockColorConverter(new float[] {1.0f, 1.0f, 1.0f});
+        ColorConverter<SRGBStaticColor> img1 = ColorConverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
+        ColorConverter<SRGBStaticColor> img2 = ColorConverterHelper.mockColorConverter(new float[] {1.0f, 1.0f, 1.0f});
 
         SRGBStaticColor threshold = new SRGBStaticColor(new float[] {0.0f, 0.0f, 0.0f});
 
@@ -66,8 +66,8 @@ public class AEMetricTransientOperationTest {
 
     @Test
     public void executeTest_thresholdPerChannel() {
-        ColorConverter<SRGBStaticColor> img1 = ColorCoverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
-        ColorConverter<SRGBStaticColor> img2 = ColorCoverterHelper.mockColorConverter(new float[] {0.5f, 0.5f, 0.5f});
+        ColorConverter<SRGBStaticColor> img1 = ColorConverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
+        ColorConverter<SRGBStaticColor> img2 = ColorConverterHelper.mockColorConverter(new float[] {0.5f, 0.5f, 0.5f});
 
         SRGBStaticColor threshold = new SRGBStaticColor(new float[] {0.0f, 0.5f, 1.0f});
         AEMetric metric = new AEMetric(img1, img2, threshold, new Point(0, 0), new Point(1, 1));

@@ -18,8 +18,8 @@ public class SimpleSSIMTransientOperationTest {
 
     @Test
     public void executeTest_1x1_allChannelsZero() {
-        ColorConverter<SRGBStaticColor> img1 = ColorCoverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
-        ColorConverter<SRGBStaticColor> img2 = ColorCoverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
+        ColorConverter<SRGBStaticColor> img1 = ColorConverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
+        ColorConverter<SRGBStaticColor> img2 = ColorConverterHelper.mockColorConverter(new float[] {0.0f, 0.0f, 0.0f});
 
         SRGBStaticColor threshold = new SRGBStaticColor(new float[] {0.0f, 0.0f, 0.0f});
 
