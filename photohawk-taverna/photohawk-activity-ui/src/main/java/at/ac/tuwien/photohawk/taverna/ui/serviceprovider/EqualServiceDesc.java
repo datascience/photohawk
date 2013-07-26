@@ -27,6 +27,9 @@ public class EqualServiceDesc extends AbstractServiceDesc<CommonActivityConfigur
 
     private static final String SERVICE_NAME = "Equal";
 
+    /**
+     * Creates a new service description.
+     */
     public EqualServiceDesc() {
         super(SERVICE_NAME);
     }
@@ -38,8 +41,7 @@ public class EqualServiceDesc extends AbstractServiceDesc<CommonActivityConfigur
 
     @Override
     public CommonActivityConfigurationBean getActivityConfiguration() {
-        CommonActivityConfigurationBean bean = new CommonActivityConfigurationBean();
-        return bean;
+        return new CommonActivityConfigurationBean();
     }
 
 }

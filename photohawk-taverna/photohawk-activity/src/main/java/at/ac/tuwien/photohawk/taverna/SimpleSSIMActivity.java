@@ -70,55 +70,43 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
             public void run() {
                 logger.info("Activity started");
 
-                // Wrap image 1
-                logger.info("Loading image on port " + IN_IMAGE_1);
-                BufferedImage image1 = wrapInputImage(callback, inputs.get(IN_IMAGE_1));
-                if (null == image1) {
-                    callback.fail("SSIM: Could not read image on port " + IN_IMAGE_1);
-                    logger.error("Could not read image on port " + IN_IMAGE_1);
-                    return;
-                }
-
-                // Wrap image 2
-                logger.info("Loading image on port " + IN_IMAGE_2);
-                BufferedImage image2 = wrapInputImage(callback, inputs.get(IN_IMAGE_2));
-                if (null == image2) {
-                    callback.fail("SSIM: Could not read image on port " + IN_IMAGE_2);
-                    logger.error("Could not read image on port " + IN_IMAGE_2);
+                // Read images
+                BufferedImage[] images = readImages(inputs, callback);
+                if (images == null) {
                     return;
                 }
 
                 // Convert to SRGB
-                SRGBColorConverter srgbImage1 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(image1));
-                SRGBColorConverter srgbImage2 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(image2));
-                image1 = srgbImage1.getImage().getBufferedImage();
-                image2 = srgbImage2.getImage().getBufferedImage();
+                SRGBColorConverter srgbImage1 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[0]));
+                SRGBColorConverter srgbImage2 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[1]));
+                images[0] = srgbImage1.getImage().getBufferedImage();
+                images[1] = srgbImage2.getImage().getBufferedImage();
 
                 // Resize
-                ShrinkResizePreprocessor shrink = new ShrinkResizePreprocessor(image1, image2);
+                ShrinkResizePreprocessor shrink = new ShrinkResizePreprocessor(images[0], images[1]);
                 shrink.process();
-                image1 = shrink.getResult1();
-                image2 = shrink.getResult2();
+                images[0] = shrink.getResult1();
+                images[1] = shrink.getResult2();
                 shrink = null;
 
                 // Scale
-                ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(image1, image1,
+                ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(images[0], images[0],
                     DEFAULT_SCALE_TARGET_SIZE);
                 scale.process();
-                image1 = scale.getResult1();
-                image2 = scale.getResult2();
+                images[0] = scale.getResult1();
+                images[1] = scale.getResult2();
                 scale = null;
 
                 // Evaluate
-                ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(image1);
+                ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(images[0]);
                 HSBColorConverter c1 = new HSBColorConverter(new SRGBColorConverter(wrapped1));
-                ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(image2);
+                ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(images[1]);
                 HSBColorConverter c2 = new HSBColorConverter(new SRGBColorConverter(wrapped2));
 
                 // TODO: What happens if one image is smaller than the
                 // SCALE_TARGET_SIZE?
-                SimpleSSIMMetric ssim = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(image1.getWidth(),
-                    image1.getHeight()));
+                SimpleSSIMMetric ssim = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(images[0].getWidth(),
+                    images[0].getHeight()));
 
                 TransientOperation<Float, StaticColor> op = ssim.execute();
                 Map<String, T2Reference> outputs = registerOutputs(callback, op, OUT_AGGREGATED, OUT_CHANNELS,

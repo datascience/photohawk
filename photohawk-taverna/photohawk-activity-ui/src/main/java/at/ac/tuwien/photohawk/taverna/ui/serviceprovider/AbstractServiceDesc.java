@@ -31,11 +31,30 @@ import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
  */
 public abstract class AbstractServiceDesc<T> extends ServiceDescription<T> {
 
-    private String serviceName;
+    private String name;
 
-    public AbstractServiceDesc(String serviceName) {
+    /**
+     * Creates a new service description with the provided service name.
+     * 
+     * @param name
+     *            name of the service
+     * @param description
+     *            description of the service
+     */
+    public AbstractServiceDesc(String name, String description) {
         super();
-        this.serviceName = serviceName;
+        this.name = name;
+        setDescription(description);
+    }
+
+    /**
+     * Creates a new service description with the provided service name.
+     * 
+     * @param name
+     *            name of the service
+     */
+    public AbstractServiceDesc(String name) {
+        this(name, "");
     }
 
     private List<String> path = Arrays.<String> asList(CommonServiceProvider.PROVIDER_NAME);
@@ -56,14 +75,14 @@ public abstract class AbstractServiceDesc<T> extends ServiceDescription<T> {
 
     @Override
     public String getName() {
-        return serviceName;
+        return name;
     }
 
     @Override
     protected List<? extends Object> getIdentifyingData() {
         List<Object> data = new ArrayList<Object>(2);
         data.add(CommonServiceProvider.PROVIDER_NAME);
-        data.add(serviceName);
+        data.add(name);
         return data;
     }
 }

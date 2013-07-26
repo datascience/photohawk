@@ -88,8 +88,46 @@ public abstract class AbstractActivity<T> extends AbstractAsynchronousActivity<T
     }
 
     /**
+     * Reads the input images from the provided inputs.
+     * 
+     * @param inputs
+     *            the inputs of the activity
+     * @param callback
+     *            callback
+     * @return an array with IN_IMAGE_1 and IN_IMAGE_2 in this order or null if
+     *         one of the images could not be read
+     */
+    protected BufferedImage[] readImages(final Map<String, T2Reference> inputs,
+        final AsynchronousActivityCallback callback) {
+
+        BufferedImage[] images = new BufferedImage[2];
+
+        // Wrap image 1
+        logger.info("Loading image on port " + IN_IMAGE_1);
+        images[0] = wrapInputImage(callback, inputs.get(IN_IMAGE_1));
+        if (null == images[0]) {
+            logger.warn("Could not read image on port " + IN_IMAGE_1);
+            callback.fail("Equals: Could not read image on port " + IN_IMAGE_1);
+            return null;
+        }
+
+        // Wrap image 2
+        logger.info("Loading image on port " + IN_IMAGE_2);
+        images[1] = wrapInputImage(callback, inputs.get(IN_IMAGE_2));
+        if (null == images[1]) {
+            logger.warn("Could not read image on port " + IN_IMAGE_2);
+            callback.fail("Equals: Could not read image on port " + IN_IMAGE_2);
+            return null;
+        }
+
+        return images;
+    }
+
+    /**
      * Reads the data from input port specified by the provided reference from
      * the callback context and wraps it into a BufferedImage object.
+     * 
+     * If one of the images could not be read, fails the activity.
      * 
      * @param callback
      *            the callback environment

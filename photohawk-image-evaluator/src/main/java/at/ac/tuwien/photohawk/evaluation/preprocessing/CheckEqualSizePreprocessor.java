@@ -23,9 +23,9 @@ import org.apache.logging.log4j.Logger;
 /**
  * Preprocessor that checks if two images have the same size.
  */
-public class EqualSizePreprocessor implements Preprocessor {
+public class CheckEqualSizePreprocessor implements Preprocessor {
 
-    private static final Logger LOGGER = LogManager.getLogger(EqualSizePreprocessor.class);
+    private static final Logger LOGGER = LogManager.getLogger(CheckEqualSizePreprocessor.class);
 
     private BufferedImage img1;
     private BufferedImage img2;
@@ -38,7 +38,7 @@ public class EqualSizePreprocessor implements Preprocessor {
      * @param img2
      *            image 2
      */
-    public EqualSizePreprocessor(final BufferedImage img1, final BufferedImage img2) {
+    public CheckEqualSizePreprocessor(final BufferedImage img1, final BufferedImage img2) {
         this.img1 = img1;
         this.img2 = img2;
     }

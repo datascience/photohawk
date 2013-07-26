@@ -17,26 +17,26 @@ package at.ac.tuwien.photohawk.taverna.ui.serviceprovider;
 
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
 
-import at.ac.tuwien.photohawk.taverna.AEActivity;
 import at.ac.tuwien.photohawk.taverna.CommonActivityConfigurationBean;
+import at.ac.tuwien.photohawk.taverna.MSEActivity;
 
 /**
- * Service description for AE.
+ * Service description for MSE.
  */
-public class AEServiceDesc extends AbstractServiceDesc<CommonActivityConfigurationBean> {
+public class MSEServiceDesc extends AbstractServiceDesc<CommonActivityConfigurationBean> {
 
-    private static final String SERVICE_NAME = "Absolute Error";
+    private static final String SERVICE_NAME = "Mean Squared Error";
 
     /**
      * Creates a new service description.
      */
-    public AEServiceDesc() {
+    public MSEServiceDesc() {
         super(SERVICE_NAME);
     }
 
     @Override
     public Class<? extends Activity<CommonActivityConfigurationBean>> getActivityClass() {
-        return AEActivity.class;
+        return MSEActivity.class;
     }
 
     @Override

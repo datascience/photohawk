@@ -1,4 +1,4 @@
 at.ac.tuwien.photohawk.taverna.RAWvernaActivityHealthChecker
 at.ac.tuwien.photohawk.taverna.SimpleSSIMActivityHealthChecker
 at.ac.tuwien.photohawk.taverna.EqualActivityHealthChecker
-at.ac.tuwien.photohawk.taverna.AEErrorActivityHealthChecker
+at.ac.tuwien.photohawk.taverna.AEActivityHealthChecker

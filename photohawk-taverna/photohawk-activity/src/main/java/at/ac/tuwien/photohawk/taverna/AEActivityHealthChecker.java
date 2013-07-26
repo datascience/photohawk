@@ -26,7 +26,7 @@ import net.sf.taverna.t2.workflowmodel.health.HealthChecker;
 /**
  * Health checker for EqualActivity.
  */
-public class AEErrorActivityHealthChecker implements HealthChecker<AEErrorActivity> {
+public class AEActivityHealthChecker implements HealthChecker<AEActivity> {
 
     @Override
     public boolean isTimeConsuming() {
@@ -39,7 +39,7 @@ public class AEErrorActivityHealthChecker implements HealthChecker<AEErrorActivi
     }
 
     @Override
-    public VisitReport visit(AEErrorActivity activity, List<Object> ancestry) {
+    public VisitReport visit(AEActivity activity, List<Object> ancestry) {
         List<VisitReport> subReports = new ArrayList<VisitReport>();
         Status status = VisitReport.getWorstStatus(subReports);
         return new VisitReport(HealthCheck.getInstance(), activity, "AE report", HealthCheck.NO_PROBLEM, status,

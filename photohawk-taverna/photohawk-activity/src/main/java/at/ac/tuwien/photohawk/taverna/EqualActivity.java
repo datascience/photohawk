@@ -63,26 +63,15 @@ public class EqualActivity extends AbstractActivity<CommonActivityConfigurationB
             public void run() {
                 logger.info("Activity started");
 
-                // Wrap image 1
-                logger.info("Loading image on port " + IN_IMAGE_1);
-                BufferedImage image1 = wrapInputImage(callback, inputs.get(IN_IMAGE_1));
-                if (null == image1) {
-                    callback.fail("Equals: Could not read image on port " + IN_IMAGE_1);
-                    logger.error("Could not read image on port " + IN_IMAGE_1);
+                // Read images
+                BufferedImage[] images = readImages(inputs, callback);
+                if (images == null) {
                     return;
                 }
 
-                // Wrap image 2
-                logger.info("Loading image on port " + IN_IMAGE_2);
-                BufferedImage image2 = wrapInputImage(callback, inputs.get(IN_IMAGE_2));
-                if (null == image2) {
-                    callback.fail("Equals: Could not read image on port " + IN_IMAGE_2);
-                    logger.error("Could not read image on port " + IN_IMAGE_2);
-                    return;
-                }
-
+                // Process images
                 Map<String, T2Reference> outputs = null;
-                if (image1.getWidth() != image2.getWidth() || image1.getHeight() != image2.getHeight()) {
+                if (images[0].getWidth() != images[1].getWidth() || images[0].getHeight() != images[1].getHeight()) {
                     logger.debug("Images have different size");
                     InvocationContext context = callback.getContext();
                     ReferenceService referenceService = context.getReferenceService();
@@ -91,24 +80,22 @@ public class EqualActivity extends AbstractActivity<CommonActivityConfigurationB
                     T2Reference aggregatedRef = referenceService.register(new Boolean(false), 0, true, context);
                     outputs.put(OUT, aggregatedRef);
                 } else {
-                    ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(image1);
-                    ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(image2);
+                    ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(images[0]);
+                    ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(images[1]);
                     AutoColorConverter c1 = new AutoColorConverter(wrapped1, wrapped2,
                         AutoColorConverter.AlternativeColorConverter.CIEXYZ);
                     AutoColorConverter c2 = new AutoColorConverter(wrapped2, wrapped1,
                         AutoColorConverter.AlternativeColorConverter.CIEXYZ);
 
                     // Evaluate
-                    EqualMetric equal = new EqualMetric(c1, c2, new Point(0, 0), new Point(image1.getWidth(), image1
-                        .getHeight()));
+                    EqualMetric equal = new EqualMetric(c1, c2, new Point(0, 0), new Point(images[0].getWidth(),
+                        images[0].getHeight()));
 
                     TransientOperation<Boolean, Boolean> op = equal.execute();
                     outputs = registerOutputs(callback, op);
                 }
 
-                // Return map of output data, with empty index array as this is
-                // the only and final result (this index parameter is used if
-                // pipelining output)
+                // Return results
                 callback.receiveResult(outputs, new int[0]);
             }
         });

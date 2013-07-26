@@ -27,6 +27,9 @@ public class SimpleSSIMServiceDesc extends AbstractServiceDesc<SimpleSSIMActivit
 
     private static final String SERVICE_NAME = "SSIM";
 
+    /**
+     * Creates a new service description.
+     */
     public SimpleSSIMServiceDesc() {
         super(SERVICE_NAME);
     }

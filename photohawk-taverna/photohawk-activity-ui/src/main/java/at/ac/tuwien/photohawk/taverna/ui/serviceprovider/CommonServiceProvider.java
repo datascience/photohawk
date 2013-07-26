@@ -17,7 +17,6 @@ package at.ac.tuwien.photohawk.taverna.ui.serviceprovider;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -38,29 +37,19 @@ public class CommonServiceProvider implements ServiceDescriptionProvider {
     private static final URI PROVIDER_ID = URI
         .create("http://tuwien.ac.at/2013/photohawk/service-provider/CommonServiceProvider");
 
-    private static final List<String> PATH = Arrays.<String> asList(PROVIDER_NAME);
-
     @Override
     public void findServiceDescriptionsAsync(FindServiceDescriptionsCallBack callBack) {
-        // Use callback.status() for long-running searches
-        // callBack.status("Resolving example services");
-
         List<ServiceDescription<?>> results = new ArrayList<ServiceDescription<?>>();
 
-        SimpleSSIMServiceDesc ssimService = new SimpleSSIMServiceDesc();
-        results.add(ssimService);
+        results.add(new SimpleSSIMServiceDesc());
+        results.add(new EqualServiceDesc());
+        results.add(new AEServiceDesc());
+        results.add(new MAEServiceDesc());
+        results.add(new PAEServiceDesc());
+        results.add(new MSEServiceDesc());
 
-        EqualServiceDesc equalService = new EqualServiceDesc();
-        results.add(equalService);
-
-        AEServiceDesc aeService = new AEServiceDesc();
-        results.add(aeService);
-
-        // partialResults() can also be called several times from inside
-        // for-loop if the full search takes a long time
         callBack.partialResults(results);
 
-        // No more results will be coming
         callBack.finished();
     }
 
