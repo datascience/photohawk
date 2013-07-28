@@ -24,7 +24,7 @@ public class AEMetricTest extends AbstractMetricTest {
         AEMetric metric = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op = metric.execute();
 
-        checkOperation(op, 0.0f);
+        checkOperationEqual(op, 0.0f);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class AEMetricTest extends AbstractMetricTest {
         AEMetric metric = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op = metric.execute();
 
-        checkOperation(op, 0.0f);
+        checkOperationEqual(op, 0.0f);
     }
 
     @Test
@@ -46,12 +46,12 @@ public class AEMetricTest extends AbstractMetricTest {
         AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 1.0f);
+        checkOperationEqual(op1, 1.0f);
 
         AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 1.0f);
+        checkOperationEqual(op2, 1.0f);
     }
 
     @Test
@@ -62,12 +62,12 @@ public class AEMetricTest extends AbstractMetricTest {
         AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 0.2f);
+        checkOperationEqual(op1, 0.2f);
 
         AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 0.2f);
+        checkOperationEqual(op2, 0.2f);
     }
 
     @Test
@@ -78,12 +78,12 @@ public class AEMetricTest extends AbstractMetricTest {
         AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 0.4f);
+        checkOperationEqual(op1, 0.4f);
 
         AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 0.4f);
+        checkOperationEqual(op2, 0.4f);
     }
 
     @Test
@@ -94,12 +94,12 @@ public class AEMetricTest extends AbstractMetricTest {
         AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 0.32f);
+        checkOperationEqual(op1, 0.32f);
 
         AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 0.32f);
+        checkOperationEqual(op2, 0.32f);
     }
 
     @Test
@@ -110,12 +110,12 @@ public class AEMetricTest extends AbstractMetricTest {
         AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 1.0f, 0.0f, 1.0f, 1.0f);
+        checkOperationEqual(op1, 1.0f, 0.0f, 1.0f, 1.0f);
 
         AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 1.0f, 0.0f, 1.0f, 1.0f);
+        checkOperationEqual(op2, 1.0f, 0.0f, 1.0f, 1.0f);
     }
 
     @Test
@@ -126,11 +126,11 @@ public class AEMetricTest extends AbstractMetricTest {
         AEMetric metric1 = new AEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 1.0f, 1.0f, 0.0f, 1.0f);
+        checkOperationEqual(op1, 1.0f, 1.0f, 0.0f, 1.0f);
 
         AEMetric metric2 = new AEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 1.0f, 1.0f, 0.0f, 1.0f);
+        checkOperationEqual(op2, 1.0f, 1.0f, 0.0f, 1.0f);
     }
 }

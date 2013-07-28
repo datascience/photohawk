@@ -21,7 +21,7 @@ public abstract class AbstractMetricTest {
     protected static final Point DEFAULT_ENDPOINT = new Point(DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE);
 
     /**
-     * Asserts the operation results for the provided values using
+     * Asserts the operation results to be equal to the provided values using
      * {@link FLOAT_ASSERT_DELTA} as delta.
      * 
      * @param op
@@ -31,7 +31,7 @@ public abstract class AbstractMetricTest {
      * @param expectedChannels
      *            expected channel values
      */
-    protected void checkOperation(final TransientOperation<Float, StaticColor> op, final float expectedAggregate,
+    protected void checkOperationEqual(final TransientOperation<Float, StaticColor> op, final float expectedAggregate,
         final float... expectedChannels) {
         StaticColor result = op.getResult();
 
@@ -42,7 +42,7 @@ public abstract class AbstractMetricTest {
     }
 
     /**
-     * Asserts the operation results for the provided values using
+     * Asserts the operation results to be equal to the provided values using
      * {@link FLOAT_ASSERT_DELTA} as delta.
      * 
      * @param op
@@ -50,10 +50,45 @@ public abstract class AbstractMetricTest {
      * @param expectedValue
      *            expected aggregate value
      */
-    protected void checkOperation(final TransientOperation<Float, StaticColor> op, final float expectedValue) {
+    protected void checkOperationEqual(final TransientOperation<Float, StaticColor> op, final float expectedValue) {
         float[] expectedChannels = new float[op.getResult().getNumberOfChannels()];
         Arrays.fill(expectedChannels, expectedValue);
-        checkOperation(op, expectedValue, expectedChannels);
+        checkOperationEqual(op, expectedValue, expectedChannels);
     }
 
+    /**
+     * Asserts the operation results to be not equal to the provided values
+     * using {@link FLOAT_ASSERT_DELTA} as delta.
+     * 
+     * @param op
+     *            operation to check
+     * @param expectedAggregate
+     *            expected aggregate value
+     * @param expectedChannels
+     *            expected channel values
+     */
+    protected void checkOperationNotEqual(final TransientOperation<Float, StaticColor> op,
+        final float expectedAggregate, final float... expectedChannels) {
+        StaticColor result = op.getResult();
+
+        Assert.assertNotEquals(expectedAggregate, op.getAggregatedResult(), FLOAT_ASSERT_DELTA);
+        for (int i = 0; i < expectedChannels.length; i++) {
+            Assert.assertNotEquals(expectedChannels[i], result.getChannelValue(i), FLOAT_ASSERT_DELTA);
+        }
+    }
+
+    /**
+     * Asserts the operation results to be not equal to the provided values
+     * using {@link FLOAT_ASSERT_DELTA} as delta.
+     * 
+     * @param op
+     *            operation to check
+     * @param expectedValue
+     *            expected aggregate value
+     */
+    protected void checkOperationNotEqual(final TransientOperation<Float, StaticColor> op, final float expectedValue) {
+        float[] expectedChannels = new float[op.getResult().getNumberOfChannels()];
+        Arrays.fill(expectedChannels, expectedValue);
+        checkOperationNotEqual(op, expectedValue, expectedChannels);
+    }
 }

@@ -37,7 +37,6 @@ import at.ac.tuwien.photohawk.evaluation.colorconverter.hsb.HSBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.OperationException;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 
-
 /**
  * This class implements a simple SSIM Metric. Based on: Z. Wang, A. C. Bovik,
  * H. R. Sheikh and E. P. Simoncelli,
@@ -49,7 +48,7 @@ import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
  */
 public class SimpleSSIMMetric extends Metric {
 
-    private static final int DEFAULT_BLOCK_SIZE = 11;
+    private static final int BLOCK_SIZE = 11;
 
     private static final int DEFAULT_TARGET_SIZE = 256;
 
@@ -86,8 +85,6 @@ public class SimpleSSIMMetric extends Metric {
         0.000273561160085806, 5.77411251978637e-05, 7.81441153305360e-06, 1.05756559815326e-06, 7.81441153305360e-06,
         3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017,
         0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06};
-
-    private int blocksize;
 
     /**
      * Prepares the provided image for this metric.
@@ -187,7 +184,7 @@ public class SimpleSSIMMetric extends Metric {
 
     /**
      * Creates a new SimpleSSIMMetric with the provided parameters and a
-     * blocksize of {@link #DEFAULT_BLOCK_SIZE}.
+     * blocksize of {@link #BLOCK_SIZE2}.
      * 
      * @param img1
      *            color converter of image 1
@@ -199,26 +196,7 @@ public class SimpleSSIMMetric extends Metric {
      *            end of comparison
      */
     public SimpleSSIMMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
-        this(img1, img2, start, end, DEFAULT_BLOCK_SIZE);
-    }
-
-    /**
-     * Creates a new SimpleSSIMMetric with the provided parameters.
-     * 
-     * @param img1
-     *            color converter of image 1
-     * @param img2
-     *            color converter of image 2
-     * @param start
-     *            start of comparison
-     * @param end
-     *            end of comparison
-     * @param blocksize
-     *            the blocksize
-     */
-    public SimpleSSIMMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end, int blocksize) {
         super(img1, img2, start, end);
-        this.blocksize = blocksize;
     }
 
     @Override
@@ -231,13 +209,18 @@ public class SimpleSSIMMetric extends Metric {
         SSIMTransientOperation op = this.prepare();
 
         op.init();
-        for (int x = start.x + blocksize / 2; x < end.x - blocksize / 2; x += 2) {
-            for (int y = start.y + blocksize / 2; y < end.y - blocksize / 2; y += 2) {
-                int[] xValues = new int[blocksize * blocksize];
-                int[] yValues = new int[blocksize * blocksize];
+
+        if (end.x - start.x < BLOCK_SIZE || end.y - start.y < BLOCK_SIZE) {
+            throw new IllegalArgumentException("Metric comparison size is smaller than block size.");
+        }
+
+        for (int x = start.x + BLOCK_SIZE / 2; x < end.x - BLOCK_SIZE / 2; x += 2) {
+            for (int y = start.y + BLOCK_SIZE / 2; y < end.y - BLOCK_SIZE / 2; y += 2) {
+                int[] xValues = new int[BLOCK_SIZE * BLOCK_SIZE];
+                int[] yValues = new int[BLOCK_SIZE * BLOCK_SIZE];
                 int counter = 0;
-                for (int i = -blocksize / 2; i < (blocksize + 1) / 2; i++) {
-                    for (int j = -blocksize / 2; j < (blocksize + 1) / 2; j++) {
+                for (int i = -BLOCK_SIZE / 2; i < (BLOCK_SIZE + 1) / 2; i++) {
+                    for (int j = -BLOCK_SIZE / 2; j < (BLOCK_SIZE + 1) / 2; j++) {
                         xValues[counter] = x + i;
                         yValues[counter] = y + j;
                         counter++;
@@ -314,7 +297,7 @@ public class SimpleSSIMMetric extends Metric {
         @Override
         public void execute(int[] x, int[] y) {
 
-            if (x.length != blocksize * blocksize || y.length != blocksize * blocksize) {
+            if (x.length != BLOCK_SIZE * BLOCK_SIZE || y.length != BLOCK_SIZE * BLOCK_SIZE) {
                 throw new IllegalArgumentException("Data size doesn't match blocksize");
             }
 
@@ -349,11 +332,11 @@ public class SimpleSSIMMetric extends Metric {
         }
 
         public int getGranularityX() {
-            return blocksize;
+            return BLOCK_SIZE;
         }
 
         public int getGranularityY() {
-            return blocksize;
+            return BLOCK_SIZE;
         }
 
         /**

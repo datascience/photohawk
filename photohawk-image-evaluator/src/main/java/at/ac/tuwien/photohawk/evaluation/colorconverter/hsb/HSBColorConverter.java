@@ -21,7 +21,6 @@ import at.ac.tuwien.photohawk.evaluation.colorconverter.ColorConverter;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBColorConverter;
 
-
 /**
  * This ColorConverter can convert from sRGB to HSB.
  * 
@@ -81,7 +80,7 @@ public class HSBColorConverter implements ColorConverter<HSBStaticColor> {
      * Normalizes the hue difference.
      * 
      * @param value
-     *            heu value
+     *            hue value
      * @return the normalized value
      */
     public static double normalizeHueDifference(double value) {

@@ -24,7 +24,7 @@ public class MSEMetricTest extends AbstractMetricTest {
         MSEMetric metric = new MSEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op = metric.execute();
 
-        checkOperation(op, 0.0f);
+        checkOperationEqual(op, 0.0f);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class MSEMetricTest extends AbstractMetricTest {
         MSEMetric metric = new MSEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op = metric.execute();
 
-        checkOperation(op, 0.0f);
+        checkOperationEqual(op, 0.0f);
     }
 
     @Test
@@ -46,12 +46,12 @@ public class MSEMetricTest extends AbstractMetricTest {
         MSEMetric metric1 = new MSEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 1.0f);
+        checkOperationEqual(op1, 1.0f);
 
         MSEMetric metric2 = new MSEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 1.0f);
+        checkOperationEqual(op2, 1.0f);
     }
 
     @Test
@@ -62,12 +62,12 @@ public class MSEMetricTest extends AbstractMetricTest {
         MSEMetric metric1 = new MSEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 0.2f);
+        checkOperationEqual(op1, 0.2f);
 
         MSEMetric metric2 = new MSEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 0.2f);
+        checkOperationEqual(op2, 0.2f);
     }
 
     @Test
@@ -79,12 +79,12 @@ public class MSEMetricTest extends AbstractMetricTest {
 
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 0.4f);
+        checkOperationEqual(op1, 0.4f);
 
         MSEMetric metric2 = new MSEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 0.4f);
+        checkOperationEqual(op2, 0.4f);
     }
 
     @Test
@@ -95,12 +95,12 @@ public class MSEMetricTest extends AbstractMetricTest {
         MSEMetric metric1 = new MSEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, 0.32f);
+        checkOperationEqual(op1, 0.32f);
 
         MSEMetric metric2 = new MSEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, 0.32f);
+        checkOperationEqual(op2, 0.32f);
     }
 
     @Test
@@ -111,12 +111,12 @@ public class MSEMetricTest extends AbstractMetricTest {
         MSEMetric metric1 = new MSEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, (1.25f / 3.0f), 0.0f, 0.25f, 1.0f);
+        checkOperationEqual(op1, (1.25f / 3.0f), 0.0f, 0.25f, 1.0f);
 
         MSEMetric metric2 = new MSEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, (1.25f / 3.0f), 0.0f, 0.25f, 1.0f);
+        checkOperationEqual(op2, (1.25f / 3.0f), 0.0f, 0.25f, 1.0f);
     }
 
     @Test
@@ -127,11 +127,11 @@ public class MSEMetricTest extends AbstractMetricTest {
         MSEMetric metric1 = new MSEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperation(op1, (1.28f / 3.0f), 0.64f, 0.0f, 0.64f);
+        checkOperationEqual(op1, (1.28f / 3.0f), 0.64f, 0.0f, 0.64f);
 
         MSEMetric metric2 = new MSEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperation(op2, (1.28f / 3.0f), 0.64f, 0.0f, 0.64f);
+        checkOperationEqual(op2, (1.28f / 3.0f), 0.64f, 0.0f, 0.64f);
     }
 }

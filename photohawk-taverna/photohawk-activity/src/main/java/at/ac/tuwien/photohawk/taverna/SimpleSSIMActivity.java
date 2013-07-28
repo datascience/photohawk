@@ -49,7 +49,7 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
     private static final String OUT_CHANNELS = "SSIM_Channels";
     private static final String OUT_CHANNEL_NAMES = "SSIM_ChannelNames";
 
-    private static final int DEFAULT_SCALE_TARGET_SIZE = 512;
+    private static final int DEFAULT_SCALE_TARGET_SIZE = 256;
 
     /**
      * Reconfigure ports of activity.
@@ -90,7 +90,7 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
                 shrink = null;
 
                 // Scale
-                ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(images[0], images[0],
+                ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(images[0], images[1],
                     DEFAULT_SCALE_TARGET_SIZE);
                 scale.process();
                 images[0] = scale.getResult1();
