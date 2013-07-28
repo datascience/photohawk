@@ -86,6 +86,8 @@ public class SimpleSSIMMetric extends Metric {
         3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017,
         0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06};
 
+    private boolean doThreaded = false;
+
     /**
      * Prepares the provided image for this metric.
      * 
@@ -99,6 +101,7 @@ public class SimpleSSIMMetric extends Metric {
      * @return the original image if no transformation was done or a new
      *         transformed image otherwise
      */
+    @Deprecated
     public static BufferedImage prepare(BufferedImage img) {
         return SimpleSSIMMetric.prepare(img, 0, 0, img.getWidth(), img.getHeight(), DEFAULT_TARGET_SIZE);
     }
@@ -128,6 +131,7 @@ public class SimpleSSIMMetric extends Metric {
      * @return the original image if no transformation was done or a new
      *         transformed image otherwise
      */
+    @Deprecated
     public static BufferedImage prepare(BufferedImage img, int x, int y, int width, int height, int targetSize) {
         BufferedImage result = img;
 
@@ -199,6 +203,25 @@ public class SimpleSSIMMetric extends Metric {
         super(img1, img2, start, end);
     }
 
+    /**
+     * Creates a new SimpleSSIMMetric with the provided parameters and a
+     * blocksize of {@link #BLOCK_SIZE2}.
+     * 
+     * @param img1
+     *            color converter of image 1
+     * @param img2
+     *            color converter of image 2
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
+     */
+    public SimpleSSIMMetric(final ColorConverter<?> img1, final ColorConverter<?> img2, final Point start,
+        final Point end, final boolean doThreaded) {
+        super(img1, img2, start, end);
+        this.doThreaded = doThreaded;
+    }
+
     @Override
     public SSIMTransientOperation prepare() {
         return new SSIMTransientOperation();
@@ -241,8 +264,6 @@ public class SimpleSSIMMetric extends Metric {
     public class SSIMTransientOperation extends MetricTransientOperation {
 
         private static final int DEFAULT_THREADPOOL_SIZE = 20;
-
-        private boolean doThreaded = false;
 
         private double[] ssimTotal;
         private StaticColor realssimTotal;
@@ -296,7 +317,6 @@ public class SimpleSSIMMetric extends Metric {
 
         @Override
         public void execute(int[] x, int[] y) {
-
             if (x.length != BLOCK_SIZE * BLOCK_SIZE || y.length != BLOCK_SIZE * BLOCK_SIZE) {
                 throw new IllegalArgumentException("Data size doesn't match blocksize");
             }

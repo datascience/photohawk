@@ -19,6 +19,10 @@ public class SimpleSSIMMetricTest extends AbstractMetricTest {
 
     private Point DEFAULT_ENDPOINT = new Point(DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE);
 
+    private int LARGE_IMAGE_SIZE = 22;
+
+    private Point LARGE_ENDPOINT = new Point(LARGE_IMAGE_SIZE, LARGE_IMAGE_SIZE);
+
     /**
      * Tests if the result for the same pattern is 1.0f.
      */
@@ -95,7 +99,7 @@ public class SimpleSSIMMetricTest extends AbstractMetricTest {
      * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
      */
     @Test
-    public void executeTest_notEqual_zeroPattern_sixPattern_check() {
+    public void executeTest_notEqual_zeroPattern_sixPattern() {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 6));
 
@@ -117,7 +121,7 @@ public class SimpleSSIMMetricTest extends AbstractMetricTest {
      * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
      */
     @Test
-    public void executeTest_notEqual_zeroPattern_eightPattern_check() {
+    public void executeTest_notEqual_zeroPattern_eightPattern() {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 8));
 
@@ -127,6 +131,80 @@ public class SimpleSSIMMetricTest extends AbstractMetricTest {
         checkOperationEqual(op1, 0.028088f);
 
         SimpleSSIMMetric metric2 = new SimpleSSIMMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        TransientOperation<Float, StaticColor> op2 = metric2.execute();
+
+        checkOperationEqual(op2, 0.028088f);
+    }
+
+    /**
+     * Tests if the metric for the patterns provides the correct result.
+     * 
+     * Note: The result was checked against ssim.m available at
+     * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
+     */
+    @Test
+    public void executeTest_notEqual_zeroPattern_eightPattern_22x22() {
+        final int size = 22;
+
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(size, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(size, 8));
+
+        SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, new Point(size, size));
+        TransientOperation<Float, StaticColor> op1 = metric1.execute();
+
+        checkOperationEqual(op1, 0.028088f);
+
+        SimpleSSIMMetric metric2 = new SimpleSSIMMetric(img2, img1, DEFAULT_STARTPOINT, new Point(size, size));
+        TransientOperation<Float, StaticColor> op2 = metric2.execute();
+
+        checkOperationEqual(op2, 0.028088f);
+    }
+
+    /**
+     * Tests if the result for the same pattern is 1.0f.
+     */
+    @Test
+    public void executeTest_equal_zeroPattern_22x22_threaded() {
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 0));
+
+        SimpleSSIMMetric metric = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, LARGE_ENDPOINT, true);
+        TransientOperation<Float, StaticColor> op = metric.execute();
+
+        checkOperationEqual(op, 1.0f);
+    }
+
+    /**
+     * Tests if the result for the same pattern is 1.0f.
+     */
+    @Test
+    public void executeTest_equal_onePattern_22x22_threaded() {
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 1));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 1));
+
+        SimpleSSIMMetric metric = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, LARGE_ENDPOINT, true);
+        TransientOperation<Float, StaticColor> op = metric.execute();
+
+        checkOperationEqual(op, 1.0f);
+    }
+
+    /**
+     * Tests if the metric for the patterns provides the correct result.
+     * 
+     * Note: The result was checked against ssim.m available at
+     * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
+     */
+    @Test
+    public void executeTest_notEqual_zeroPattern_eightPattern_22x22_threaded() {
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 8));
+
+        SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, LARGE_ENDPOINT, true);
+        TransientOperation<Float, StaticColor> op1 = metric1.execute();
+
+        checkOperationEqual(op1, 0.028088f);
+
+        SimpleSSIMMetric metric2 = new SimpleSSIMMetric(img2, img1, DEFAULT_STARTPOINT, LARGE_ENDPOINT, true);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
         checkOperationEqual(op2, 0.028088f);
