@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>at.ac.tuwien</groupId>
+  <artifactId>photohawk</artifactId>
+  <versioning>
+    <versions>
+      <version>0.0.2-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20130728224413</lastUpdated>
+  </versioning>
+</metadata>
