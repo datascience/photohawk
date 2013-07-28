@@ -67,7 +67,7 @@ public class ColorConverterHelper {
      * @return an array of colors
      */
     public static SRGBStaticColor[] getColors() {
-        SRGBStaticColor[] colors = new SRGBStaticColor[6];
+        SRGBStaticColor[] colors = new SRGBStaticColor[9];
 
         colors[0] = new SRGBStaticColor(0, 0, 0);
         colors[1] = new SRGBStaticColor(1.0f, 1.0f, 1.0f);
@@ -75,7 +75,10 @@ public class ColorConverterHelper {
         colors[3] = new SRGBStaticColor(1.0f, 0.5f, 0.0f);
         colors[4] = new SRGBStaticColor(0.1f, 0.5f, 0.9f);
         colors[5] = new SRGBStaticColor(0.9f, 0.5f, 0.1f);
-
+        colors[6] = new SRGBStaticColor(0.2f, 0.2f, 0.2f);
+        colors[7] = new SRGBStaticColor(0.5f, 0.5f, 0.5f);
+        colors[8] = new SRGBStaticColor(0.058823529f, 0.058823529f, 0.058823529f);
+        
         return colors;
     }
 

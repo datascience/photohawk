@@ -19,6 +19,9 @@ public class SimpleSSIMMetricTest extends AbstractMetricTest {
 
     private Point DEFAULT_ENDPOINT = new Point(DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE);
 
+    /**
+     * Tests if the result for the same pattern is 1.0f.
+     */
     @Test
     public void executeTest_equal_zeroPattern() {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
@@ -30,6 +33,9 @@ public class SimpleSSIMMetricTest extends AbstractMetricTest {
         checkOperationEqual(op, 1.0f);
     }
 
+    /**
+     * Tests if the result for the same pattern is 1.0f.
+     */
     @Test
     public void executeTest_equal_onePattern() {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
@@ -41,8 +47,11 @@ public class SimpleSSIMMetricTest extends AbstractMetricTest {
         checkOperationEqual(op, 1.0f);
     }
 
+    /**
+     * Tests if the result for two different pattern is not 1.0f.
+     */
     @Test
-    public void executeTest_notEqual_zeroPattern_onePattern() {
+    public void executeTest_notEqual_zeroPattern_onePattern_notOne() {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
 
@@ -55,5 +64,71 @@ public class SimpleSSIMMetricTest extends AbstractMetricTest {
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
         checkOperationNotEqual(op2, 1.0f);
+    }
+
+    /**
+     * Tests if the metric for the patterns provides the correct result.
+     * 
+     * Note: The result was checked against ssim.m available at
+     * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
+     */
+    @Test
+    public void executeTest_notEqual_zeroPattern_onePattern() {
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
+
+        SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        TransientOperation<Float, StaticColor> op1 = metric1.execute();
+
+        checkOperationEqual(op1, 0.00009999f);
+
+        SimpleSSIMMetric metric2 = new SimpleSSIMMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        TransientOperation<Float, StaticColor> op2 = metric2.execute();
+
+        checkOperationEqual(op2, 0.00009999f);
+    }
+
+    /**
+     * Tests if the metric for the patterns provides the correct result.
+     * 
+     * Note: The result was checked against ssim.m available at
+     * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
+     */
+    @Test
+    public void executeTest_notEqual_zeroPattern_sixPattern_check() {
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 6));
+
+        SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        TransientOperation<Float, StaticColor> op1 = metric1.execute();
+
+        checkOperationEqual(op1, 0.0024938f);
+
+        SimpleSSIMMetric metric2 = new SimpleSSIMMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        TransientOperation<Float, StaticColor> op2 = metric2.execute();
+
+        checkOperationEqual(op2, 0.0024938f);
+    }
+
+    /**
+     * Tests if the metric for the patterns provides the correct result.
+     * 
+     * Note: The result was checked against ssim.m available at
+     * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
+     */
+    @Test
+    public void executeTest_notEqual_zeroPattern_eightPattern_check() {
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 8));
+
+        SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        TransientOperation<Float, StaticColor> op1 = metric1.execute();
+
+        checkOperationEqual(op1, 0.028088f);
+
+        SimpleSSIMMetric metric2 = new SimpleSSIMMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
+        TransientOperation<Float, StaticColor> op2 = metric2.execute();
+
+        checkOperationEqual(op2, 0.028088f);
     }
 }

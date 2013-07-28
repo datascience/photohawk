@@ -127,11 +127,11 @@ public class MAEMetricTest extends AbstractMetricTest {
         MAEMetric metric1 = new MAEMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
-        checkOperationEqual(op1, 0.53333f, 0.8f, 0.0f, 0.8f);
+        checkOperationEqual(op1, 0.5333333f, 0.8f, 0.0f, 0.8f);
 
         MAEMetric metric2 = new MAEMetric(img2, img1, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
-        checkOperationEqual(op2, 0.53333f, 0.8f, 0.0f, 0.8f);
+        checkOperationEqual(op2, 0.5333333f, 0.8f, 0.0f, 0.8f);
     }
 }

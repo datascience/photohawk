@@ -12,7 +12,7 @@ import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
  */
 public abstract class AbstractMetricTest {
 
-    protected static final float FLOAT_ASSERT_DELTA = 0.0001f;
+    protected static final float FLOAT_ASSERT_DELTA = 0.000001f;
 
     protected static final int DEFAULT_IMAGE_SIZE = 5;
 
