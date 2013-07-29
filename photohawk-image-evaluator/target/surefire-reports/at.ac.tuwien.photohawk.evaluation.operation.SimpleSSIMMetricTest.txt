@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: at.ac.tuwien.photohawk.evaluation.operation.SimpleSSIMMetricTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.771 sec
