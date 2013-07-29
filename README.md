@@ -20,7 +20,8 @@ To build the library and plugin, follow these steps:
 <pre>mvn deploy</pre>
 This will deploy the built packages to `/tmp/photohawk` and `/tmp/photohawk-SNAPSHOT` respectively.
 Alternatively override the distributionManagement in your settings.xml.
-4. Copy the deployed artefacts to a webserver
+4. Update the `photohawk-repository` and `photohawk-snapshot-repository` in the photohawk-plugin-VERSION.xml to point to your repository
+5. Copy the deployed artefacts your repository
 
 Note that a hosted version is currently available at [http://datascience.github.io/photohawk/taverna/updates/2.4.0/snapshot](http://http://datascience.github.io/photohawk/taverna/updates/2.4.0/snapshot).
 
