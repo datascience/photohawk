@@ -46,33 +46,28 @@
 </ul><p>Additionally it packages the implementation as a <a href="http://www.taverna.org.uk/">Taverna</a> plugin for use in a Taverna workflow.</p>
 
 <h2>
-<a name="build" class="anchor" href="#build"><span class="octicon octicon-link"></span></a>Build</h2>
-
-<p>To build the library and plugin, follow these steps:</p>
-
-<ol>
-<li>Clone the repository</li>
-<li>Go into the repository folder</li>
-<li>Build the project using maven
-<pre>mvn deploy</pre>
-This will deploy the built packages to <code>/tmp/photohawk</code> and <code>/tmp/photohawk-SNAPSHOT</code> respectively.
-Alternatively override the distributionManagement in your settings.xml.</li>
-<li>Copy the deployed artefacts to a webserver</li>
-</ol><p>Note that a hosted version is currently available at <a href="http://ifs.tuwien.ac.at/%7Eplangg/photohawk/">http://ifs.tuwien.ac.at/~plangg/photohawk/</a>.</p>
-
-<h2>
 <a name="install-the-taverna-plugin" class="anchor" href="#install-the-taverna-plugin"><span class="octicon octicon-link"></span></a>Install the Taverna plugin</h2>
 
 <ol>
 <li>Open Taverna</li>
 <li>Add the plugin site
-a. Open <code>Menu -&gt; Advanced -&gt; Updates and plugins -&gt; Find new plugins -&gt; Add update site</code>
-b. Choose a site name
-c. Enter the site URL <code>http://ifs.tuwien.ac.at/~plangg/photohawk/</code>
+
+<ol>
+<li>Open <code>Menu -&gt; Advanced -&gt; Updates and plugins -&gt; Find new plugins -&gt; Add update site</code>
+</li>
+<li>Choose a site name</li>
+<li>Enter the site URL <code>http://datascience.github.io/photohawk/taverna/updates/2.4.0/release</code> or <code>http://datascience.github.io/photohawk/taverna/updates/2.4.0/snapshot</code>
+</li>
+</ol>
 </li>
 <li>Install the plugin
-a. Tick the checkbox next to <code>Photohawk Taverna plugin</code>
-b. Click Install</li>
+
+<ol>
+<li>Tick the checkbox next to <code>Photohawk Taverna plugin</code>
+</li>
+<li>Click Install</li>
+</ol>
+</li>
 <li>Restart Taverna</li>
 </ol>
       </section>
