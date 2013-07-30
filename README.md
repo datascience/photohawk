@@ -28,12 +28,12 @@ Note that a hosted version is currently available at [http://datascience.github.
 ## Install the Taverna plugin
 1. Open Taverna
 2. Add the plugin site
-    a. Open `Menu -> Advanced -> Updates and plugins -> Find new plugins -> Add update site`
-    b. Choose a site name
-    c. Enter the site URL `http://datascience.github.io/photohawk/taverna/updates/2.4.0/release` or `http://datascience.github.io/photohawk/taverna/updates/2.4.0/snapshot`
+    1. Open `Menu -> Advanced -> Updates and plugins -> Find new plugins -> Add update site`
+    2. Choose a site name
+    3. Enter the site URL `http://datascience.github.io/photohawk/taverna/updates/2.4.0/release` or `http://datascience.github.io/photohawk/taverna/updates/2.4.0/snapshot`
 3. Install the plugin
-    a. Tick the checkbox next to `Photohawk Taverna plugin`
-    b. Click Install
+    1. Tick the checkbox next to `Photohawk Taverna plugin`
+    2. Click Install
 4. Restart Taverna
 
 ## Set up the development environment
@@ -42,22 +42,22 @@ Note that a hosted version is currently available at [http://datascience.github.
 3. Install the [m2eclipse plugin](http://marketplace.eclipse.org/content/maven-integration-eclipse)
 4. Create a new workspace
 5. Import the projects
-    a. Open `File -> Import... -> Existing Maven Projects`
-    b. Select the repository as `Root Directory`
-    c. Select all projects
-    d. Click `Finish`
+    1. Open `File -> Import... -> Existing Maven Projects`
+    2. Select the repository as `Root Directory`
+    3. Select all projects
+    4. Click `Finish`
 
 ### Code formatter & checkstyle
 1. Install the [checkstyle plugin](http://marketplace.eclipse.org/node/150)
 2. Set up the code formatter
-    a. Open `Window -> Preferences`
-    c. Open `Java -> Code style -> Formatter`
-    d. Click `Import...` and select the file `code-style/eclipse_formatter.xml`
+    1. Open `Window -> Preferences`
+    2. Open `Java -> Code style -> Formatter`
+    3. Click `Import...` and select the file `code-style/eclipse_formatter.xml`
 3. Set up checktyle
-    a. Open `Window -> Preferences`
-    b. Open `Checkstyle`
-    c. Select `New... -> External configuration` and select `code-style/checkstyle.xml`
-    d. Activate the checkstyle plugin for all projects
+    1. Open `Window -> Preferences`
+    2. Open `Checkstyle`
+    3. Select `New... -> External configuration` and select `code-style/checkstyle.xml`
+    4. Activate the checkstyle plugin for all projects
 
 ### Debug within eclipse
 Right click `photohawk-activity-ui/src/test/java/at.ac.tuwien.photohawk.taverna.ui.TavernaWorkbenchWithExamplePlugin.java` and select `Debug as -> Java Application`.
