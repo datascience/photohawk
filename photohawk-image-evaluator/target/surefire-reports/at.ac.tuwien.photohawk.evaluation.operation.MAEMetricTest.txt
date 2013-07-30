@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: at.ac.tuwien.photohawk.evaluation.operation.MAEMetricTest
--------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 sec
