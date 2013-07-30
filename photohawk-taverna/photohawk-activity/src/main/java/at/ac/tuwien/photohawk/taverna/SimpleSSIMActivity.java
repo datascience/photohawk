@@ -19,11 +19,11 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
+
+import org.apache.log4j.Logger;
 
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.hsb.HSBColorConverter;
@@ -48,8 +48,6 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
     private static final String OUT_AGGREGATED = "SSIM";
     private static final String OUT_CHANNELS = "SSIM_Channels";
     private static final String OUT_CHANNEL_NAMES = "SSIM_ChannelNames";
-
-    private static final int DEFAULT_SCALE_TARGET_SIZE = 256;
 
     /**
      * Reconfigure ports of activity.
@@ -77,10 +75,10 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
                 }
 
                 // Convert to SRGB
-                SRGBColorConverter srgbImage1 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[0]));
-                SRGBColorConverter srgbImage2 = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[1]));
-                images[0] = srgbImage1.getImage().getBufferedImage();
-                images[1] = srgbImage2.getImage().getBufferedImage();
+                images[0] = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[0])).getImage()
+                    .getBufferedImage();
+                images[1] = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[1])).getImage()
+                    .getBufferedImage();
 
                 // Resize
                 ShrinkResizePreprocessor shrink = new ShrinkResizePreprocessor(images[0], images[1]);
@@ -90,8 +88,13 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
                 shrink = null;
 
                 // Scale
+                int targetSize = getConfiguration().getTargetSize();
+                if (targetSize <= 0) {
+                    targetSize = SimpleSSIMMetric.DEFAULT_TARGET_SIZE;
+                }
                 ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(images[0], images[1],
-                    DEFAULT_SCALE_TARGET_SIZE);
+                    targetSize);
+
                 scale.process();
                 images[0] = scale.getResult1();
                 images[1] = scale.getResult2();
@@ -105,8 +108,14 @@ public class SimpleSSIMActivity extends AbstractActivity<SimpleSSIMActivityConfi
 
                 // TODO: What happens if one image is smaller than the
                 // SCALE_TARGET_SIZE?
-                SimpleSSIMMetric ssim = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(images[0].getWidth(),
-                    images[0].getHeight()));
+                SimpleSSIMMetric ssim = null;
+                if (!getConfiguration().isDoThreaded() || getConfiguration().getThreadPoolSize() <= 0) {
+                    ssim = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(images[0].getWidth(), images[0]
+                        .getHeight()), getConfiguration().isDoThreaded());
+                } else {
+                    ssim = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(images[0].getWidth(), images[0]
+                        .getHeight()), getConfiguration().isDoThreaded(), getConfiguration().getThreadPoolSize());
+                }
 
                 TransientOperation<Float, StaticColor> op = ssim.execute();
                 Map<String, T2Reference> outputs = registerOutputs(callback, op, OUT_AGGREGATED, OUT_CHANNELS,

@@ -48,9 +48,22 @@ import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
  */
 public class SimpleSSIMMetric extends Metric {
 
-    private static final int BLOCK_SIZE = 11;
+    /**
+     * Default target size of the image.
+     */
+    public static final int DEFAULT_TARGET_SIZE = 256;
 
-    private static final int DEFAULT_TARGET_SIZE = 256;
+    /**
+     * Default state whether the operation is executed with multiple threads.
+     */
+    public static final boolean DEFAULT_DO_THREADED = false;
+
+    /**
+     * Default thread pool size.
+     */
+    public static final int DEFAULT_THREADPOOL_SIZE = 20;
+
+    private static final int BLOCK_SIZE = 11;
 
     private static final Logger LOGGER = LogManager.getLogger(SimpleSSIMMetric.class);
 
@@ -86,7 +99,9 @@ public class SimpleSSIMMetric extends Metric {
         3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017,
         0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06};
 
-    private boolean doThreaded = false;
+    private boolean doThreaded = DEFAULT_DO_THREADED;
+
+    private int threadPoolSize = DEFAULT_THREADPOOL_SIZE;
 
     /**
      * Prepares the provided image for this metric.
@@ -218,8 +233,27 @@ public class SimpleSSIMMetric extends Metric {
      */
     public SimpleSSIMMetric(final ColorConverter<?> img1, final ColorConverter<?> img2, final Point start,
         final Point end, final boolean doThreaded) {
-        super(img1, img2, start, end);
+        this(img1, img2, start, end);
         this.doThreaded = doThreaded;
+    }
+
+    /**
+     * Creates a new SimpleSSIMMetric with the provided parameters and a
+     * blocksize of {@link #BLOCK_SIZE2}.
+     * 
+     * @param img1
+     *            color converter of image 1
+     * @param img2
+     *            color converter of image 2
+     * @param start
+     *            start of comparison
+     * @param end
+     *            end of comparison
+     */
+    public SimpleSSIMMetric(final ColorConverter<?> img1, final ColorConverter<?> img2, final Point start,
+        final Point end, final boolean doThreaded, final int threadPoolSize) {
+        this(img1, img2, start, end, doThreaded);
+        this.threadPoolSize = threadPoolSize;
     }
 
     @Override
@@ -262,9 +296,6 @@ public class SimpleSSIMMetric extends Metric {
      * Metric.
      */
     public class SSIMTransientOperation extends MetricTransientOperation {
-
-        private static final int DEFAULT_THREADPOOL_SIZE = 20;
-
         private double[] ssimTotal;
         private StaticColor realssimTotal;
         private int blocks;
@@ -275,7 +306,7 @@ public class SimpleSSIMMetric extends Metric {
         public void init() {
             if (doThreaded) {
                 LOGGER.debug("Threaded execution enabled, creating pool");
-                this.pool = Executors.newFixedThreadPool(DEFAULT_THREADPOOL_SIZE);
+                this.pool = Executors.newFixedThreadPool(threadPoolSize);
                 this.service = new ExecutorCompletionService<Double[]>(pool);
             }
 

@@ -17,9 +17,41 @@ package at.ac.tuwien.photohawk.taverna;
 
 import java.io.Serializable;
 
+import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
+
 /**
  * Activity configuration bean for SimpleSSIMActivity.
  */
 public class SimpleSSIMActivityConfigurationBean implements Serializable {
     private static final long serialVersionUID = -7424460713469977670L;
+
+    private int targetSize = SimpleSSIMMetric.DEFAULT_TARGET_SIZE;
+
+    private boolean doThreaded = SimpleSSIMMetric.DEFAULT_DO_THREADED;
+
+    private int threadPoolSize = SimpleSSIMMetric.DEFAULT_THREADPOOL_SIZE;
+
+    public int getTargetSize() {
+        return targetSize;
+    }
+
+    public void setTargetSize(int targetSize) {
+        this.targetSize = targetSize;
+    }
+
+    public boolean isDoThreaded() {
+        return doThreaded;
+    }
+
+    public void setDoThreaded(boolean doThreaded) {
+        this.doThreaded = doThreaded;
+    }
+
+    public int getThreadPoolSize() {
+        return threadPoolSize;
+    }
+
+    public void setThreadPoolSize(int threadPoolSize) {
+        this.threadPoolSize = threadPoolSize;
+    }
 }

@@ -41,6 +41,15 @@ public class SimpleSSIMActivityHealthChecker implements HealthChecker<SimpleSSIM
     @Override
     public VisitReport visit(SimpleSSIMActivity activity, List<Object> ancestry) {
         List<VisitReport> subReports = new ArrayList<VisitReport>();
+
+        SimpleSSIMActivityConfigurationBean config = activity.getConfiguration();
+
+        // Check target size
+        if (config.getTargetSize() <= 0) {
+            subReports.add(new VisitReport(HealthCheck.getInstance(), activity, "Target size must be larger than 0",
+                HealthCheck.NO_CONFIGURATION, Status.SEVERE));
+        }
+
         Status status = VisitReport.getWorstStatus(subReports);
         return new VisitReport(HealthCheck.getInstance(), activity, "SSIM report", HealthCheck.NO_PROBLEM, status,
             subReports);
