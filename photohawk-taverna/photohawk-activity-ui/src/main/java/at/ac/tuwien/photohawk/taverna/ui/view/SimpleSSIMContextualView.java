@@ -18,17 +18,26 @@ package at.ac.tuwien.photohawk.taverna.ui.view;
 import java.awt.Frame;
 
 import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.JEditorPane;
 
-import net.sf.taverna.t2.workbench.ui.actions.activity.HTMLBasedActivityContextualView;
+import net.sf.taverna.t2.lang.ui.HtmlUtils;
+import net.sf.taverna.t2.workbench.ui.views.contextualviews.ContextualView;
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivity;
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivityConfigurationBean;
 import at.ac.tuwien.photohawk.taverna.ui.config.SimpleSSIMConfigureAction;
 
-public class SimpleSSIMContextualView extends HTMLBasedActivityContextualView<SimpleSSIMActivityConfigurationBean> {
+public class SimpleSSIMContextualView extends ContextualView {
     private static final long serialVersionUID = 2608878796411766535L;
 
+    private SimpleSSIMActivity activity;
+
+    private JEditorPane editorPane;
+
     public SimpleSSIMContextualView(SimpleSSIMActivity activity) {
-        super(activity);
+        super();
+        this.activity = activity;
+        initView();
     }
 
     @Override
@@ -37,8 +46,22 @@ public class SimpleSSIMContextualView extends HTMLBasedActivityContextualView<Si
     }
 
     @Override
+    public JComponent getMainFrame() {
+        editorPane = HtmlUtils.createEditorPane(buildHtml());
+        return HtmlUtils.panelForHtml(editorPane);
+    }
+
+    private String buildHtml() {
+        String html = HtmlUtils.getHtmlHead("white");
+        html += HtmlUtils.buildTableOpeningTag();
+        html += "<tr><th colspan=\"2\">" + getViewTitle() + "</th></tr>";
+        html += getRawTableRowsHtml() + "</table>";
+        html += "</body></html>";
+        return html;
+    }
+
     protected String getRawTableRowsHtml() {
-        SimpleSSIMActivityConfigurationBean configuration = getActivity().getConfiguration();
+        SimpleSSIMActivityConfigurationBean configuration = activity.getConfiguration();
         StringBuilder sb = new StringBuilder();
         sb.append("<tr><td>Target size</td><td>");
         sb.append(configuration.getTargetSize());
@@ -60,11 +83,11 @@ public class SimpleSSIMContextualView extends HTMLBasedActivityContextualView<Si
 
     @Override
     public Action getConfigureAction(final Frame owner) {
-        return new SimpleSSIMConfigureAction(getActivity(), owner);
+        return new SimpleSSIMConfigureAction(activity, owner);
     }
 
     @Override
-    public SimpleSSIMActivity getActivity() {
-        return (SimpleSSIMActivity) super.getActivity();
+    public void refreshView() {
+        editorPane.setText(buildHtml());
     }
 }
