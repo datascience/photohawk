@@ -331,6 +331,7 @@ public class SimpleSSIMMetric extends Metric {
                         }
                     } catch (InterruptedException e) {
                         LOGGER.error("Retrieving result of block [{}] interrupted", i, e);
+                        Thread.currentThread().interrupt();
                         throw new OperationException("Retrieving result of block " + i + " interrupted");
                     } catch (ExecutionException e) {
                         LOGGER.error("Execution of block [{}] had an exception", i, e);
