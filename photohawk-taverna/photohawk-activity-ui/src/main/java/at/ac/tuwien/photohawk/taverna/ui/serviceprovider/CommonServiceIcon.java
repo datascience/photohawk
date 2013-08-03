@@ -28,6 +28,8 @@ import at.ac.tuwien.photohawk.taverna.AbstractActivity;
  */
 public class CommonServiceIcon implements ActivityIconSPI {
 
+    private static final String ICON_PATH = "/hawkeye-icon.png";
+
     private static Icon icon;
 
     @Override
@@ -50,7 +52,7 @@ public class CommonServiceIcon implements ActivityIconSPI {
      */
     public static Icon getIcon() {
         if (icon == null) {
-            icon = new ImageIcon(CommonServiceIcon.class.getResource("/exampleIcon.png"));
+            icon = new ImageIcon(CommonServiceIcon.class.getResource(ICON_PATH));
         }
         return icon;
     }

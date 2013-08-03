@@ -20,16 +20,20 @@ import java.util.List;
 
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.ContextualView;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ContextualViewFactory;
+
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivity;
 
+/**
+ * Factory for contextual view for SSIM.
+ */
 public class SimpleSSIMActivityContextViewFactory implements ContextualViewFactory<SimpleSSIMActivity> {
-
+    @Override
     public boolean canHandle(Object selection) {
         return selection instanceof SimpleSSIMActivity;
     }
 
+    @Override
     public List<ContextualView> getViews(SimpleSSIMActivity selection) {
         return Arrays.<ContextualView> asList(new SimpleSSIMContextualView(selection));
     }
-
 }

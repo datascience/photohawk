@@ -18,11 +18,18 @@ package at.ac.tuwien.photohawk.taverna.ui.menu;
 import javax.swing.Action;
 
 import net.sf.taverna.t2.workbench.activitytools.AbstractConfigureActivityMenuAction;
+
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivity;
 import at.ac.tuwien.photohawk.taverna.ui.config.SimpleSSIMConfigureAction;
 
+/**
+ * Creates a new configure menu for SSIM.
+ */
 public class SimpleSSIMConfigureMenuAction extends AbstractConfigureActivityMenuAction<SimpleSSIMActivity> {
 
+    /**
+     * Creates a new instance.
+     */
     public SimpleSSIMConfigureMenuAction() {
         super(SimpleSSIMActivity.class);
     }

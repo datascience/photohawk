@@ -20,18 +20,31 @@ import java.awt.event.ActionEvent;
 
 import net.sf.taverna.t2.workbench.ui.actions.activity.ActivityConfigurationAction;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityConfigurationDialog;
+
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivity;
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivityConfigurationBean;
 
+/**
+ * Configuration action for SSIM.
+ */
 @SuppressWarnings("serial")
 public class SimpleSSIMConfigureAction extends
     ActivityConfigurationAction<SimpleSSIMActivity, SimpleSSIMActivityConfigurationBean> {
 
+    /**
+     * Creates a new instance for the provided activity.
+     * 
+     * @param activity
+     *            the activity of this configuration
+     * @param owner
+     *            the owner frame
+     */
     public SimpleSSIMConfigureAction(SimpleSSIMActivity activity, Frame owner) {
         super(activity);
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public void actionPerformed(ActionEvent e) {
         ActivityConfigurationDialog<SimpleSSIMActivity, SimpleSSIMActivityConfigurationBean> currentDialog = ActivityConfigurationAction
             .getDialog(getActivity());

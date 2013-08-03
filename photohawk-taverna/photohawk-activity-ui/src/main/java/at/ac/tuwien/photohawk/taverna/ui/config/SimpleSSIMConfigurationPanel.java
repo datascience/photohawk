@@ -25,13 +25,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityConfigurationPanel;
+
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivity;
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivityConfigurationBean;
 
+/**
+ * Configuration GUI Panel for SSIM.
+ */
 @SuppressWarnings("serial")
 public class SimpleSSIMConfigurationPanel extends
     ActivityConfigurationPanel<SimpleSSIMActivity, SimpleSSIMActivityConfigurationBean> {
 
+    private static final int FIELD_WIDTH = 20;
     private SimpleSSIMActivity activity;
     private SimpleSSIMActivityConfigurationBean configBean;
 
@@ -39,18 +44,27 @@ public class SimpleSSIMConfigurationPanel extends
     private JCheckBox doThreadedBox;
     private JTextField threadPoolSizeText;
 
+    /**
+     * Creates a new instance for the provided activity.
+     * 
+     * @param activity
+     *            the activity for this panel
+     */
     public SimpleSSIMConfigurationPanel(SimpleSSIMActivity activity) {
         this.activity = activity;
         initGui();
     }
 
+    /**
+     * Initializes the part of this config panel.
+     */
     protected void initGui() {
         removeAll();
         setLayout(new GridLayout(0, 2));
 
         JLabel targetSizeLabel = new JLabel("Target Size:");
         add(targetSizeLabel);
-        targetSizeText = new JTextField(20);
+        targetSizeText = new JTextField(FIELD_WIDTH);
         add(targetSizeText);
         targetSizeLabel.setLabelFor(targetSizeText);
 
@@ -67,7 +81,7 @@ public class SimpleSSIMConfigurationPanel extends
 
         JLabel numberOfThreadsLabel = new JLabel("Number of threads:");
         add(numberOfThreadsLabel);
-        threadPoolSizeText = new JTextField(20);
+        threadPoolSizeText = new JTextField(FIELD_WIDTH);
         add(threadPoolSizeText);
         numberOfThreadsLabel.setLabelFor(threadPoolSizeText);
 
@@ -76,7 +90,10 @@ public class SimpleSSIMConfigurationPanel extends
     }
 
     /**
-     * Check that user values in UI are valid
+     * Check that user values in UI are valid, and displays a error message if
+     * not.
+     * 
+     * @return true if the values are valid, false otherwise
      */
     @Override
     public boolean checkValues() {
@@ -114,6 +131,8 @@ public class SimpleSSIMConfigurationPanel extends
     /**
      * Return configuration bean generated from user interface last time
      * noteConfiguration() was called.
+     * 
+     * @return the configuration bean
      */
     @Override
     public SimpleSSIMActivityConfigurationBean getConfiguration() {
@@ -122,19 +141,21 @@ public class SimpleSSIMConfigurationPanel extends
     }
 
     /**
-     * Check if the user has changed the configuration from the original
+     * Check if the user has changed the configuration from the original.
+     * 
+     * @return true if the configuration changed, false otherwise
      */
     @Override
     public boolean isConfigurationChanged() {
         // true (changed) unless all fields match the originals
-        return !(Integer.toString(configBean.getTargetSize()).equals(targetSizeText.getText())
-            && (configBean.isDoThreaded() == doThreadedBox.isSelected()) && Integer.toString(
-            configBean.getThreadPoolSize()).equals(threadPoolSizeText.getText()));
+        return !((Integer.toString(configBean.getTargetSize()).equals(targetSizeText.getText()))
+            && (configBean.isDoThreaded() == doThreadedBox.isSelected()) && (Integer.toString(configBean
+            .getThreadPoolSize()).equals(threadPoolSizeText.getText())));
     }
 
     /**
      * Prepare a new configuration bean from the UI, to be returned with
-     * getConfiguration()
+     * getConfiguration().
      */
     @Override
     public void noteConfiguration() {

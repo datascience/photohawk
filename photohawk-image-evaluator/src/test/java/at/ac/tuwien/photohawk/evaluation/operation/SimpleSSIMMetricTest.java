@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * Copyright 2013 Vienna University of Technology
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 package at.ac.tuwien.photohawk.evaluation.operation;
 
 import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.getColors;
@@ -13,15 +28,18 @@ import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBStaticColor;
 import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
 
+/**
+ * Unit tests for SSIM metric.
+ */
 public class SimpleSSIMMetricTest extends AbstractMetricTest {
 
-    private int DEFAULT_IMAGE_SIZE = 11;
+    private static final int DEFAULT_IMAGE_SIZE = 11;
 
-    private Point DEFAULT_ENDPOINT = new Point(DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE);
+    private static final Point DEFAULT_ENDPOINT = new Point(DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE);
 
-    private int LARGE_IMAGE_SIZE = 22;
+    private static final int LARGE_IMAGE_SIZE = 22;
 
-    private Point LARGE_ENDPOINT = new Point(LARGE_IMAGE_SIZE, LARGE_IMAGE_SIZE);
+    private static final Point LARGE_ENDPOINT = new Point(LARGE_IMAGE_SIZE, LARGE_IMAGE_SIZE);
 
     /**
      * Tests if the result for the same pattern is 1.0f.

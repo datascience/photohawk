@@ -32,9 +32,9 @@ import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
  * 
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  */
-public class AutoColorConverter implements ColorConverter {
+public class AutoColorConverter implements ColorConverter<StaticColor> {
 
-    private ColorConverter converter;
+    private ColorConverter<?> converter;
 
     @SuppressWarnings("deprecation")
     public AutoColorConverter(ConvenientBufferedImageWrapper img, ConvenientBufferedImageWrapper match,

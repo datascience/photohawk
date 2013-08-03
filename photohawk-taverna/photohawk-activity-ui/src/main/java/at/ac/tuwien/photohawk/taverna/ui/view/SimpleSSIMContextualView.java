@@ -23,17 +23,29 @@ import javax.swing.JEditorPane;
 
 import net.sf.taverna.t2.lang.ui.HtmlUtils;
 import net.sf.taverna.t2.workbench.ui.views.contextualviews.ContextualView;
+
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivity;
 import at.ac.tuwien.photohawk.taverna.SimpleSSIMActivityConfigurationBean;
 import at.ac.tuwien.photohawk.taverna.ui.config.SimpleSSIMConfigureAction;
 
+/**
+ * Contextual view for SSIM.
+ */
 public class SimpleSSIMContextualView extends ContextualView {
     private static final long serialVersionUID = 2608878796411766535L;
+
+    private static final int PREFERRED_POSITION = 100;
 
     private SimpleSSIMActivity activity;
 
     private JEditorPane editorPane;
 
+    /**
+     * Creates a new instance for the provided activity.
+     * 
+     * @param activity
+     *            the activity
+     */
     public SimpleSSIMContextualView(SimpleSSIMActivity activity) {
         super();
         this.activity = activity;
@@ -51,18 +63,19 @@ public class SimpleSSIMContextualView extends ContextualView {
         return HtmlUtils.panelForHtml(editorPane);
     }
 
+    /**
+     * Creates the HTML view for the activity.
+     * 
+     * @return the HTML view as string
+     */
     private String buildHtml() {
-        String html = HtmlUtils.getHtmlHead("white");
-        html += HtmlUtils.buildTableOpeningTag();
-        html += "<tr><th colspan=\"2\">" + getViewTitle() + "</th></tr>";
-        html += getRawTableRowsHtml() + "</table>";
-        html += "</body></html>";
-        return html;
-    }
-
-    protected String getRawTableRowsHtml() {
         SimpleSSIMActivityConfigurationBean configuration = activity.getConfiguration();
         StringBuilder sb = new StringBuilder();
+        sb.append(HtmlUtils.getHtmlHead("white"));
+        sb.append(HtmlUtils.buildTableOpeningTag());
+        sb.append("<tr><th colspan=\"2\">");
+        sb.append(getViewTitle());
+        sb.append("</th></tr>");
         sb.append("<tr><td>Target size</td><td>");
         sb.append(configuration.getTargetSize());
         sb.append("</td></tr><tr><td>Threaded</td><td>");
@@ -73,12 +86,13 @@ public class SimpleSSIMContextualView extends ContextualView {
             sb.append(configuration.getThreadPoolSize());
             sb.append("</td></tr>");
         }
+        sb.append("</table></body></html>");
         return sb.toString();
     }
 
     @Override
     public int getPreferredPosition() {
-        return 100;
+        return PREFERRED_POSITION;
     }
 
     @Override
