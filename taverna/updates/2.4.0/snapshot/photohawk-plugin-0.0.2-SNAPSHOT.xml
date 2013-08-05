@@ -10,7 +10,7 @@
 <repository>http://www.mygrid.org.uk/maven/repository</repository>
 <repository>http://datascience.github.io/photohawk/taverna/updates/2.4.0/release</repository>
 <repository>http://datascience.github.io/photohawk/taverna/updates/2.4.0/snapshot</repository>
-<repository>http://repo1.maven.org/maven2</repository>
+<repository>http://repo.maven.apache.org/maven2</repository>
 <repository>http://www.mygrid.org.uk/maven/snapshot-repository</repository>
 <repository>http://uk.maven.org/maven2</repository>
 <repository>http://download.java.net/maven/2</repository>
