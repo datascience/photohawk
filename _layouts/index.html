@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Photohawk : Pure Java image comparison" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+	<link rel="icon" type="image/png" href="{{ site.repository-path }}/images/photohawk-icon.png"><!-- Major Browsers -->
+	<!--[if IE]><link rel="SHORTCUT ICON" href="{{ site.repository-path }}/favicon.ico"/><![endif]--><!-- Internet Explorer-->
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ site.repository-path }}/stylesheets/stylesheet.css">
 
     <title>Photohawk</title>
   </head>
@@ -18,7 +21,12 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/datascience/photohawk">View on GitHub</a>
 
-          <img id="project_logo" src="images/photohawk.svg" alt="Photohawk logo"/>
+          <div id="org_logo">
+            <a href="http://tuwien.ac.at/"><img id="tu_logo" src="{{ site.repository-path }}/images/tuwien.png" alt="TU Wien logo" class="logo"/></a>
+            <a href="http://ifs.tuwien.ac.at/"><img id="tu_logo" src="{{ site.repository-path }}/images/ifs.png" alt="IFS logo" class="logo"/></a>
+          </div>
+
+          <a href="http://datascience.github.io/photohawk/"><img id="project_logo" src="{{ site.repository-path }}/images/photohawk.png" alt="Photohawk logo" class="logo"/></a>
           <h2 id="project_tagline">Pure Java image comparison</h2>
 
             <section id="downloads">
@@ -39,11 +47,8 @@
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">Photohawk maintained by <a href="https://github.com/datascience">datascience</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
-    
 
   </body>
 </html>
