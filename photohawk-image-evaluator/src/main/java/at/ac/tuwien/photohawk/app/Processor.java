@@ -24,8 +24,8 @@ import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.ScaleToNearestFactorPreprocessor;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.ShrinkResizePreprocessor;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
-import net.sf.ij_plugins.dcraw.DCRawException;
-import net.sf.ij_plugins.dcraw.DCRawReader;
+import at.ac.tuwien.photohawk.evaluation.util.RawImageReader;
+
 import org.apache.commons.io.FilenameUtils;
 
 import javax.imageio.ImageIO;
@@ -38,8 +38,9 @@ import java.io.IOException;
  * @author artur
  */
 public class Processor {
-    Float run(String path1, String path2) throws IOException, DCRawException, ClassNotFoundException, IllegalAccessException, InstantiationException {
-        File file1=new File(path1);
+    Float run(String path1, String path2) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+        RawImageReader.ConversionParameter params=new RawImageReader.ConversionParameter();
+        /*File file1=new File(path1);
         File file2=new File(path2);
         String path1NoExt = FilenameUtils.removeExtension(path1);
         String path2NoExt = FilenameUtils.removeExtension(path2);
@@ -66,8 +67,9 @@ public class Processor {
         reader.removeAllLogListeners();
 
         file1=new File(path1NoExt + ".tiff");
-        file2=new File(path2NoExt + ".tiff");
-        BufferedImage[] images={ImageIO.read(file1),ImageIO.read(file2)};
+        file2=new File(path2NoExt + ".tiff");    */
+
+        BufferedImage[] images={RawImageReader.read(path1, params),RawImageReader.read(path2, params)};
         if (images == null) {
             throw new IOException("One of the images is corrupted or does not exist");
         }
@@ -102,8 +104,8 @@ public class Processor {
         SimpleSSIMMetric ssim = null;
         ssim = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(images[0].getWidth(), images[0].getHeight()));
         TransientOperation<Float, StaticColor> op = ssim.execute();
-        file1.delete();
-        file2.delete();
+        //file1.delete();
+        //file2.delete();
         return op.getAggregatedResult();
 
     }

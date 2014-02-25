@@ -15,8 +15,6 @@
  */
 package at.ac.tuwien.photohawk.app;
 
-import net.sf.ij_plugins.dcraw.DCRawException;
-
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,8 +40,6 @@ public class CLI {
             System.out.println(result);
         } catch (IOException ex) {
             Logger.getLogger(CLI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DCRawException e) {
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {

@@ -16,13 +16,10 @@
 package at.ac.tuwien.photohawk.evaluation.util;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
-import at.ac.tuwien.photohawk.executor.CommandExecutor;
-
-
 
 
 /**
@@ -32,6 +29,62 @@ import at.ac.tuwien.photohawk.executor.CommandExecutor;
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  */
 public class RawImageReader {
+
+    private static String dcrawBinPath;
+    private static String OS = null;
+    public static String getOsName()
+    {
+        if(OS == null) { OS = System.getProperty("os.name"); }
+        return OS;
+    }
+    public static boolean isWindows()
+    {
+        return getOsName().startsWith("Windows");
+    }
+    private static String pickDcrawExecutable() {
+        return isWindows() ? "dcraw.exe" : "dcraw";
+    }
+
+    private static void validateDCRaw() throws IOException {
+        validateDcraw(null);
+    }
+    public static void validateDcraw(String pathToDcraw) throws IOException {
+        if (dcrawBinPath!=null && !dcrawBinPath.equals(""))
+            return;
+        if (pathToDcraw!=null){
+            if (!pathToDcraw.endsWith(pickDcrawExecutable()))
+            {
+                if (pathToDcraw.endsWith("/"))
+                    pathToDcraw = pathToDcraw + pickDcrawExecutable();
+                else
+                    pathToDcraw = pathToDcraw + "/" + pickDcrawExecutable();
+            }
+            File file = new File(pathToDcraw);
+            if (file.exists())
+            {
+                dcrawBinPath=file.getAbsolutePath();
+                //System.out.println("DCRAW executable attached successfully");
+                return;
+            }
+        }else{
+            File file = new File("dcraw/" + pickDcrawExecutable());
+            if (file.exists())
+            {
+                dcrawBinPath=file.getAbsolutePath();
+                //System.out.println("DCRAW executable attached successfully");
+                return;
+            }   else {
+                file = new File(pickDcrawExecutable());
+                dcrawBinPath=file.getAbsolutePath();
+                //System.out.println("DCRAW executable attached successfully");
+                return;
+
+            }
+        }
+        throw new IOException("No DCRAW executable found at [ " + dcrawBinPath + " ]");
+    }
+
+
 
     /**
      * Reads a RAW image using dcraw.
@@ -47,15 +100,16 @@ public class RawImageReader {
     public static BufferedImage read(String file, ConversionParameter params) throws IOException {
 
         BufferedImage img = null;
+        validateDCRaw();
 
         try {
-            CommandExecutor exec = new CommandExecutor();
-
+            //CommandExecutor exec = new CommandExecutor();
+            RawCommandExecutor exec   = new RawCommandExecutor();
             // Check if dcraw can decode the file
-            int exitstatus = exec.runCommand("dcraw -i " + file);
+            int exitstatus = exec.runCommand(dcrawBinPath + " -i -v " + file);
             if (exitstatus == 0) {
 
-                String command = "dcraw -c";
+                String command = dcrawBinPath + " -c";
 
                 if (params.isUse16Bit()) {
                     command += " -T";
@@ -64,6 +118,11 @@ public class RawImageReader {
                 // Quickfix
                 if (params.isUseTIFF()) {
                     // command += " -6";
+                }
+
+                if (!params.isUseAutoStretchOrRotation())
+                {
+                    command += " -j";
                 }
 
                 if (params.isUseFixedWhiteLevel()) {
@@ -82,15 +141,16 @@ public class RawImageReader {
                     command += " " + params.getInterpolation().getValue();
                 }
 
-                Process process = RawCommandExecutor.getProcess(command + " " + file);
+                Process process = exec.getProcess(command + " " + file);
                 img = ImageIO.read(process.getInputStream());
-                exitstatus = RawCommandExecutor.runProcess(process);
+                exitstatus = exec.runCommand(process);
 
                 if (exitstatus != 0) {
                     throw new IOException("Error while converting raw");
                 }
+            } else{
+                throw new IOException("No DCRAW executable found at [ " + dcrawBinPath + " ]");
             }
-
         } catch (Exception e) {
             throw new IOException(e.getMessage());
         }
@@ -105,19 +165,21 @@ public class RawImageReader {
         private InterpretationType interpolation;
         private boolean useCameraWhiteBalance;
         private boolean useFixedWhiteLevel;
+        private boolean useAutoStretchOrRotation;
 
         public ConversionParameter() {
-            this(true, true, ConversionColorSpace.sRGB, InterpretationType.ColorInterpolated, false, false);
+            this(true, true, ConversionColorSpace.sRGB, InterpretationType.ColorInterpolated, true, true,false);
         }
 
         public ConversionParameter(boolean use16Bit, boolean useTIFF, ConversionColorSpace cs,
-            InterpretationType interpolation, boolean useCameraWhitebalance, boolean useFixedWhiteLevel) {
+                                   InterpretationType interpolation, boolean useCameraWhitebalance, boolean useFixedWhiteLevel, boolean useAutoStretchOrRotation) {
             this.use16Bit = use16Bit;
             this.useTIFF = useTIFF;
             this.cs = cs;
             this.interpolation = interpolation;
             this.useCameraWhiteBalance = useCameraWhitebalance;
             this.useFixedWhiteLevel = useFixedWhiteLevel;
+            this.useAutoStretchOrRotation= useAutoStretchOrRotation;
         }
 
         public boolean isUse16Bit() {
@@ -142,6 +204,10 @@ public class RawImageReader {
 
         public InterpretationType getInterpolation() {
             return this.interpolation;
+        }
+
+        public boolean isUseAutoStretchOrRotation() {
+            return this.useAutoStretchOrRotation;
         }
 
         public enum ConversionColorSpace {
