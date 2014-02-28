@@ -30,13 +30,15 @@ public class CLI {
             System.out
                     .println("Please provide paths to raw images");
             System.out
-                    .println("e.g.: java -jar profiler.jar /home/user/image1.nef /home/user/image2.dng");
+                    .println("e.g.: java -jar profiler.jar mode /home/user/image1.nef /home/user/image2.dng");
+            System.out
+                    .println("      where mode = ssim, ae, pae, mae or mse");
             return;
         }
-        String[] input={args[0],args[1]};
+        String[] input={args[0],args[1],args[2]};
         try {
             Processor p=new Processor();
-            Float result=p.run(input[0],input[1]);
+            Float result=p.run(input[0],input[1],input[2]);
             System.out.println(result);
         } catch (IOException ex) {
             Logger.getLogger(CLI.class.getName()).log(Level.SEVERE, null, ex);

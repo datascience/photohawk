@@ -20,7 +20,7 @@ import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.hsb.HSBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
-import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
+import at.ac.tuwien.photohawk.evaluation.operation.metric.*;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.ScaleToNearestFactorPreprocessor;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.ShrinkResizePreprocessor;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
@@ -38,75 +38,60 @@ import java.io.IOException;
  * @author artur
  */
 public class Processor {
-    Float run(String path1, String path2) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+    final float FLOAT_ASSERT_DELTA = 0.000001f;
+
+    final int DEFAULT_IMAGE_SIZE = 5;
+
+    final Point DEFAULT_STARTPOINT = new Point(0, 0);
+
+    final Point DEFAULT_ENDPOINT = new Point(DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE);
+
+    Float run(String mode,String path1, String path2) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+
         RawImageReader.ConversionParameter params=new RawImageReader.ConversionParameter();
-        /*File file1=new File(path1);
-        File file2=new File(path2);
-        String path1NoExt = FilenameUtils.removeExtension(path1);
-        String path2NoExt = FilenameUtils.removeExtension(path2);
-
-        DCRawReader reader = new DCRawReader();
-
-        reader.addLogListener(new DCRawReader.LogListener() {
-            @Override
-            public void log(String message) {
-                System.out.println("message = " + message);
-            }
-        });
-       // String[] readerFileSuffixes = ImageIO.getReaderFileSuffixes();
-        reader.executeCommand(new String[]{
-                "-v", // Print verbose messages
-                "-w", // Use camera white balance, if possible
-                "-T", // Write TIFF instead of PPM
-                "-j", // Don't stretch or rotate raw pixels
-                "-W", // Don't automatically brighten the image
-                file1.getAbsolutePath()});
-
-        reader.executeCommand(new String[]{
-                "-v", "-w", "-T", "-j", "-W", file2.getAbsolutePath()});
-        reader.removeAllLogListeners();
-
-        file1=new File(path1NoExt + ".tiff");
-        file2=new File(path2NoExt + ".tiff");    */
-
         BufferedImage[] images={RawImageReader.read(path1, params),RawImageReader.read(path2, params)};
+
         if (images == null) {
             throw new IOException("One of the images is corrupted or does not exist");
         }
 
         // Convert to SRGB
+
         images[0] = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[0])).getImage().getBufferedImage();
         images[1] = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[1])).getImage().getBufferedImage();
-        // Resize
-        ShrinkResizePreprocessor shrink = new ShrinkResizePreprocessor(images[0], images[1]);
-        shrink.process();
-        images[0] = shrink.getResult1();
-        images[1] = shrink.getResult2();
-        shrink = null;
 
-        // Scale
-        int targetSize = SimpleSSIMMetric.DEFAULT_TARGET_SIZE;
-        ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(images[0], images[1], targetSize);
-
-        scale.process();
-        images[0] = scale.getResult1();
-        images[1] = scale.getResult2();
-        scale = null;
-
-        // Evaluate
         ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(images[0]);
-        HSBColorConverter c1 = new HSBColorConverter(new SRGBColorConverter(wrapped1));
         ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(images[1]);
+        HSBColorConverter c1 = new HSBColorConverter(new SRGBColorConverter(wrapped1));
         HSBColorConverter c2 = new HSBColorConverter(new SRGBColorConverter(wrapped2));
-
-        // TODO: What happens if one image is smaller than the
-        // SCALE_TARGET_SIZE?
-        SimpleSSIMMetric ssim = null;
-        ssim = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(images[0].getWidth(), images[0].getHeight()));
-        TransientOperation<Float, StaticColor> op = ssim.execute();
-        //file1.delete();
-        //file2.delete();
-        return op.getAggregatedResult();
-
+        TransientOperation<Float, StaticColor> op=null;
+        if (mode.equals("ssim"))
+        {
+        SimpleSSIMMetric ssim = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(images[0].getWidth(), images[0].getHeight()));
+        op = ssim.execute();
+        }
+        else if (mode.equals("ae"))
+        {
+            AEMetric ae=new AEMetric(c1,c2,DEFAULT_STARTPOINT, DEFAULT_ENDPOINT) ;
+            op = ae.execute();
+        }
+        else if (mode.equals("pae"))
+        {
+            PAEMetric pae=new PAEMetric(c1,c2,DEFAULT_STARTPOINT, DEFAULT_ENDPOINT) ;
+            op = pae.execute();
+        }
+        else if (mode.equals("mae"))
+        {
+            MAEMetric mae=new MAEMetric(c1,c2,DEFAULT_STARTPOINT, DEFAULT_ENDPOINT) ;
+            op = mae.execute();
+        }
+        else if (mode.equals("mse"))
+        {
+            MSEMetric mse=new MSEMetric(c1,c2,DEFAULT_STARTPOINT, DEFAULT_ENDPOINT) ;
+            op = mse.execute();
+        }
+        if (op!=null)
+            return op.getAggregatedResult();
+        return null;
     }
 }
