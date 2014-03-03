@@ -49,16 +49,30 @@ public class Processor {
     Float run(String mode,String path1, String path2) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
 
         RawImageReader.ConversionParameter params=new RawImageReader.ConversionParameter();
-        BufferedImage[] images={RawImageReader.read(path1, params),RawImageReader.read(path2, params)};
-
+	BufferedImage[] images={RawImageReader.read(path1, params),RawImageReader.read(path2, params)};
         if (images == null) {
             throw new IOException("One of the images is corrupted or does not exist");
         }
-
+/*
         // Convert to SRGB
-
         images[0] = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[0])).getImage().getBufferedImage();
         images[1] = new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[1])).getImage().getBufferedImage();
+        // Resize
+        ShrinkResizePreprocessor shrink = new ShrinkResizePreprocessor(images[0], images[1]);
+        shrink.process();
+        images[0] = shrink.getResult1();
+        images[1] = shrink.getResult2();
+        shrink = null;
+
+        // Scale
+        int targetSize = SimpleSSIMMetric.DEFAULT_TARGET_SIZE;
+        ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(images[0], images[1], targetSize);
+
+        scale.process();
+        images[0] = scale.getResult1();
+        images[1] = scale.getResult2();
+        scale = null;
+*/
 
         ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(images[0]);
         ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(images[1]);

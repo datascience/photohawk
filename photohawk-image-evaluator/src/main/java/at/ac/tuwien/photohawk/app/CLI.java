@@ -30,7 +30,7 @@ public class CLI {
             System.out
                     .println("Please provide paths to raw images");
             System.out
-                    .println("e.g.: java -jar profiler.jar mode /home/user/image1.nef /home/user/image2.dng");
+                    .println("e.g.: java -jar photohawk.jar mode /home/user/image1.nef /home/user/image2.dng");
             System.out
                     .println("      where mode = ssim, ae, pae, mae or mse");
             return;
@@ -40,14 +40,14 @@ public class CLI {
             Processor p=new Processor();
             Float result=p.run(input[0],input[1],input[2]);
             System.out.println(result);
-        } catch (IOException ex) {
-            Logger.getLogger(CLI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            Logger.getLogger(CLI.class.getName()).log(Level.SEVERE, null, e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Logger.getLogger(CLI.class.getName()).log(Level.SEVERE, null, e);
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            Logger.getLogger(CLI.class.getName()).log(Level.SEVERE, null, e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            Logger.getLogger(CLI.class.getName()).log(Level.SEVERE, null, e);
         }
 
 
