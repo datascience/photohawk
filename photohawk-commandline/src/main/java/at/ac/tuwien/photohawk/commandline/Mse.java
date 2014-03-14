@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import at.ac.tuwien.photohawk.evaluation.qa.MseQa;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
@@ -32,6 +33,8 @@ public class Mse implements Command {
 
 	private Subparser subparser;
 
+    private MseQa mseQa;
+
 	private ResultPrinter<Float, StaticColor> resultPrinter;
 
 	public Mse(Subparsers subparsers) {
@@ -53,6 +56,8 @@ public class Mse implements Command {
 	public void configure(Namespace n) {
 		this.n = n;
 		resultPrinter = new HRFloatResultPrinter(System.out);
+
+        mseQa = new MseQa();
 	}
 
 	@Override
@@ -65,23 +70,8 @@ public class Mse implements Command {
 			BufferedImage leftImg = ImageIO.read(left);
 			BufferedImage rightImg = ImageIO.read(right);
 
-			// Check size
-			CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(
-					leftImg, rightImg);
-			equalSize.process();
-			leftImg = equalSize.getResult1();
-			rightImg = equalSize.getResult2();
-			equalSize = null;
-
-			// Run metric
-			MSEMetric metric = new MSEMetric(new SRGBColorConverter(
-					new ConvenientBufferedImageWrapper(leftImg)),
-					new SRGBColorConverter(new ConvenientBufferedImageWrapper(
-							rightImg)), new Point(0, 0), new Point(
-							leftImg.getWidth(), leftImg.getHeight()));
-
 			// Evaluate
-			TransientOperation<Float, StaticColor> op = metric.execute();
+			TransientOperation<Float, StaticColor> op = mseQa.evaluate(leftImg, rightImg);
 
 			resultPrinter.print(op);
 		} catch (PreprocessingException e) {

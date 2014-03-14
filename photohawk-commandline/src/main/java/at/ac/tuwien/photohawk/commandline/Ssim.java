@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import at.ac.tuwien.photohawk.evaluation.qa.SsimQa;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
@@ -33,6 +34,8 @@ class Ssim implements Command {
 
 	private Subparser subparser;
 
+    private SsimQa ssimQa;
+
 	private ResultPrinter<Float, StaticColor> resultPrinter;
 
 	public Ssim(Subparsers subparsers) {
@@ -55,6 +58,7 @@ class Ssim implements Command {
 	public void configure(Namespace n) {
 		this.n = n;
 		resultPrinter = new HRFloatResultPrinter(System.out);
+        ssimQa = new SsimQa();
 	}
 
 	@Override
@@ -66,47 +70,8 @@ class Ssim implements Command {
 			BufferedImage leftImg = ImageIO.read(left);
 			BufferedImage rightImg = ImageIO.read(right);
 
-			// Convert to SRGB
-			leftImg = new SRGBColorConverter(
-					new ConvenientBufferedImageWrapper(leftImg)).getImage()
-					.getBufferedImage();
-			rightImg = new SRGBColorConverter(
-					new ConvenientBufferedImageWrapper(rightImg)).getImage()
-					.getBufferedImage();
-
-			// Resize
-			ShrinkResizePreprocessor shrink = new ShrinkResizePreprocessor(
-					leftImg, rightImg);
-			shrink.process();
-			leftImg = shrink.getResult1();
-			rightImg = shrink.getResult2();
-			shrink = null;
-
-			// Scale
-			ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(
-					leftImg, rightImg, SimpleSSIMMetric.DEFAULT_TARGET_SIZE);
-			scale.process();
-			leftImg = scale.getResult1();
-			rightImg = scale.getResult2();
-			scale = null;
-
 			// Evaluate
-			ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(
-					leftImg);
-			HSBColorConverter c1 = new HSBColorConverter(
-					new SRGBColorConverter(wrapped1));
-			ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(
-					rightImg);
-			HSBColorConverter c2 = new HSBColorConverter(
-					new SRGBColorConverter(wrapped2));
-
-			// TODO: What happens if one image is smaller than the
-			// SCALE_TARGET_SIZE?
-			 SimpleSSIMMetric metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(
-					leftImg.getWidth(), rightImg.getHeight()), false);
-
-			// Evaluate
-			TransientOperation<Float, StaticColor> op = metric.execute();
+			TransientOperation<Float, StaticColor> op = ssimQa.evaluate(leftImg, rightImg);
 
 			resultPrinter.print(op);
 		} catch (IOException e) {

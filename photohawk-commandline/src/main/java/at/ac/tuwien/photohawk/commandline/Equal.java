@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import at.ac.tuwien.photohawk.evaluation.qa.EqualQa;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
@@ -31,6 +32,8 @@ public class Equal implements Command {
 
 	private Subparser subparser;
 
+    private EqualQa equalQa;
+
 	private ResultPrinter<Boolean, Boolean> resultPrinter;
 
 	public Equal(Subparsers subparsers) {
@@ -52,11 +55,11 @@ public class Equal implements Command {
 	public void configure(Namespace n) {
 		this.n = n;
 		resultPrinter = new HRBooleanResultPrinter(System.out);
+        equalQa = new EqualQa();
 	}
 
 	@Override
 	public void evaluate() {
-
 		File left = (File) n.get(LEFT);
 		File right = (File) n.get(RIGHT);
 
@@ -64,23 +67,8 @@ public class Equal implements Command {
 			BufferedImage leftImg = ImageIO.read(left);
 			BufferedImage rightImg = ImageIO.read(right);
 
-			// Check size
-			CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(
-					leftImg, rightImg);
-			equalSize.process();
-			leftImg = equalSize.getResult1();
-			rightImg = equalSize.getResult2();
-			equalSize = null;
-
-			// Run metric
-			EqualMetric metric = new EqualMetric(new SRGBColorConverter(
-					new ConvenientBufferedImageWrapper(leftImg)),
-					new SRGBColorConverter(new ConvenientBufferedImageWrapper(
-							rightImg)), new Point(0, 0), new Point(
-							leftImg.getWidth(), leftImg.getHeight()));
-
 			// Evaluate
-			TransientOperation<Boolean, Boolean> op = metric.execute();
+			TransientOperation<Boolean, Boolean> op = equalQa.evaluate(leftImg, rightImg);
 
 			resultPrinter.print(op);
 		} catch (PreprocessingException e) {
