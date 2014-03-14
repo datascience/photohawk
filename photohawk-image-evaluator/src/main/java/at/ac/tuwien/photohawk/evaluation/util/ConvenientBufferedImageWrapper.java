@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2010-2013 Vienna University of Technology
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,29 +15,14 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.evaluation.util;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.Image;
-import java.awt.ImageCapabilities;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
-import java.awt.image.Raster;
-import java.awt.image.RenderedImage;
-import java.awt.image.SampleModel;
-import java.awt.image.TileObserver;
-import java.awt.image.WritableRaster;
+import java.awt.*;
+import java.awt.image.*;
 import java.util.Vector;
 
 /**
  * This class wraps a BufferedImage and provides some convenience as well as
  * performance tweaks.
- * 
+ *
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  * @version 1.0
  */
@@ -48,9 +33,8 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
 
     /**
      * Creates a new ConvenientBufferedImageWrapper for the provided image.
-     * 
-     * @param img
-     *            the image
+     *
+     * @param img the image
      */
     public ConvenientBufferedImageWrapper(BufferedImage img) {
         setBufferedImage(img);
@@ -58,30 +42,26 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
 
     /**
      * Returns a sample at the provided coordinates.
-     * 
-     * @param x
-     *            the x coordinate
-     * @param y
-     *            the y coordinate
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
      * @return an array representing the sample
      */
     public float[] getSample(int x, int y) {
         float[] result = new float[getSampleModel().getNumBands()];
+        int[] data = new int[getSampleModel().getNumBands()];
 
-        for (int i = 0; i < result.length; i++) {
-            result[i] = getData().getSample(x, y, i) / (float) Math.pow(2, getColorModel().getComponentSize(i));
-        }
+        data = getData().getPixel(x, y, data);
+        result = getColorModel().getNormalizedComponents(data, 0, result, 0);
 
         return result;
     }
 
     /**
      * Returns a sample at the provided coordinates.
-     * 
-     * @param x
-     *            the x coordinate
-     * @param y
-     *            the y coordinate
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
      * @return the sample as color
      */
     public Color getSampleAsColor(int x, int y) {
@@ -89,10 +69,18 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
     }
 
     /**
+     * Returns the image of this wrapper.
+     *
+     * @return the image.
+     */
+    public BufferedImage getBufferedImage() {
+        return this.bufferedImage;
+    }
+
+    /**
      * Sets the image of this object.
-     * 
-     * @param img
-     *            the image
+     *
+     * @param img the image
      */
     private void setBufferedImage(BufferedImage img) {
         if (null == img) {
@@ -107,21 +95,16 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
         data = this.bufferedImage.getData();
     }
 
-    /**
-     * Returns the image of this wrapper.
-     * 
-     * @return the image.
-     */
-    public BufferedImage getBufferedImage() {
-        return this.bufferedImage;
-    }
-
     /* ********* */
     /* DELEGATES */
     /* ********* */
     public synchronized Raster getData() {
         // Due to performance reasons
         return data;
+    }
+
+    public void setData(Raster r) {
+        this.bufferedImage.setData(r);
     }
 
     public void addTileObserver(TileObserver to) {
@@ -150,6 +133,10 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
 
     public float getAccelerationPriority() {
         return this.bufferedImage.getAccelerationPriority();
+    }
+
+    public void setAccelerationPriority(float priority) {
+        this.bufferedImage.setAccelerationPriority(priority);
     }
 
     public WritableRaster getAlphaRaster() {
@@ -314,14 +301,6 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
 
     public void removeTileObserver(TileObserver to) {
         this.bufferedImage.removeTileObserver(to);
-    }
-
-    public void setAccelerationPriority(float priority) {
-        this.bufferedImage.setAccelerationPriority(priority);
-    }
-
-    public void setData(Raster r) {
-        this.bufferedImage.setData(r);
     }
 
     public void setRGB(int startX, int startY, int w, int h, int[] rgbArray, int offset, int scansize) {

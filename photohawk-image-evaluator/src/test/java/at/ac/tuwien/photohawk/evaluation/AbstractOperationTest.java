@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package at.ac.tuwien.photohawk.evaluation.operation;
+package at.ac.tuwien.photohawk.evaluation;
 
 import java.awt.Point;
 import java.util.Arrays;
 
+import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 import org.junit.Assert;
 
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
@@ -25,7 +26,7 @@ import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 /**
  * Abstract class for metric tests.
  */
-public abstract class AbstractMetricTest {
+public abstract class AbstractOperationTest {
 
     protected static final float FLOAT_ASSERT_DELTA = 0.000001f;
 

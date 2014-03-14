@@ -21,6 +21,7 @@ import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.m
 
 import java.awt.Point;
 
+import at.ac.tuwien.photohawk.evaluation.AbstractOperationTest;
 import org.junit.Test;
 
 import at.ac.tuwien.photohawk.evaluation.colorconverter.ColorConverter;
@@ -31,7 +32,7 @@ import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
 /**
  * Unit tests for SSIM metric.
  */
-public class SimpleSSIMMetricTest extends AbstractMetricTest {
+public class SimpleSSIMMetricTest extends AbstractOperationTest {
 
     private static final int DEFAULT_IMAGE_SIZE = 11;
 

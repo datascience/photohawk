@@ -22,6 +22,7 @@ import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.g
 import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.getUniformPattern;
 import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.mockColorConverter;
 
+import at.ac.tuwien.photohawk.evaluation.AbstractOperationTest;
 import org.junit.Test;
 
 import at.ac.tuwien.photohawk.evaluation.colorconverter.ColorConverter;
@@ -32,7 +33,7 @@ import at.ac.tuwien.photohawk.evaluation.operation.metric.MAEMetric;
 /**
  * Unit tests for MAE metric.
  */
-public class MAEMetricTest extends AbstractMetricTest {
+public class MAEMetricTest extends AbstractOperationTest {
 
     @Test
     public void executeTest_equal_zeroPattern() {
