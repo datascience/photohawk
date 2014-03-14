@@ -125,7 +125,8 @@ public class CommandExecutor {
     protected Process runCommandHelper(String commandLine) throws IOException {
         String[] cmdArray = null;
         Process process = null;
-        if (("Linux".compareTo(System.getProperty("os.name")) == 0)
+        process = Runtime.getRuntime().exec(commandLine, getEnvTokens());
+       /* if (("Linux".compareTo(System.getProperty("os.name")) == 0)
             || ("Mac OS X".compareTo(System.getProperty("os.name")) == 0)) {
             cmdArray = new String[] {"/bin/bash", "-c", commandLine};
             if (fWorkingDirectory == null) {
@@ -140,7 +141,7 @@ public class CommandExecutor {
             } else {
                 process = Runtime.getRuntime().exec(cmdArray, getEnvTokens(), new File(fWorkingDirectory));
             }
-        }
+        }              */
 
         return process;
     }

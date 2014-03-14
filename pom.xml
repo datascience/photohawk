@@ -11,6 +11,7 @@
 	<modules>
 		<module>photohawk-image-evaluator</module>
 		<module>photohawk-taverna</module>
+        <module>photohawk-commandline</module>
 	</modules>
 
 	<licenses>
@@ -36,6 +37,13 @@
 			<organization>IMP, IFS, UT Vienna</organization>
 			<organizationUrl>http://ifs.tuwien.ac.at/imp</organizationUrl>
 		</developer>
+        <developer>
+            <id>AK</id>
+            <name>Artur Kulmukhametov</name>
+            <email>artur.kulmukhametov@tuwien.ac.at</email>
+            <organization>IMP, IFS, UT Vienna</organization>
+            <organizationUrl>http://ifs.tuwien.ac.at/imp</organizationUrl>
+        </developer>
 	</developers>
 
 	<build>
