@@ -61,14 +61,6 @@ public final class BufferedImageHelper {
         g.setColor(color);
         g.fillRect(0, 0, width, height);
         g.dispose();
-
-        try {
-            File file = new File("/home/markus/image.png");
-            file.createNewFile();
-            ImageIO.write(img, "png", file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         
         return img;
     }
