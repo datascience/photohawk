@@ -57,8 +57,8 @@ public class ScaleToNearestFactorPreprocessor extends ScalePreprocessor {
      *            the target size
      * @return a scale factor
      */
-    private static float calcScaleFactor(final BufferedImage img, final int targetSize) {
-        return 1.0f / Math.max(1, Math.round(Math.min(img.getWidth(), img.getHeight()) / (float) targetSize));
+    private static double calcScaleFactor(final BufferedImage img, final int targetSize) {
+        return 1.0d / Math.max(1, Math.round(Math.min(img.getWidth(), img.getHeight()) / (double) targetSize));
     }
 
     @Override
@@ -70,6 +70,8 @@ public class ScaleToNearestFactorPreprocessor extends ScalePreprocessor {
         } else {
             LOGGER.info("All scale factors [{}], [{}], [{}], [{}] are above threshold [{}]", widthFactor1,
                 heightFactor1, widthFactor2, heightFactor2, THRESHOLD);
+            result1 = img1;
+            result2 = img2;
         }
     }
 }

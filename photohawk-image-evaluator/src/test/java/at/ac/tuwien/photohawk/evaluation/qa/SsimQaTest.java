@@ -16,9 +16,9 @@
 package at.ac.tuwien.photohawk.evaluation.qa;
 
 import at.ac.tuwien.photohawk.evaluation.AbstractOperationTest;
+import at.ac.tuwien.photohawk.evaluation.BufferedImageHelper;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
-import at.ac.tuwien.photohawk.evaluation.preprocessing.PreprocessingException;
 import org.junit.Test;
 
 import java.awt.*;

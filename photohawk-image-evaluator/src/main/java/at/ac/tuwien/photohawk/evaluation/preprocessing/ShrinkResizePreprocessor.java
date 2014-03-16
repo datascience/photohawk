@@ -19,7 +19,7 @@ import java.awt.image.BufferedImage;
 
 /**
  * Preprocessor that resizes images to the smaller width and height of the
- * images respecitively.
+ * images respectively.
  */
 public class ShrinkResizePreprocessor extends ResizePreprocessor {
 
