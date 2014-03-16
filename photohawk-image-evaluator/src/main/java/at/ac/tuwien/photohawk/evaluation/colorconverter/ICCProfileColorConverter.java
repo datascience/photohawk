@@ -20,9 +20,13 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
+
+import javax.imageio.ImageIO;
 
 
 /**
@@ -47,7 +51,7 @@ public abstract class ICCProfileColorConverter implements FullColorConverter {
     public ICCProfileColorConverter(ConvenientBufferedImageWrapper img, ColorSpace cs) {
         ColorConvertOp transform = new ColorConvertOp(null);
 
-        int[] bits = new int[img.getColorModel().getNumComponents()];
+        int[] bits = new int[cs.getNumComponents()];
         Arrays.fill(bits, SIGNIFICANT_BITS);
         BufferedImage temp = transform.createCompatibleDestImage(img.getBufferedImage(), new ComponentColorModel(cs,
             bits, img.getColorModel().hasAlpha(), img.getColorModel().isAlphaPremultiplied(), img.getColorModel()

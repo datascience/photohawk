@@ -15,19 +15,17 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.taverna;
 
-import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-
-import net.sf.taverna.t2.reference.T2Reference;
-import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivity;
-import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
-
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.metric.AEMetric;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
+import net.sf.taverna.t2.reference.T2Reference;
+import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivity;
+import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
+import org.apache.log4j.Logger;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Map;
 
 /**
  * Activity that runs SSIM.
@@ -61,7 +59,7 @@ public class AEActivity extends XAEErrorActivity<CommonActivityConfigurationBean
                 }
 
                 AEMetric metric = new AEMetric(new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[0])),
-                    new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[1])), new Point(0, 0), new Point(
+                        new SRGBColorConverter(new ConvenientBufferedImageWrapper(images[1])), new Point(0, 0), new Point(
                         images[0].getWidth(), images[0].getHeight()));
 
                 executeMetric(metric, images[0], images[1], callback);
