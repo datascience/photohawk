@@ -1,30 +1,44 @@
+/*******************************************************************************
+ * Copyright 2010-2014 Vienna University of Technology
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 package at.ac.tuwien.photohawk.commandline;
 
 import at.ac.tuwien.photohawk.commandline.result.HRFloatResultPrinter;
 import at.ac.tuwien.photohawk.commandline.result.ResultPrinter;
+import at.ac.tuwien.photohawk.commandline.util.ImageReader;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
-import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
-import at.ac.tuwien.photohawk.evaluation.operation.metric.PAEMetric;
-import at.ac.tuwien.photohawk.evaluation.preprocessing.CheckEqualSizePreprocessor;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.PreprocessingException;
 import at.ac.tuwien.photohawk.evaluation.qa.PaeQa;
-import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Peak absolute error command.
+ */
 class Pae implements Command {
 
     private static final String LEFT = "left";
     private static final String RIGHT = "right";
+    private static final String BASE_KEY = "dcraw.pae";
 
     private Namespace n = null;
 
@@ -36,6 +50,13 @@ class Pae implements Command {
 
     private ResultPrinter<Float, StaticColor> resultPrinter;
 
+    private ImageReader ir;
+
+    /**
+     * Creates a new PAE command.
+     *
+     * @param subparsers the subparser to use
+     */
     public Pae(Subparsers subparsers) {
         this.subparsers = subparsers;
     }
@@ -55,17 +76,18 @@ class Pae implements Command {
     public void configure(Namespace n) {
         this.n = n;
         resultPrinter = new HRFloatResultPrinter(System.out);
+        ir = new ImageReader(BASE_KEY);
         paeQa = new PaeQa();
     }
 
     @Override
     public void evaluate() {
-        File left = (File) n.get(LEFT);
-        File right = (File) n.get(RIGHT);
+        File left = n.get(LEFT);
+        File right = n.get(RIGHT);
 
         try {
-            BufferedImage leftImg = ImageIO.read(left);
-            BufferedImage rightImg = ImageIO.read(right);
+            BufferedImage leftImg = ir.readImage(left, n.getString(Photohawk.READ_LEFT_KEY), n.getString(Photohawk.READ_RIGHT_KEY));
+            BufferedImage rightImg = ir.readImage(right, n.getString(Photohawk.READ_RIGHT_KEY), n.getString(Photohawk.READ_LEFT_KEY));
 
             // Evaluate
             TransientOperation<Float, StaticColor> op = paeQa.evaluate(leftImg, rightImg);
@@ -73,10 +95,12 @@ class Pae implements Command {
             resultPrinter.print(op);
         } catch (PreprocessingException e) {
             subparser.printUsage();
-            System.err.print("Image size does not match");
+            System.err.println("Cannot process files");
+            System.err.println(e.getMessage());
         } catch (IOException e) {
             subparser.printUsage();
-            System.err.print("Could not read file");
+            System.err.println("Cannot read file");
+            System.err.println(e.getMessage());
         }
     }
 }

@@ -39,7 +39,7 @@ public class HRBooleanResultPrinter implements ResultPrinter<Boolean, Boolean> {
 
     @Override
     public void print(TransientOperation<Boolean, Boolean> op) {
-        w.print(op.getAggregatedResult());
+        w.println(op.getAggregatedResult());
         w.flush();
     }
 }

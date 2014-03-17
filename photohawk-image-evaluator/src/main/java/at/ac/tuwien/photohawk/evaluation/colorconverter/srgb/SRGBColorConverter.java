@@ -35,7 +35,6 @@ public class SRGBColorConverter extends ICCProfileColorConverter implements Colo
      * 
      * @param img
      *            the image
-     * @throws ImageException
      */
     public SRGBColorConverter(ConvenientBufferedImageWrapper img) {
         super(img, ICC_ColorSpace.getInstance(ICC_ColorSpace.CS_sRGB));

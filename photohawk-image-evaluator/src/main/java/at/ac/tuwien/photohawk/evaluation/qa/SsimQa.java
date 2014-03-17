@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package at.ac.tuwien.photohawk.evaluation.qa;
 
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
@@ -31,13 +30,13 @@ import java.awt.image.BufferedImage;
 public class SsimQa implements Qa<Float, StaticColor> {
 
     @Override
-    public TransientOperation<Float, StaticColor> evaluate(BufferedImage left2, BufferedImage right2) {
+    public TransientOperation<Float, StaticColor> evaluate(BufferedImage left, BufferedImage right) {
         // Convert to SRGB
         BufferedImage leftImg = new SRGBColorConverter(
-                new ConvenientBufferedImageWrapper(left2)).getImage()
+                new ConvenientBufferedImageWrapper(left)).getImage()
                 .getBufferedImage();
         BufferedImage rightImg = new SRGBColorConverter(
-                new ConvenientBufferedImageWrapper(right2)).getImage()
+                new ConvenientBufferedImageWrapper(right)).getImage()
                 .getBufferedImage();
 
         // Resize

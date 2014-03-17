@@ -18,6 +18,7 @@ package at.ac.tuwien.photohawk.commandline;
 
 import at.ac.tuwien.photohawk.commandline.result.HRBooleanResultPrinter;
 import at.ac.tuwien.photohawk.commandline.result.ResultPrinter;
+import at.ac.tuwien.photohawk.commandline.util.ImageReader;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.PreprocessingException;
 import at.ac.tuwien.photohawk.evaluation.qa.EqualQa;
@@ -38,6 +39,7 @@ public class Equal implements Command {
 
     private static final String LEFT = "left";
     private static final String RIGHT = "right";
+    private static final String BASE_KEY = "dcraw.equal";
 
     private Namespace n = null;
 
@@ -48,6 +50,8 @@ public class Equal implements Command {
     private EqualQa equalQa;
 
     private ResultPrinter<Boolean, Boolean> resultPrinter;
+
+    private ImageReader ir;
 
     /**
      * Creates a new equal command.
@@ -73,17 +77,18 @@ public class Equal implements Command {
     public void configure(Namespace n) {
         this.n = n;
         resultPrinter = new HRBooleanResultPrinter(System.out);
+        ir = new ImageReader(BASE_KEY);
         equalQa = new EqualQa();
     }
 
     @Override
     public void evaluate() {
-        File left = (File) n.get(LEFT);
-        File right = (File) n.get(RIGHT);
+        File left = n.get(LEFT);
+        File right = n.get(RIGHT);
 
         try {
-            BufferedImage leftImg = ImageIO.read(left);
-            BufferedImage rightImg = ImageIO.read(right);
+            BufferedImage leftImg = ir.readImage(left, n.getString(Photohawk.READ_LEFT_KEY), n.getString(Photohawk.READ_RIGHT_KEY));
+            BufferedImage rightImg = ir.readImage(right, n.getString(Photohawk.READ_RIGHT_KEY), n.getString(Photohawk.READ_LEFT_KEY));
 
             // Evaluate
             TransientOperation<Boolean, Boolean> op = equalQa.evaluate(leftImg, rightImg);
@@ -91,10 +96,12 @@ public class Equal implements Command {
             resultPrinter.print(op);
         } catch (PreprocessingException e) {
             subparser.printUsage();
-            System.err.print("Image size does not match");
+            System.err.println("Cannot process files");
+            System.err.println(e.getMessage());
         } catch (IOException e) {
             subparser.printUsage();
-            System.err.print("Could not read file");
+            System.err.println("Cannot read file");
+            System.err.println(e.getMessage());
         }
     }
 

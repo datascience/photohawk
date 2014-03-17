@@ -54,6 +54,18 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>tomgibara</id>
+            <name>Tom Gibara Maven Repository</name>
+            <layout>default</layout>
+            <url>http://www.tomgibara.com/maven/repo/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>net.sourceforge.argparse4j</groupId>
@@ -85,6 +97,12 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>photohawk-image-evaluator</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tomgibara.imageio</groupId>
+            <artifactId>imageio-tiff</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>

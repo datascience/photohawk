@@ -18,6 +18,7 @@ package at.ac.tuwien.photohawk.commandline;
 
 import at.ac.tuwien.photohawk.commandline.result.HRFloatResultPrinter;
 import at.ac.tuwien.photohawk.commandline.result.ResultPrinter;
+import at.ac.tuwien.photohawk.commandline.util.ImageReader;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.PreprocessingException;
@@ -27,7 +28,6 @@ import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +39,7 @@ public class Mse implements Command {
 
     private static final String LEFT = "left";
     private static final String RIGHT = "right";
+    private static final String BASE_KEY = "dcraw.mse";
 
     private Namespace n = null;
 
@@ -49,6 +50,8 @@ public class Mse implements Command {
     private MseQa mseQa;
 
     private ResultPrinter<Float, StaticColor> resultPrinter;
+
+    private ImageReader ir;
 
     /**
      * Creates a new MSE command.
@@ -74,30 +77,30 @@ public class Mse implements Command {
     public void configure(Namespace n) {
         this.n = n;
         resultPrinter = new HRFloatResultPrinter(System.out);
-
+        ir = new ImageReader(BASE_KEY);
         mseQa = new MseQa();
     }
 
     @Override
     public void evaluate() {
-
-        File left = (File) n.get(LEFT);
-        File right = (File) n.get(RIGHT);
+        File left = n.get(LEFT);
+        File right = n.get(RIGHT);
 
         try {
-            BufferedImage leftImg = ImageIO.read(left);
-            BufferedImage rightImg = ImageIO.read(right);
+            BufferedImage leftImg = ir.readImage(left, n.getString(Photohawk.READ_LEFT_KEY), n.getString(Photohawk.READ_RIGHT_KEY));
+            BufferedImage rightImg = ir.readImage(right, n.getString(Photohawk.READ_RIGHT_KEY), n.getString(Photohawk.READ_LEFT_KEY));
 
             // Evaluate
             TransientOperation<Float, StaticColor> op = mseQa.evaluate(leftImg, rightImg);
-
             resultPrinter.print(op);
         } catch (PreprocessingException e) {
             subparser.printUsage();
-            System.err.print("Image size does not match");
+            System.err.println("Cannot process files");
+            System.err.println(e.getMessage());
         } catch (IOException e) {
             subparser.printUsage();
-            System.err.print("Could not read file");
+            System.err.println("Cannot read file");
+            System.err.println(e.getMessage());
         }
     }
 

@@ -18,8 +18,10 @@ package at.ac.tuwien.photohawk.commandline;
 
 import at.ac.tuwien.photohawk.commandline.result.HRFloatResultPrinter;
 import at.ac.tuwien.photohawk.commandline.result.ResultPrinter;
+import at.ac.tuwien.photohawk.commandline.util.ImageReader;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
+import at.ac.tuwien.photohawk.evaluation.preprocessing.PreprocessingException;
 import at.ac.tuwien.photohawk.evaluation.qa.SsimQa;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.Namespace;
@@ -38,6 +40,7 @@ class Ssim implements Command {
 
     private static final String LEFT = "left";
     private static final String RIGHT = "right";
+    private static final String BASE_KEY = "dcraw.ssim";
 
     private Namespace n = null;
 
@@ -48,6 +51,8 @@ class Ssim implements Command {
     private SsimQa ssimQa;
 
     private ResultPrinter<Float, StaticColor> resultPrinter;
+
+    private ImageReader ir;
 
     /**
      * Creates a new SSIM command.
@@ -74,25 +79,31 @@ class Ssim implements Command {
     public void configure(Namespace n) {
         this.n = n;
         resultPrinter = new HRFloatResultPrinter(System.out);
+        ir = new ImageReader(BASE_KEY);
         ssimQa = new SsimQa();
     }
 
     @Override
     public void evaluate() {
-        File left = (File) n.get(LEFT);
-        File right = (File) n.get(RIGHT);
+        File left = n.get(LEFT);
+        File right = n.get(RIGHT);
 
         try {
-            BufferedImage leftImg = ImageIO.read(left);
-            BufferedImage rightImg = ImageIO.read(right);
+            BufferedImage leftImg = ir.readImage(left, n.getString(Photohawk.READ_LEFT_KEY), n.getString(Photohawk.READ_RIGHT_KEY));
+            BufferedImage rightImg = ir.readImage(right, n.getString(Photohawk.READ_RIGHT_KEY), n.getString(Photohawk.READ_LEFT_KEY));
 
             // Evaluate
             TransientOperation<Float, StaticColor> op = ssimQa.evaluate(leftImg, rightImg);
 
             resultPrinter.print(op);
+        } catch (PreprocessingException e) {
+            subparser.printUsage();
+            System.err.println("Cannot process files");
+            System.err.println(e.getMessage());
         } catch (IOException e) {
             subparser.printUsage();
-            System.err.print("Could not read file");
+            System.err.println("Cannot read file");
+            System.err.println(e.getMessage());
         }
     }
 }

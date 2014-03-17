@@ -16,13 +16,14 @@
 
 package at.ac.tuwien.photohawk.app;
 
+import at.ac.tuwien.photohawk.dcraw.ConversionParameters;
+import at.ac.tuwien.photohawk.dcraw.RawImageReader;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.hsb.HSBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 import at.ac.tuwien.photohawk.evaluation.operation.metric.*;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
-import at.ac.tuwien.photohawk.evaluation.util.RawImageReader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -39,9 +40,10 @@ public class Processor {
     final Point DEFAULT_STARTPOINT = new Point(0, 0);
 
     Float run(String mode, String path1, String path2) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+        RawImageReader ir = new RawImageReader();
 
-        RawImageReader.ConversionParameter params = new RawImageReader.ConversionParameter();
-        BufferedImage[] images = {RawImageReader.read(path1, params), RawImageReader.read(path2, params)};
+        ConversionParameters params = new ConversionParameters();
+        BufferedImage[] images = {ir.read(path1, params.arguments()), ir.read(path2, params.arguments())};
         if (images == null) {
             throw new IOException("One of the images is corrupted or does not exist");
         }
