@@ -14,32 +14,29 @@
  * limitations under the License.
  ******************************************************************************/
 
-package at.ac.tuwien.photohawk.commandline.result;
-
-import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
-
-import java.io.OutputStream;
-import java.io.PrintWriter;
+package at.ac.tuwien.photohawk.commandline;
 
 /**
- * Human readable boolean result printer.
+ * Thrown if an exception occured during photohawk execution.
  */
-public class HRBooleanResultPrinter implements ResultPrinter<Boolean, Boolean> {
-
-    private PrintWriter w;
+public class PhotohawkException extends RuntimeException {
 
     /**
-     * Creates a new result printer for the provided output stream.
+     * Creates a new exception with the provided message.
      *
-     * @param out the output stream to print to
+     * @param message exception message
      */
-    public HRBooleanResultPrinter(OutputStream out) {
-        w = new PrintWriter(out);
+    public PhotohawkException(String message) {
+        super(message);
     }
 
-    @Override
-    public void print(TransientOperation<Boolean, Boolean> op) {
-        w.print(op.getAggregatedResult());
-        w.flush();
+    /**
+     * Creates a new exception with the provided message and cause.
+     *
+     * @param message exception message
+     * @param cause   exception cause
+     */
+    public PhotohawkException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
