@@ -33,6 +33,8 @@ public class Photohawk {
 
     public static final String READ_MODE_DIRECT = "direct";
     public static final String READ_MODE_DCRAW = "dcraw";
+    public static final String READ_MODE_DCRAW_FALLBACK = "dcraw-fallback";
+    public static final String READ_MODE_DIRECT_MIMETYPE = "direct-mimetype";
     public static final String READ_LEFT = "--read-left";
     public static final String READ_RIGHT = "--read-right";
     public static final String READ_LEFT_KEY = "read_left";
@@ -69,8 +71,8 @@ public class Photohawk {
             throw new PhotohawkException("Error reading git properties.", e);
         }
 
-        parser.addArgument(READ_LEFT).choices(READ_MODE_DIRECT, READ_MODE_DCRAW).setDefault(READ_MODE_DIRECT).help("read mode for images");
-        parser.addArgument(READ_RIGHT).choices(READ_MODE_DIRECT, READ_MODE_DCRAW).setDefault(READ_MODE_DIRECT).help("read mode for images");
+        parser.addArgument(READ_LEFT).choices(READ_MODE_DIRECT, READ_MODE_DCRAW, READ_MODE_DCRAW_FALLBACK, READ_MODE_DIRECT_MIMETYPE).setDefault(READ_MODE_DCRAW_FALLBACK).help("read mode for images");
+        parser.addArgument(READ_RIGHT).choices(READ_MODE_DIRECT, READ_MODE_DCRAW, READ_MODE_DCRAW_FALLBACK, READ_MODE_DIRECT_MIMETYPE).setDefault(READ_MODE_DCRAW_FALLBACK).help("read mode for images");
 
         Subparsers subparsers = parser.addSubparsers().title("Algorithm")
                 .help("Comparison algorithm");

@@ -28,7 +28,6 @@ import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -89,8 +88,10 @@ class Ssim implements Command {
         File right = n.get(RIGHT);
 
         try {
-            BufferedImage leftImg = ir.readImage(left, n.getString(Photohawk.READ_LEFT_KEY), n.getString(Photohawk.READ_RIGHT_KEY));
-            BufferedImage rightImg = ir.readImage(right, n.getString(Photohawk.READ_RIGHT_KEY), n.getString(Photohawk.READ_LEFT_KEY));
+            String leftMode = ir.determineReadMode(left, n.getString(Photohawk.READ_LEFT_KEY));
+            String rightMode = ir.determineReadMode(right, n.getString(Photohawk.READ_RIGHT_KEY));
+            BufferedImage leftImg = ir.readImage(left, leftMode, rightMode);
+            BufferedImage rightImg = ir.readImage(right, rightMode, leftMode);
 
             // Evaluate
             TransientOperation<Float, StaticColor> op = ssimQa.evaluate(leftImg, rightImg);

@@ -18,7 +18,6 @@ package at.ac.tuwien.photohawk.dcraw;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -57,50 +56,6 @@ public class RawImageReader {
      */
     public RawImageReader(String dcrawBin) {
         this.dcrawBin = dcrawBin;
-    }
-
-    public boolean isWindows() {
-        return System.getProperty("os.name").startsWith("Windows");
-    }
-
-    private String pickDcrawExecutable() {
-        return isWindows() ? "dcraw.exe" : "dcraw";
-    }
-
-    private void validateDCRaw() throws IOException {
-        validateDcraw(null);
-    }
-
-    public void validateDcraw(String pathToDcraw) throws IOException {
-        if (dcrawBin != null && !dcrawBin.equals("")) {
-            return;
-        }
-        if (pathToDcraw != null) {
-            if (!pathToDcraw.endsWith(pickDcrawExecutable())) {
-                if (pathToDcraw.endsWith("/")) {
-                    pathToDcraw = pathToDcraw + pickDcrawExecutable();
-                } else {
-                    pathToDcraw = pathToDcraw + "/" + pickDcrawExecutable();
-                }
-            }
-            File file = new File(pathToDcraw);
-            if (file.exists()) {
-                dcrawBin = file.getAbsolutePath();
-                return;
-            }
-        } else {
-            File file = new File("dcraw/" + pickDcrawExecutable());
-            if (file.exists()) {
-                dcrawBin = file.getAbsolutePath();
-                return;
-            } else {
-                file = new File(pickDcrawExecutable());
-                dcrawBin = file.getAbsolutePath();
-                return;
-
-            }
-        }
-        throw new IOException("No DCRAW executable found at [ " + dcrawBin + " ]");
     }
 
     /**

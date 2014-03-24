@@ -87,8 +87,10 @@ public class Equal implements Command {
         File right = n.get(RIGHT);
 
         try {
-            BufferedImage leftImg = ir.readImage(left, n.getString(Photohawk.READ_LEFT_KEY), n.getString(Photohawk.READ_RIGHT_KEY));
-            BufferedImage rightImg = ir.readImage(right, n.getString(Photohawk.READ_RIGHT_KEY), n.getString(Photohawk.READ_LEFT_KEY));
+            String leftMode = ir.determineReadMode(left, n.getString(Photohawk.READ_LEFT_KEY));
+            String rightMode = ir.determineReadMode(right, n.getString(Photohawk.READ_RIGHT_KEY));
+            BufferedImage leftImg = ir.readImage(left, leftMode, rightMode);
+            BufferedImage rightImg = ir.readImage(right, rightMode, leftMode);
 
             // Evaluate
             TransientOperation<Boolean, Boolean> op = equalQa.evaluate(leftImg, rightImg);
