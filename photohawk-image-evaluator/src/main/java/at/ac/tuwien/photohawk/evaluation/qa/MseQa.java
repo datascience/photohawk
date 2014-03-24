@@ -26,6 +26,9 @@ import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Quality assurance for mean square error.
+ */
 public class MseQa implements Qa<Float, StaticColor> {
 
     @Override
@@ -41,7 +44,8 @@ public class MseQa implements Qa<Float, StaticColor> {
                 new ConvenientBufferedImageWrapper(left)),
                 new SRGBColorConverter(new ConvenientBufferedImageWrapper(
                         right)), new Point(0, 0), new Point(
-                left.getWidth(), left.getHeight()));
+                left.getWidth(), left.getHeight())
+        );
 
         // Evaluate
         return metric.execute();

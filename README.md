@@ -8,10 +8,24 @@ Photohawk is a pure Java implementation of the following image comparison algori
 * Peak absolute error
 * Structured similarity metric
 
+Additionally photohawk can be used as a command line app and it packages the implementation as a [Taverna](http://www.taverna.org.uk/) plugin for use in a Taverna workflow.
 
-Additionally it packages the implementation as a [Taverna](http://www.taverna.org.uk/) plugin for use in a Taverna workflow.
+## Command line
 
-## Build
+### Build
+To build the library and plugin, follow these steps:
+
+1. Clone the repository
+2. Go into the repository folder
+3. Build the project using maven
+<pre>mvn package</pre>
+This will create the jar files `photohawk-commandline-VERSION.jar` and `photohawk-commandline-VERSION-jar-with-dependencies.jar` in the target folder `photohawk-commandline/target`.
+4. Run the jar with `java -jar photohawk-commandline/target/photohawk-commandline-VERSION-jar-with-dependencies.jar`
+
+
+## Taverna plugin
+
+### Build
 To build the library and plugin, follow these steps:
 
 1. Clone the repository
@@ -25,7 +39,7 @@ Alternatively override the distributionManagement in your settings.xml.
 
 Note that a hosted version is currently available at [http://datascience.github.io/photohawk/taverna/updates/2.4.0/snapshot](http://http://datascience.github.io/photohawk/taverna/updates/2.4.0/snapshot).
 
-## Install the Taverna plugin
+### Install the Taverna plugin
 1. Open Taverna
 2. Add the plugin site
     1. Open `Menu -> Advanced -> Updates and plugins -> Find new plugins -> Add update site`

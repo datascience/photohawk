@@ -27,6 +27,9 @@ import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Quality assurance for structured similarity metric.
+ */
 public class SsimQa implements Qa<Float, StaticColor> {
 
     @Override

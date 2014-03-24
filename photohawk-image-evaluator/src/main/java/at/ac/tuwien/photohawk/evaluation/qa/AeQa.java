@@ -26,6 +26,9 @@ import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Quality assurance for absolute error.
+ */
 public class AeQa implements Qa<Float, StaticColor> {
 
     @Override

@@ -20,6 +20,12 @@ import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Quality assurance evaluation of two images.
+ *
+ * @param <AggregatedResult> aggregated result type
+ * @param <Result>           channel result type
+ */
 public interface Qa<AggregatedResult, Result> {
     TransientOperation<AggregatedResult, Result> evaluate(BufferedImage left, BufferedImage right);
 }
