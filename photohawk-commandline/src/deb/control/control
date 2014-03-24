@@ -1,0 +1,11 @@
+Package: photohawk
+Version: 0.0.3
+Section: misc
+Priority: optional
+Architecture: all
+Depends: default-jdk (>= 1.6)
+Recommends: dcraw (>= 9.16)
+Homepage: http://datascience.github.io/photohawk/
+Maintainer: Markus Plangg <markus.plangg@tuwien.ac.at>
+Description: Pure Java image comparison
+ Java image comparison tool providing AE, Equals, MAE, MSE, PAE, SSIM.

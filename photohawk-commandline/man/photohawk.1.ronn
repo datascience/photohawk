@@ -1,0 +1,73 @@
+photohawk(1) -- image comparison
+=======================================
+
+## SYNOPSIS
+
+`photohawk` [`-h`] [`--version`] [`--read-left` {`direct`,`dcraw`}] [`--read-right` {`direct`,`dcraw`}] {`ssim`,`ae`,`equal`,`mae`,`mse`,`pae`} `<args>`
+
+## DESCRIPTION
+
+`photohawk` is a Java based impage comparison tool supporting:
+
+  * Structured similarity metric
+  * Absolute error
+  * Equal
+  * Mean absolute error
+  * Mean squared error
+  * Peak absolute error
+
+## OPTIONS
+
+`-h`, `--help`
+    show this help message and exit
+
+`--version`
+    show version information and exit
+
+`--read-left` {`direct`,`dcraw`}
+    read mode for images (default: direct)
+        `direct` reads the image using Java's ImageIO
+        `dcraw` converts the image using dcraw before reading the image
+        `dcraw-fallback` checks if the image can be decoded by dcraw, otherwise fall back to direct mode
+        `direct-mimetype` checks if the image mimetype is supported by the direct mode, otherwise fall back to dcraw
+
+`--read-right` {`direct`,`dcraw`}
+    read mode for images (default: direct)
+        `direct` reads the image using Java's ImageIO
+        `dcraw` converts the image using dcraw before reading the image
+        `dcraw-fallback` checks if the image can be decoded by dcraw, otherwise fall back to direct mode
+        `direct-mimetype` checks if the image mimetype is supported by the direct mode, otherwise fall back to dcraw
+
+### Algorithms
+
+`ssim`
+    Structured similarity metric
+
+`ae`
+    Absolute error metric
+
+`equal`
+    Equal
+
+`mae`
+    Mean absolute error metric
+
+`mse`
+    Mean squared error
+
+`pae`
+    Peak absolute error metric
+
+
+## ENVIRONMENT
+
+`DCRAW`
+    With read mode `dcraw`, Photohawk will use this variable to locate the dcraw executable. If not set, dcraw must be in the PATH.
+
+## COPYRIGHT
+
+Photohawk is licensed under the Apache License, Version 2.0
+
+## SEE ALSO
+
+dcraw(1), [Structured similarity metric](https://ece.uwaterloo.ca/~z70wang/research/ssim/)

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Set JVM options
+JVM_OPTIONS="-Xmx1G"
+
+# Try JAVA_HOME
+JAVA=java
+if [ -f "$JAVA_HOME/bin/java" ] && [ -x "$JAVA_HOME/bin/java" ]; then
+    JAVA="$JAVA_HOME/bin/java"
+fi
+
+# Build photohawk command
+#PHOTOHAWK="$JAVA $JVM_OPTIONS -jar /usr/share/photohawk/lib/photohawk-commandline-*-jar-with-dependencies.jar"
+
+exec $PHOTOHAWK "$@"
