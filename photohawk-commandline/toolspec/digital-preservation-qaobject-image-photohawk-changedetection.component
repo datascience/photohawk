@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://scape-project.eu/component"
+            xsi:schemaLocation="http://scape-project.eu/component toolwrapper-data/src/main/resources/component-1.1_draft.xsd"
+            schemaVersion="1.1">
+    <component xsi:type="QAObjectComparison" profile="http://purl.org/DP/components#QAObjectComparison"
+               profileVersion="1.1" name="digital-preservation-qaobject-image-photohawk-ae"
+               author="Markus Plangg">
+        <license name="Apache-2.0" type="FLOSS" uri="http://opensource.org/licenses/Apache-2.0"/>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <outputMeasure name="AE" uri="http://purl.org/DP/quality/measures#4"
+                       typeOfProcessingInstruction="JAVA">
+            import java.util.Scanner;
+            String AE = "";
+            Scanner s = new Scanner(STDOUT_IN);
+            if (s.hasNextLine()) {
+            AE = s.nextLine();
+            }
+        </outputMeasure>
+    </component>
+    <component xsi:type="QAObjectComparison" profile="http://purl.org/DP/components#QAObjectComparison"
+               profileVersion="1.1" name="digital-preservation-qaobject-image-photohawk-equal"
+               author="Markus Plangg">
+        <license name="Apache-2.0" type="FLOSS" uri="http://opensource.org/licenses/Apache-2.0"/>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <outputMeasure name="equal" uri="http://purl.org/DP/quality/measures#2"
+                       typeOfProcessingInstruction="JAVA">
+            import java.util.Scanner;
+            String equal = "";
+            Scanner s = new Scanner(STDOUT_IN);
+            if (s.hasNextLine()) {
+            equal = s.nextLine();
+            }
+        </outputMeasure>
+    </component>
+    <component xsi:type="QAObjectComparison" profile="http://purl.org/DP/components#QAObjectComparison"
+               profileVersion="1.1" name="digital-preservation-qaobject-image-photohawk-mae"
+               author="Markus Plangg">
+        <license name="Apache-2.0" type="FLOSS" uri="http://opensource.org/licenses/Apache-2.0"/>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <outputMeasure name="MAE" uri="http://purl.org/DP/quality/measures#5"
+                       typeOfProcessingInstruction="JAVA">
+            import java.util.Scanner;
+            String MAE = "";
+            Scanner s = new Scanner(STDOUT_IN);
+            if (s.hasNextLine()) {
+            MAE = s.nextLine();
+            }
+        </outputMeasure>
+    </component>
+    <component xsi:type="QAObjectComparison" profile="http://purl.org/DP/components#QAObjectComparison"
+               profileVersion="1.1" name="digital-preservation-qaobject-image-photohawk-mse"
+               author="Markus Plangg">
+        <license name="Apache-2.0" type="FLOSS" uri="http://opensource.org/licenses/Apache-2.0"/>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <outputMeasure name="MSE" uri="http://purl.org/DP/quality/measures#6"
+                       typeOfProcessingInstruction="JAVA">
+            import java.util.Scanner;
+            String MSE = "";
+            Scanner s = new Scanner(STDOUT_IN);
+            if (s.hasNextLine()) {
+            MSE = s.nextLine();
+            }
+        </outputMeasure>
+    </component>
+    <component xsi:type="QAObjectComparison" profile="http://purl.org/DP/components#QAObjectComparison"
+               profileVersion="1.1" name="digital-preservation-qaobject-image-photohawk-pae"
+               author="Markus Plangg">
+        <license name="Apache-2.0" type="FLOSS" uri="http://opensource.org/licenses/Apache-2.0"/>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <outputMeasure name="PAE" uri="http://purl.org/DP/quality/measures#6"
+                       typeOfProcessingInstruction="JAVA">
+            import java.util.Scanner;
+            String PAE = "";
+            Scanner s = new Scanner(STDOUT_IN);
+            if (s.hasNextLine()) {
+            PAE = s.nextLine();
+            }
+        </outputMeasure>
+    </component>
+    <component xsi:type="QAObjectComparison" profile="http://purl.org/DP/components#QAObjectComparison"
+               profileVersion="1.1" name="digital-preservation-qaobject-image-photohawk-mse"
+               author="Markus Plangg">
+        <license name="Apache-2.0" type="FLOSS" uri="http://opensource.org/licenses/Apache-2.0"/>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <outputMeasure name="MSE" uri="http://purl.org/DP/quality/measures#7"
+                       typeOfProcessingInstruction="JAVA">
+            import java.util.Scanner;
+            String MSE = "";
+            Scanner s = new Scanner(STDOUT_IN);
+            if (s.hasNextLine()) {
+            MSE = s.nextLine();
+            }
+        </outputMeasure>
+    </component>
+    <component xsi:type="QAObjectComparison" profile="http://purl.org/DP/components#QAObjectComparison"
+               profileVersion="1.1" name="digital-preservation-qaobject-image-photohawk-ssim"
+               author="Markus Plangg">
+        <license name="Apache-2.0" type="FLOSS" uri="http://opensource.org/licenses/Apache-2.0"/>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <acceptedMimetype>image/*</acceptedMimetype>
+        <outputMeasure name="SSIM" uri="http://purl.org/DP/quality/measures#1"
+                       typeOfProcessingInstruction="JAVA">
+            import java.util.Scanner;
+            String SSIM = "";
+            Scanner s = new Scanner(STDOUT_IN);
+            if (s.hasNextLine()) {
+            SSIM = s.nextLine();
+            }
+        </outputMeasure>
+    </component>
+</components>

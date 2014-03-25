@@ -1,0 +1,26 @@
+digital-preservation-qaobject-image-photohawk-changedetection (0.0.3) unstable; urgency=low
+
+  * Add dcraw-callback, direct-mimetype readmodes [Issue #9]
+  * Use channels of target colorspace instead of source colorspace [Issue #7]
+  * Add ability to read images using dcraw [Issue #5]
+  * Create command-line tool [Issue #1]
+
+ -- Markus Plangg <markus.plangg@tuwien.ac.at>  Tue, 25 Mar 2014 12:00:00 +0000
+
+digital-preservation-qaobject-image-photohawk-changedetection (0.0.2) unstable; urgency=low
+
+  * Update Taverna activity icons
+  * Add GUI for parameters in Taverna
+  * Add parameters for threads
+  * Add Travis integration
+  * Add unit testing
+  * Code cleanup
+  * Add licensing
+
+ -- Markus Plangg <markus.plangg@tuwien.ac.at>  Sat, 03 Aug 2013 19:15:34 +0000
+
+digital-preservation-qaobject-image-photohawk-changedetection (0.0.1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Markus Plangg <markus.plangg@tuwien.ac.at>  Thu, 25 Jul 2013 19:39:22 +0000

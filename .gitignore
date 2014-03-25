@@ -9,3 +9,6 @@ target/
 **/man/*.1
 **/man/*.1.gz
 **/man/*.1.html
+**/man/*.1.html
+photohawk-commandline/toolspec/out
+photohawk-commandline/toolspec/debian
