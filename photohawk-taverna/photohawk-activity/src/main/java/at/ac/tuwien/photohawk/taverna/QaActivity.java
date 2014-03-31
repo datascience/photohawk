@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2013 Vienna University of Technology
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,20 +15,8 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.taverna;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
-import javax.imageio.stream.MemoryCacheImageInputStream;
-
-import org.apache.log4j.Logger;
-
+import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
+import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.ReferenceServiceException;
@@ -37,27 +25,33 @@ import net.sf.taverna.t2.workflowmodel.processor.activity.AbstractAsynchronousAc
 import net.sf.taverna.t2.workflowmodel.processor.activity.ActivityConfigurationException;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
+import org.apache.log4j.Logger;
 
-import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
-import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import javax.imageio.stream.MemoryCacheImageInputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-public abstract class AbstractActivity<T> extends AbstractAsynchronousActivity<T> implements AsynchronousActivity<T> {
-
-    private static Logger logger = Logger.getLogger(AbstractActivity.class);
+public abstract class QaActivity<T> extends AbstractAsynchronousActivity<T> implements AsynchronousActivity<T> {
 
     /**
      * Port names.
      */
     protected static final String IN_IMAGE_1 = "image1";
     protected static final String IN_IMAGE_2 = "image2";
-
+    private static Logger logger = Logger.getLogger(QaActivity.class);
+    private static Object lock = new Object();
+    private static boolean pluginsScanned = false;
     /**
      * Configuration of this instance.
      */
     private T configBean;
-
-    private static Object lock = new Object();
-    private static boolean pluginsScanned = false;
 
     @Override
     public void configure(T configBean) throws ActivityConfigurationException {
@@ -89,16 +83,14 @@ public abstract class AbstractActivity<T> extends AbstractAsynchronousActivity<T
 
     /**
      * Reads the input images from the provided inputs.
-     * 
-     * @param inputs
-     *            the inputs of the activity
-     * @param callback
-     *            callback
+     *
+     * @param inputs   the inputs of the activity
+     * @param callback callback
      * @return an array with IN_IMAGE_1 and IN_IMAGE_2 in this order or null if
-     *         one of the images could not be read
+     * one of the images could not be read
      */
     protected BufferedImage[] readImages(final Map<String, T2Reference> inputs,
-        final AsynchronousActivityCallback callback) {
+                                         final AsynchronousActivityCallback callback) {
 
         BufferedImage[] images = new BufferedImage[2];
 
@@ -126,13 +118,11 @@ public abstract class AbstractActivity<T> extends AbstractAsynchronousActivity<T
     /**
      * Reads the data from input port specified by the provided reference from
      * the callback context and wraps it into a BufferedImage object.
-     * 
+     * <p/>
      * If one of the images could not be read, fails the activity.
-     * 
-     * @param callback
-     *            the callback environment
-     * @param reference
-     *            the reference of the input port
+     *
+     * @param callback  the callback environment
+     * @param reference the reference of the input port
      * @return the image data wrapped in a BufferedImage
      */
     protected BufferedImage wrapInputImage(AsynchronousActivityCallback callback, T2Reference reference) {
@@ -212,16 +202,14 @@ public abstract class AbstractActivity<T> extends AbstractAsynchronousActivity<T
 
     /**
      * Registers the outputs.
-     * 
-     * @param callback
-     *            callback of the activity
-     * @param op
-     *            results
+     *
+     * @param callback callback of the activity
+     * @param op       results
      * @return a map of output port names and output references
      */
     protected Map<String, T2Reference> registerOutputs(final AsynchronousActivityCallback callback,
-        final TransientOperation<Float, StaticColor> op, final String aggregatedName, final String channelsName,
-        final String channelNamesName) {
+                                                       final TransientOperation<Float, StaticColor> op, final String aggregatedName, final String channelsName,
+                                                       final String channelNamesName) {
         logger.debug("Registering outputs");
 
         InvocationContext context = callback.getContext();

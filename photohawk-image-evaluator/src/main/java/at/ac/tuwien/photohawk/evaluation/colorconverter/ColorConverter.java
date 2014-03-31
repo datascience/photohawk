@@ -16,7 +16,7 @@
 package at.ac.tuwien.photohawk.evaluation.colorconverter;
 
 /**
- * This interface describes a ColorConverter that can transform colro values
+ * This interface describes a ColorConverter that can transform color values
  * from one into another color system.
  * 
  * @param <T>

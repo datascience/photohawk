@@ -32,7 +32,7 @@ import java.awt.image.BufferedImage;
 public class PaeQa implements Qa<Float, StaticColor> {
 
     @Override
-    public TransientOperation<Float, StaticColor> evaluate(BufferedImage left, BufferedImage right) {
+    public TransientOperation<Float, StaticColor> evaluate(final BufferedImage left, final BufferedImage right) {
         // Check size
         CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(
                 left, right);
@@ -40,11 +40,9 @@ public class PaeQa implements Qa<Float, StaticColor> {
         equalSize = null;
 
         // Run metric
-        PAEMetric metric = new PAEMetric(new SRGBColorConverter(
-                new ConvenientBufferedImageWrapper(left)),
-                new SRGBColorConverter(new ConvenientBufferedImageWrapper(
-                        right)), new Point(0, 0), new Point(
-                left.getWidth(), left.getHeight())
+        PAEMetric metric = new PAEMetric(new SRGBColorConverter(new ConvenientBufferedImageWrapper(left)),
+                new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)),
+                new Point(0, 0), new Point(left.getWidth(), left.getHeight())
         );
 
         // Evaluate

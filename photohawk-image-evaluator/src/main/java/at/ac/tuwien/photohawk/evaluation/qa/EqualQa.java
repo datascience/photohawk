@@ -16,7 +16,7 @@
 
 package at.ac.tuwien.photohawk.evaluation.qa;
 
-import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBColorConverter;
+import at.ac.tuwien.photohawk.evaluation.colorconverter.AutoColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 import at.ac.tuwien.photohawk.evaluation.operation.metric.EqualMetric;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.CheckEqualSizePreprocessor;
@@ -31,19 +31,21 @@ import java.awt.image.BufferedImage;
 public class EqualQa implements Qa<Boolean, Boolean> {
 
     @Override
-    public TransientOperation<Boolean, Boolean> evaluate(BufferedImage left, BufferedImage right) {
+    public TransientOperation<Boolean, Boolean> evaluate(final BufferedImage left, final BufferedImage right) {
         // Check size
-        CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(
-                left, right);
+        CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(left, right);
         equalSize.process();
         equalSize = null;
 
-        // Run metric
-        EqualMetric metric = new EqualMetric(new SRGBColorConverter(
-                new ConvenientBufferedImageWrapper(left)),
-                new SRGBColorConverter(new ConvenientBufferedImageWrapper(
-                        right)), new Point(0, 0), new Point(
-                left.getWidth(), left.getHeight()));
+        ConvenientBufferedImageWrapper leftWrapped = new ConvenientBufferedImageWrapper(left);
+        ConvenientBufferedImageWrapper rightWrapped = new ConvenientBufferedImageWrapper(right);
+        AutoColorConverter convLeft = new AutoColorConverter(leftWrapped, rightWrapped,
+                AutoColorConverter.AlternativeColorConverter.CIEXYZ);
+        AutoColorConverter convRight = new AutoColorConverter(rightWrapped, leftWrapped,
+                AutoColorConverter.AlternativeColorConverter.CIEXYZ);
+
+        // Evaluate
+        EqualMetric metric = new EqualMetric(convLeft, convRight, new Point(0, 0), new Point(left.getWidth(), left.getHeight()));
 
         // Evaluate
         return metric.execute();

@@ -32,8 +32,32 @@ import java.awt.image.BufferedImage;
  */
 public class SsimQa implements Qa<Float, StaticColor> {
 
+    private int targetSize;
+    private boolean doThreaded;
+    private int numThreads;
+
+    /**
+     * Create a new SSIM QA with default parameters.
+     */
+    public SsimQa() {
+        this.targetSize = SimpleSSIMMetric.DEFAULT_TARGET_SIZE;
+        this.doThreaded = SimpleSSIMMetric.DEFAULT_DO_THREADED;
+        this.numThreads = SimpleSSIMMetric.DEFAULT_THREADPOOL_SIZE;
+    }
+
+    /**
+     * Create a new SSIM QA with the provided parameters.
+     *
+     * @param targetSize SSIM target size
+     */
+    public SsimQa(final int targetSize, final boolean doThreaded, final int numThreads) {
+        this.targetSize = targetSize;
+        this.doThreaded = doThreaded;
+        this.numThreads = numThreads;
+    }
+
     @Override
-    public TransientOperation<Float, StaticColor> evaluate(BufferedImage left, BufferedImage right) {
+    public TransientOperation<Float, StaticColor> evaluate(final BufferedImage left, final BufferedImage right) {
         // Convert to SRGB
         BufferedImage leftImg = new SRGBColorConverter(
                 new ConvenientBufferedImageWrapper(left)).getImage()
@@ -52,25 +76,23 @@ public class SsimQa implements Qa<Float, StaticColor> {
 
         // Scale
         ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(
-                leftImg, rightImg, SimpleSSIMMetric.DEFAULT_TARGET_SIZE);
+                leftImg, rightImg, targetSize);
         scale.process();
         leftImg = scale.getResult1();
         rightImg = scale.getResult2();
         scale = null;
 
         // Evaluate
-        ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(
-                leftImg);
-        HSBColorConverter c1 = new HSBColorConverter(
-                new SRGBColorConverter(wrapped1));
-        ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(
-                rightImg);
-        HSBColorConverter c2 = new HSBColorConverter(
-                new SRGBColorConverter(wrapped2));
+        HSBColorConverter c1 = new HSBColorConverter(new SRGBColorConverter(new ConvenientBufferedImageWrapper(leftImg)));
+        HSBColorConverter c2 = new HSBColorConverter(new SRGBColorConverter(new ConvenientBufferedImageWrapper(rightImg)));
 
         // TODO: What happens if one image is smaller than the SCALE_TARGET_SIZE?
-        SimpleSSIMMetric metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(
-                leftImg.getWidth(), rightImg.getHeight()), false);
+        SimpleSSIMMetric metric = null;
+        if (!doThreaded || numThreads <= 0) {
+            metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(leftImg.getWidth(), leftImg.getHeight()), doThreaded);
+        } else {
+            metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(leftImg.getWidth(), leftImg.getHeight()), doThreaded, numThreads);
+        }
 
         // Evaluate
         return metric.execute();

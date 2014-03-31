@@ -31,8 +31,26 @@ import java.awt.image.BufferedImage;
  */
 public class AeQa implements Qa<Float, StaticColor> {
 
+    private StaticColor threshold;
+
+    /**
+     * Creates a new QA object with default parameters.
+     */
+    public AeQa() {
+        this.threshold = null;
+    }
+
+    /**
+     * Creates a new QA object with the provided threshold.
+     *
+     * @param threshold the threshold to use
+     */
+    public AeQa(final StaticColor threshold) {
+        this.threshold = threshold;
+    }
+
     @Override
-    public TransientOperation<Float, StaticColor> evaluate(BufferedImage left, BufferedImage right) {
+    public TransientOperation<Float, StaticColor> evaluate(final BufferedImage left, final BufferedImage right) {
         // Check size
         CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(
                 left, right);
@@ -40,11 +58,16 @@ public class AeQa implements Qa<Float, StaticColor> {
         equalSize = null;
 
         // Run metric
-        AEMetric metric = new AEMetric(new SRGBColorConverter(
-                new ConvenientBufferedImageWrapper(left)),
-                new SRGBColorConverter(new ConvenientBufferedImageWrapper(
-                        right)), new Point(0, 0), new Point(
-                left.getWidth(), left.getHeight()));
+        AEMetric metric;
+        if (threshold == null) {
+            metric = new AEMetric(new SRGBColorConverter(new ConvenientBufferedImageWrapper(left)),
+                    new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)),
+                    new Point(0, 0), new Point(left.getWidth(), left.getHeight()));
+        } else {
+            metric = new AEMetric(new SRGBColorConverter(new ConvenientBufferedImageWrapper(left)),
+                    new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)),
+                    threshold, new Point(0, 0), new Point(left.getWidth(), left.getHeight()));
+        }
 
         // Evaluate
         return metric.execute();

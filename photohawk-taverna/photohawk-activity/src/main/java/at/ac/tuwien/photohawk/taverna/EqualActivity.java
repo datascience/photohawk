@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2013 Vienna University of Technology
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,36 +15,30 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.taverna;
 
-import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-
+import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
+import at.ac.tuwien.photohawk.evaluation.qa.EqualQa;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivity;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AsynchronousActivityCallback;
+import org.apache.log4j.Logger;
 
-import at.ac.tuwien.photohawk.evaluation.colorconverter.AutoColorConverter;
-import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
-import at.ac.tuwien.photohawk.evaluation.operation.metric.EqualMetric;
-import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Activity that runs SSIM.
  */
-public class EqualActivity extends AbstractActivity<CommonActivityConfigurationBean> implements
-    AsynchronousActivity<CommonActivityConfigurationBean> {
-
-    private static Logger logger = Logger.getLogger(EqualActivity.class);
+public class EqualActivity extends QaActivity<CommonActivityConfigurationBean> implements
+        AsynchronousActivity<CommonActivityConfigurationBean> {
 
     /**
      * Port names.
      */
     private static final String OUT = "equals";
+    private static Logger logger = Logger.getLogger(EqualActivity.class);
 
     /**
      * Reconfigure ports of activity.
@@ -77,21 +71,11 @@ public class EqualActivity extends AbstractActivity<CommonActivityConfigurationB
                     ReferenceService referenceService = context.getReferenceService();
                     outputs = new HashMap<String, T2Reference>();
 
-                    T2Reference aggregatedRef = referenceService.register(new Boolean(false), 0, true, context);
+                    T2Reference aggregatedRef = referenceService.register(false, 0, true, context);
                     outputs.put(OUT, aggregatedRef);
                 } else {
-                    ConvenientBufferedImageWrapper wrapped1 = new ConvenientBufferedImageWrapper(images[0]);
-                    ConvenientBufferedImageWrapper wrapped2 = new ConvenientBufferedImageWrapper(images[1]);
-                    AutoColorConverter c1 = new AutoColorConverter(wrapped1, wrapped2,
-                        AutoColorConverter.AlternativeColorConverter.CIEXYZ);
-                    AutoColorConverter c2 = new AutoColorConverter(wrapped2, wrapped1,
-                        AutoColorConverter.AlternativeColorConverter.CIEXYZ);
-
-                    // Evaluate
-                    EqualMetric equal = new EqualMetric(c1, c2, new Point(0, 0), new Point(images[0].getWidth(),
-                        images[0].getHeight()));
-
-                    TransientOperation<Boolean, Boolean> op = equal.execute();
+                    EqualQa equalQa = new EqualQa();
+                    TransientOperation<Boolean, Boolean> op = equalQa.evaluate(images[0], images[1]);
                     outputs = registerOutputs(callback, op);
                 }
 
@@ -103,15 +87,13 @@ public class EqualActivity extends AbstractActivity<CommonActivityConfigurationB
 
     /**
      * Registers the outputs.
-     * 
-     * @param callback
-     *            callback of the activity
-     * @param op
-     *            results
+     *
+     * @param callback callback of the activity
+     * @param op       results
      * @return a map of output port names and output references
      */
     private Map<String, T2Reference> registerOutputs(final AsynchronousActivityCallback callback,
-        TransientOperation<Boolean, Boolean> op) {
+                                                     final TransientOperation<Boolean, Boolean> op) {
         logger.debug("Registering outputs");
 
         InvocationContext context = callback.getContext();

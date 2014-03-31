@@ -18,10 +18,9 @@ package at.ac.tuwien.photohawk.taverna.ui.serviceprovider;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import at.ac.tuwien.photohawk.taverna.QaActivity;
 import net.sf.taverna.t2.workbench.activityicons.ActivityIconSPI;
 import net.sf.taverna.t2.workflowmodel.processor.activity.Activity;
-
-import at.ac.tuwien.photohawk.taverna.AbstractActivity;
 
 /**
  * Icon for services.
@@ -34,7 +33,7 @@ public class CommonServiceIcon implements ActivityIconSPI {
 
     @Override
     public int canProvideIconScore(Activity<?> activity) {
-        if (activity instanceof AbstractActivity) {
+        if (activity instanceof QaActivity) {
             return DEFAULT_ICON;
         }
         return NO_ICON;

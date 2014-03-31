@@ -19,7 +19,6 @@ package at.ac.tuwien.photohawk.evaluation.qa;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
-import at.ac.tuwien.photohawk.evaluation.operation.metric.AEMetric;
 import at.ac.tuwien.photohawk.evaluation.operation.metric.MAEMetric;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.CheckEqualSizePreprocessor;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
@@ -33,7 +32,7 @@ import java.awt.image.BufferedImage;
 public class MaeQa implements Qa<Float, StaticColor> {
 
     @Override
-    public TransientOperation<Float, StaticColor> evaluate(BufferedImage left, BufferedImage right) {
+    public TransientOperation<Float, StaticColor> evaluate(final BufferedImage left, final BufferedImage right) {
         // Check size
         CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(
                 left, right);
@@ -41,11 +40,9 @@ public class MaeQa implements Qa<Float, StaticColor> {
         equalSize = null;
 
         // Run metric
-        MAEMetric metric = new MAEMetric(new SRGBColorConverter(
-                new ConvenientBufferedImageWrapper(left)),
-                new SRGBColorConverter(new ConvenientBufferedImageWrapper(
-                        right)), new Point(0, 0), new Point(
-                left.getWidth(), left.getHeight()));
+        MAEMetric metric = new MAEMetric(new SRGBColorConverter(new ConvenientBufferedImageWrapper(left)),
+                new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)), new Point(0, 0),
+                new Point(left.getWidth(), left.getHeight()));
 
         // Evaluate
         return metric.execute();
