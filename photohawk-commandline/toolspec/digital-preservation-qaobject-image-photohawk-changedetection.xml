@@ -22,7 +22,10 @@
     <operations>
         <operation name="digital-preservation-qaobject-image-photohawk-ae">
             <description>Detect similarity in images using absolute error</description>
-            <command>java -jar  /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar ae "${leftimage}" "${rightimage}"</command>
+            <command>java -jar
+                /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar
+                ae "${leftimage}" "${rightimage}"
+            </command>
             <inputs>
                 <input name="leftimage" required="true">
                     <description>Path to the left image</description>
@@ -39,7 +42,10 @@
         </operation>
         <operation name="digital-preservation-qaobject-image-photohawk-equal">
             <description>Detect similarity in images using equal</description>
-            <command>java -jar -Xmx2G /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar equal "${leftimage}" "${rightimage}"</command>
+            <command>java -jar -Xmx2G
+                /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar
+                equal "${leftimage}" "${rightimage}"
+            </command>
             <inputs>
                 <input name="leftimage" required="true">
                     <description>Path to the left image</description>
@@ -56,7 +62,10 @@
         </operation>
         <operation name="digital-preservation-qaobject-image-photohawk-mae">
             <description>Detect similarity in images using mean absolute error</description>
-            <command>java -jar -Xmx2G /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar mae "${leftimage}" "${rightimage}"</command>
+            <command>java -jar -Xmx2G
+                /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar
+                mae "${leftimage}" "${rightimage}"
+            </command>
             <inputs>
                 <input name="leftimage" required="true">
                     <description>Path to the left image</description>
@@ -73,7 +82,10 @@
         </operation>
         <operation name="digital-preservation-qaobject-image-photohawk-mse">
             <description>Detect similarity in images using mean squared error</description>
-            <command>java -jar -Xmx2G /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar mse "${leftimage}" "${rightimage}"</command>
+            <command>java -jar -Xmx2G
+                /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar
+                mse "${leftimage}" "${rightimage}"
+            </command>
             <inputs>
                 <input name="leftimage" required="true">
                     <description>Path to the left image</description>
@@ -90,7 +102,10 @@
         </operation>
         <operation name="digital-preservation-qaobject-image-photohawk-pae">
             <description>Detect similarity in images using peak absolute error</description>
-            <command>java -jar -Xmx2G /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar pae "${leftimage}" "${rightimage}"</command>
+            <command>java -jar -Xmx2G
+                /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar
+                pae "${leftimage}" "${rightimage}"
+            </command>
             <inputs>
                 <input name="leftimage" required="true">
                     <description>Path to the left image</description>
@@ -107,7 +122,10 @@
         </operation>
         <operation name="digital-preservation-qaobject-image-photohawk-ssim">
             <description>Detect similarity in images using SSIM</description>
-            <command>java -jar -Xmx2G /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar ssim "${leftimage}" "${rightimage}"</command>
+            <command>java -jar -Xmx2G
+                /usr/share/digital-preservation-qaobject-image-photohawk-changedetection/photohawk-commandline-0.0.3-SNAPSHOT-jar-with-dependencies.jar
+                ssim "${leftimage}" "${rightimage}"
+            </command>
             <inputs>
                 <input name="leftimage" required="true">
                     <description>Path to the left image</description>

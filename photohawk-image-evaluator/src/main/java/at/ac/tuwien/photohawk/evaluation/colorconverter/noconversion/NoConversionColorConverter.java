@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2010-2013 Vienna University of Technology
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,7 @@ import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 
 /**
  * This ColorConverter performs no color conversion.
- * 
+ *
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  */
 public class NoConversionColorConverter implements ColorConverter<NoConversionStaticColor> {
@@ -32,11 +32,9 @@ public class NoConversionColorConverter implements ColorConverter<NoConversionSt
 
     /**
      * Creates a new NoConversionColorConverter.
-     * 
-     * @param img
-     *            the image
-     * @param channelNames
-     *            an array of channel names
+     *
+     * @param img          the image
+     * @param channelNames an array of channel names
      */
     public NoConversionColorConverter(ConvenientBufferedImageWrapper img, String[] channelNames) {
         this.img = img;
@@ -54,9 +52,8 @@ public class NoConversionColorConverter implements ColorConverter<NoConversionSt
     /**
      * Creates a new NoConversionColorConverter with consecutive numbers as
      * channel names.
-     * 
-     * @param img
-     *            the image
+     *
+     * @param img the image
      */
     @Deprecated
     public NoConversionColorConverter(ConvenientBufferedImageWrapper img) {

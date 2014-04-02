@@ -20,8 +20,7 @@ import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.hsb.HSBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 
-import java.awt.*;
-
+import java.awt.Point;
 
 /**
  * This class implements a simple Mean Absolute Error Metric.
@@ -71,9 +70,7 @@ public class MAEMetric extends Metric {
             for (int i = 0; i < val1.getNumberOfChannels(); i++) {
                 double value = Math.abs(val1.getChannelValue(i) - val2.getChannelValue(i));
                 if (img1 instanceof HSBColorConverter && i == 2) {
-                    if (value > 0.5) {
-                        value = 1 - value;
-                    }
+                    value = HSBColorConverter.normalizeHueDifference(value);
                 }
                 channelResult[i] += value;
             }

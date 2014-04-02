@@ -27,5 +27,13 @@ import java.awt.image.BufferedImage;
  * @param <Result>           channel result type
  */
 public interface Qa<AggregatedResult, Result> {
+
+    /**
+     * Evaluate the provided images.
+     *
+     * @param left  left image to evalute
+     * @param right right image to evaluate
+     * @return the evaluation result
+     */
     TransientOperation<AggregatedResult, Result> evaluate(BufferedImage left, BufferedImage right);
 }

@@ -19,7 +19,7 @@ import at.ac.tuwien.photohawk.evaluation.BufferedImageHelper;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 /**
@@ -31,7 +31,8 @@ public class ResizePreprocessorTest {
     public void executeTest_equalSize() {
         BufferedImage img1 = BufferedImageHelper.createSolidImage(new Color(0, 0, 0));
         BufferedImage img2 = BufferedImageHelper.createSolidImage(new Color(0, 0, 0));
-        ResizePreprocessor pp = new ResizePreprocessor(img1, img2, BufferedImageHelper.DEFAULT_WIDTH, BufferedImageHelper.DEFAULT_HEIGHT);
+        ResizePreprocessor pp = new ResizePreprocessor(img1, img2, BufferedImageHelper.DEFAULT_WIDTH,
+                                                       BufferedImageHelper.DEFAULT_HEIGHT);
         pp.process();
 
         Assert.assertEquals(img1, pp.getResult1());

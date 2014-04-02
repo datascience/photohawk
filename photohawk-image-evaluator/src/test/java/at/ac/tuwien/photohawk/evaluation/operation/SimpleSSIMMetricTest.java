@@ -22,7 +22,7 @@ import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBStaticColor;
 import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Point;
 
 import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.*;
 
@@ -44,8 +44,10 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
      */
     @Test
     public void executeTest_equal_zeroPattern() {
-        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
-        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
 
         SimpleSSIMMetric metric = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op = metric.execute();
@@ -58,8 +60,10 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
      */
     @Test
     public void executeTest_equal_onePattern() {
-        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
-        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
 
         SimpleSSIMMetric metric = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op = metric.execute();
@@ -72,8 +76,10 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
      */
     @Test
     public void executeTest_notEqual_zeroPattern_onePattern_notOne() {
-        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
-        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
 
         SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
@@ -94,8 +100,10 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
      */
     @Test
     public void executeTest_notEqual_zeroPattern_onePattern() {
-        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
-        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 1));
 
         SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
@@ -116,8 +124,10 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
      */
     @Test
     public void executeTest_notEqual_zeroPattern_sixPattern() {
-        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
-        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 6));
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 6));
 
         SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
@@ -138,8 +148,10 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
      */
     @Test
     public void executeTest_notEqual_zeroPattern_eightPattern() {
-        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
-        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(DEFAULT_IMAGE_SIZE, 8));
+        ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 0));
+        ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(),
+                                                                  getUniformPattern(DEFAULT_IMAGE_SIZE, 8));
 
         SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, DEFAULT_ENDPOINT);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();

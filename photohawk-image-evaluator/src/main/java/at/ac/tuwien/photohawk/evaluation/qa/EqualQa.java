@@ -22,7 +22,7 @@ import at.ac.tuwien.photohawk.evaluation.operation.metric.EqualMetric;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.CheckEqualSizePreprocessor;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 /**
@@ -40,12 +40,13 @@ public class EqualQa implements Qa<Boolean, Boolean> {
         ConvenientBufferedImageWrapper leftWrapped = new ConvenientBufferedImageWrapper(left);
         ConvenientBufferedImageWrapper rightWrapped = new ConvenientBufferedImageWrapper(right);
         AutoColorConverter convLeft = new AutoColorConverter(leftWrapped, rightWrapped,
-                AutoColorConverter.AlternativeColorConverter.CIEXYZ);
+                                                             AutoColorConverter.AlternativeColorConverter.CIEXYZ);
         AutoColorConverter convRight = new AutoColorConverter(rightWrapped, leftWrapped,
-                AutoColorConverter.AlternativeColorConverter.CIEXYZ);
+                                                              AutoColorConverter.AlternativeColorConverter.CIEXYZ);
 
         // Evaluate
-        EqualMetric metric = new EqualMetric(convLeft, convRight, new Point(0, 0), new Point(left.getWidth(), left.getHeight()));
+        EqualMetric metric = new EqualMetric(convLeft, convRight, new Point(0, 0),
+                                             new Point(left.getWidth(), left.getHeight()));
 
         // Evaluate
         return metric.execute();

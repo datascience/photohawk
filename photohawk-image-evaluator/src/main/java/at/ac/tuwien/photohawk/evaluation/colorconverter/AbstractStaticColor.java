@@ -9,9 +9,8 @@ public abstract class AbstractStaticColor implements StaticColor {
 
     /**
      * Creates a new AbstractStaticColor.
-     * 
-     * @param values
-     *            the values of this color
+     *
+     * @param values the values of this color
      */
     protected AbstractStaticColor(float[] values) {
         setChannelValues(values);

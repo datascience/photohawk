@@ -60,10 +60,6 @@ class Ssim implements Command {
 
     private ImageReader ir;
 
-    private int targetSize;
-
-    private int threads;
-
     /**
      * Creates a new SSIM command.
      *
@@ -75,19 +71,17 @@ class Ssim implements Command {
 
     @Override
     public void init() {
-        subparser = subparsers.addParser("ssim")
-                .help("Structured similarity metric")
-                .setDefault("command", this);
+        subparser = subparsers.addParser("ssim").help("Structured similarity metric").setDefault("command", this);
 
-        subparser.addArgument(TARGET_SIZE_SHORT, TARGET_SIZE).type(Integer.class).choices(Arguments.range(1, Integer.MAX_VALUE))
-                .setDefault(SimpleSSIMMetric.DEFAULT_TARGET_SIZE).help("Target size of image before comparison").metavar("SIZE");
-        subparser.addArgument(THREADS_SHORT, THREADS).type(Integer.class).choices(Arguments.range(0, Integer.MAX_VALUE))
-                .setDefault(SimpleSSIMMetric.DEFAULT_THREADPOOL_SIZE).help("Number of threads to use").metavar("THREADS");
+        subparser.addArgument(TARGET_SIZE_SHORT, TARGET_SIZE).type(Integer.class).choices(
+                Arguments.range(1, Integer.MAX_VALUE)).setDefault(SimpleSSIMMetric.DEFAULT_TARGET_SIZE).help(
+                "Target size of image before comparison").metavar("SIZE");
+        subparser.addArgument(THREADS_SHORT, THREADS).type(Integer.class).choices(
+                Arguments.range(0, Integer.MAX_VALUE)).setDefault(SimpleSSIMMetric.DEFAULT_THREADPOOL_SIZE).help(
+                "Number of threads to use").metavar("THREADS");
 
-        subparser.addArgument(LEFT).type(Arguments.fileType().verifyCanRead())
-                .help("Left file for comparison");
-        subparser.addArgument(RIGHT).type(Arguments.fileType().verifyCanRead())
-                .help("Right file for comparison");
+        subparser.addArgument(LEFT).type(Arguments.fileType().verifyCanRead()).help("Left file for comparison");
+        subparser.addArgument(RIGHT).type(Arguments.fileType().verifyCanRead()).help("Right file for comparison");
     }
 
     @Override

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2010-2013 Vienna University of Technology
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,23 +15,18 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.evaluation.colorconverter;
 
+import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
+
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
-
-import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
-
-import javax.imageio.ImageIO;
-
 
 /**
  * This class provides a ColorConverter that uses a ICC_Profile for conversion.
- * 
+ *
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  */
 public abstract class ICCProfileColorConverter implements FullColorConverter {
@@ -42,20 +37,22 @@ public abstract class ICCProfileColorConverter implements FullColorConverter {
 
     /**
      * Creates a new ICCProfileColorConverter.
-     * 
-     * @param img
-     *            the image
-     * @param cs
-     *            the color space
+     *
+     * @param img the image
+     * @param cs  the color space
      */
     public ICCProfileColorConverter(ConvenientBufferedImageWrapper img, ColorSpace cs) {
         ColorConvertOp transform = new ColorConvertOp(null);
 
         int[] bits = new int[cs.getNumComponents()];
         Arrays.fill(bits, SIGNIFICANT_BITS);
-        BufferedImage temp = transform.createCompatibleDestImage(img.getBufferedImage(), new ComponentColorModel(cs,
-            bits, img.getColorModel().hasAlpha(), img.getColorModel().isAlphaPremultiplied(), img.getColorModel()
-                .getTransparency(), DataBuffer.TYPE_INT));
+        BufferedImage temp = transform.createCompatibleDestImage(img.getBufferedImage(),
+                                                                 new ComponentColorModel(cs, bits,
+                                                                                         img.getColorModel().hasAlpha(),
+                                                                                         img.getColorModel().isAlphaPremultiplied(),
+                                                                                         img.getColorModel().getTransparency(),
+                                                                                         DataBuffer.TYPE_INT)
+        );
 
         temp = transform.filter(img.getBufferedImage(), temp);
 

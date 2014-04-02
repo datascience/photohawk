@@ -54,8 +54,7 @@ public class AeQa implements Qa<Float, StaticColor> {
     @Override
     public TransientOperation<Float, StaticColor> evaluate(final BufferedImage left, final BufferedImage right) {
         // Check size
-        CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(
-                left, right);
+        CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(left, right);
         equalSize.process();
         equalSize = null;
 
@@ -63,12 +62,12 @@ public class AeQa implements Qa<Float, StaticColor> {
         AEMetric metric;
         if (threshold == null) {
             metric = new AEMetric(new SRGBColorConverter(new ConvenientBufferedImageWrapper(left)),
-                    new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)),
-                    new Point(0, 0), new Point(left.getWidth(), left.getHeight()));
+                                  new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)), new Point(0, 0),
+                                  new Point(left.getWidth(), left.getHeight()));
         } else {
             metric = new AEMetric(new SRGBColorConverter(new ConvenientBufferedImageWrapper(left)),
-                    new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)),
-                    threshold, new Point(0, 0), new Point(left.getWidth(), left.getHeight()));
+                                  new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)), threshold,
+                                  new Point(0, 0), new Point(left.getWidth(), left.getHeight()));
         }
 
         // Evaluate

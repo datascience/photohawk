@@ -22,7 +22,7 @@ import at.ac.tuwien.photohawk.evaluation.preprocessing.PreprocessingException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 /**

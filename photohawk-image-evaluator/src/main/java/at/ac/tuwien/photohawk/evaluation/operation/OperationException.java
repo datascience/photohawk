@@ -15,9 +15,8 @@ public class OperationException extends RuntimeException {
 
     /**
      * Creates a new PreprocessingException.
-     * 
-     * @param message
-     *            exception message
+     *
+     * @param message exception message
      */
     public OperationException(String message) {
         super(message);
@@ -25,11 +24,9 @@ public class OperationException extends RuntimeException {
 
     /**
      * Creates a new PreprocessingException.
-     * 
-     * @param message
-     *            exception message
-     * @param cause
-     *            cause
+     *
+     * @param message exception message
+     * @param cause   cause
      */
     public OperationException(String message, Throwable cause) {
         super(message, cause);
@@ -37,9 +34,8 @@ public class OperationException extends RuntimeException {
 
     /**
      * Creates a new PreprocessingException.
-     * 
-     * @param cause
-     *            cause
+     *
+     * @param cause cause
      */
     public OperationException(Throwable cause) {
         super(cause);

@@ -64,13 +64,10 @@ class Ae implements Command {
 
     @Override
     public void init() {
-        subparser = subparsers.addParser("ae").help("Absolute error metric")
-                .setDefault("command", this);
+        subparser = subparsers.addParser("ae").help("Absolute error metric").setDefault("command", this);
 
-        subparser.addArgument(LEFT).type(Arguments.fileType().verifyCanRead())
-                .help("Left file for comparison");
-        subparser.addArgument(RIGHT).type(Arguments.fileType().verifyCanRead())
-                .help("Right file for comparison");
+        subparser.addArgument(LEFT).type(Arguments.fileType().verifyCanRead()).help("Left file for comparison");
+        subparser.addArgument(RIGHT).type(Arguments.fileType().verifyCanRead()).help("Right file for comparison");
     }
 
     @Override

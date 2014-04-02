@@ -18,7 +18,7 @@ package at.ac.tuwien.photohawk.evaluation.preprocessing;
 import at.ac.tuwien.photohawk.evaluation.BufferedImageHelper;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 /**

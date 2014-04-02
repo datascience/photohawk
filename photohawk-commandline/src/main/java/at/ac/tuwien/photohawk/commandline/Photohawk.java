@@ -61,21 +61,25 @@ public class Photohawk {
      * @param args command line parameters
      * @throws PhotohawkException if the program could not be initialized
      */
-    public void init(String[] args) throws PhotohawkException {
+    public void init(String[] args) {
         ArgumentParser parser = ArgumentParsers.newArgumentParser("photohawk").defaultHelp(true);
 
         try {
-            parser.version("${prog} " + gitProperties().getProperty("git.commit.id.describe") + "\n\nLicensed under the Apache License, Version 2.0\nCopyright 2010-2014 Vienna University of Technology");
+            parser.version("${prog} " + gitProperties().getProperty("git.commit.id.describe") +
+                                   "\n\nLicensed under the Apache License, Version 2.0\nCopyright 2010-2014 Vienna University of Technology");
             parser.addArgument("--version").action(Arguments.version()).help("show version information and exit");
         } catch (IOException e) {
             throw new PhotohawkException("Error reading git properties.", e);
         }
 
-        parser.addArgument(READ_LEFT).choices(READ_MODE_DIRECT, READ_MODE_DCRAW, READ_MODE_DCRAW_FALLBACK, READ_MODE_DIRECT_MIMETYPE).setDefault(READ_MODE_DCRAW_FALLBACK).help("read mode for images");
-        parser.addArgument(READ_RIGHT).choices(READ_MODE_DIRECT, READ_MODE_DCRAW, READ_MODE_DCRAW_FALLBACK, READ_MODE_DIRECT_MIMETYPE).setDefault(READ_MODE_DCRAW_FALLBACK).help("read mode for images");
+        parser.addArgument(READ_LEFT).choices(READ_MODE_DIRECT, READ_MODE_DCRAW, READ_MODE_DCRAW_FALLBACK,
+                                              READ_MODE_DIRECT_MIMETYPE).setDefault(READ_MODE_DCRAW_FALLBACK).help(
+                "read mode for images");
+        parser.addArgument(READ_RIGHT).choices(READ_MODE_DIRECT, READ_MODE_DCRAW, READ_MODE_DCRAW_FALLBACK,
+                                               READ_MODE_DIRECT_MIMETYPE).setDefault(READ_MODE_DCRAW_FALLBACK).help(
+                "read mode for images");
 
-        Subparsers subparsers = parser.addSubparsers().title("Algorithm")
-                .help("Comparison algorithm");
+        Subparsers subparsers = parser.addSubparsers().title("Algorithm").help("Comparison algorithm");
 
         // SSIM
         Ssim ssimCmd = new Ssim(subparsers);

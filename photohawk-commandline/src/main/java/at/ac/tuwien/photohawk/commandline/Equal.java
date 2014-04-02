@@ -27,7 +27,6 @@ import net.sourceforge.argparse4j.inf.Namespace;
 import net.sourceforge.argparse4j.inf.Subparser;
 import net.sourceforge.argparse4j.inf.Subparsers;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -64,13 +63,10 @@ public class Equal implements Command {
 
     @Override
     public void init() {
-        subparser = subparsers.addParser("equal").help("Equal")
-                .setDefault("command", this);
+        subparser = subparsers.addParser("equal").help("Equal").setDefault("command", this);
 
-        subparser.addArgument(LEFT).type(Arguments.fileType().verifyCanRead())
-                .help("Left file for comparison");
-        subparser.addArgument(RIGHT).type(Arguments.fileType().verifyCanRead())
-                .help("Right file for comparison");
+        subparser.addArgument(LEFT).type(Arguments.fileType().verifyCanRead()).help("Left file for comparison");
+        subparser.addArgument(RIGHT).type(Arguments.fileType().verifyCanRead()).help("Right file for comparison");
     }
 
     @Override

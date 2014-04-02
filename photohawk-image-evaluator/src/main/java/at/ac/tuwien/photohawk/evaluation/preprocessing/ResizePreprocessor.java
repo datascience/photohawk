@@ -18,7 +18,7 @@ package at.ac.tuwien.photohawk.evaluation.preprocessing;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -82,12 +82,18 @@ public class ResizePreprocessor implements Preprocessor {
         LOGGER.info("Resizing image to width [{}], height [{}].", width, height);
 
         // Create new image with new dimensions
-        AffineTransformOp op = new AffineTransformOp(AffineTransform.getScaleInstance(width / (double) img.getWidth(),
-                height / (double) img.getHeight()), INTERPOLATION_TYPE);
+        AffineTransformOp op = new AffineTransformOp(
+                AffineTransform.getScaleInstance(width / (double) img.getWidth(), height / (double) img.getHeight()),
+                INTERPOLATION_TYPE);
 
-        BufferedImage result = op.createCompatibleDestImage(img, new ComponentColorModel(img.getColorModel()
-                .getColorSpace(), SIGNIFICANT_BITS_PER_COMPONENT, img.getColorModel().hasAlpha(), img.getColorModel()
-                .isAlphaPremultiplied(), img.getColorModel().getTransparency(), DataBuffer.TYPE_INT));
+        BufferedImage result = op.createCompatibleDestImage(img,
+                                                            new ComponentColorModel(img.getColorModel().getColorSpace(),
+                                                                                    SIGNIFICANT_BITS_PER_COMPONENT,
+                                                                                    img.getColorModel().hasAlpha(),
+                                                                                    img.getColorModel().isAlphaPremultiplied(),
+                                                                                    img.getColorModel().getTransparency(),
+                                                                                    DataBuffer.TYPE_INT)
+        );
 
         // Draw image
         Graphics2D graphics = result.createGraphics();

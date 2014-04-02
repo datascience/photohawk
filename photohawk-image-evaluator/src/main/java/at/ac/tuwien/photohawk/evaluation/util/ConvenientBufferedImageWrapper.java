@@ -49,10 +49,10 @@ public class ConvenientBufferedImageWrapper implements RenderedImage {
      */
     public float[] getSample(int x, int y) {
         float[] result = new float[getSampleModel().getNumBands()];
-        int[] data = new int[getSampleModel().getNumBands()];
+        int[] pixel = new int[getSampleModel().getNumBands()];
 
-        data = getData().getPixel(x, y, data);
-        result = getColorModel().getNormalizedComponents(data, 0, result, 0);
+        pixel = getData().getPixel(x, y, pixel);
+        result = getColorModel().getNormalizedComponents(pixel, 0, result, 0);
 
         return result;
     }

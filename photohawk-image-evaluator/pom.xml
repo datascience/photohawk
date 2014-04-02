@@ -79,10 +79,10 @@
             <scope>test</scope>
         </dependency>
 
-<!--        <dependency>
-            <groupId>com.tomgibara.imageio</groupId>
-            <artifactId>imageio-tiff</artifactId>
-            <version>1.0</version>
-        </dependency>-->
+        <!--        <dependency>
+                    <groupId>com.tomgibara.imageio</groupId>
+                    <artifactId>imageio-tiff</artifactId>
+                    <version>1.0</version>
+                </dependency>-->
     </dependencies>
 </project>

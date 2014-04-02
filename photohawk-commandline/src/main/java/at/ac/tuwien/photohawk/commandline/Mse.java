@@ -64,13 +64,10 @@ public class Mse implements Command {
 
     @Override
     public void init() {
-        subparser = subparsers.addParser("mse").help("Mean squared error")
-                .setDefault("command", this);
+        subparser = subparsers.addParser("mse").help("Mean squared error").setDefault("command", this);
 
-        subparser.addArgument(LEFT).type(Arguments.fileType().verifyCanRead())
-                .help("Left file for comparison");
-        subparser.addArgument(RIGHT).type(Arguments.fileType().verifyCanRead())
-                .help("Right file for comparison");
+        subparser.addArgument(LEFT).type(Arguments.fileType().verifyCanRead()).help("Left file for comparison");
+        subparser.addArgument(RIGHT).type(Arguments.fileType().verifyCanRead()).help("Right file for comparison");
     }
 
     @Override

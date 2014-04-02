@@ -36,7 +36,7 @@ import java.util.concurrent.FutureTask;
 public class RawImageReader {
 
     /**
-     * Environment variable name for the DCRaw executable
+     * Environment variable name for the DCRaw executable.
      */
     public static final String DCRAW_ENV_VAR = "DCRAW";
 
@@ -70,9 +70,9 @@ public class RawImageReader {
         }
 
         // Check environment
-        String dcrawBin = System.getenv().get(DCRAW_ENV_VAR);
-        if (dcrawBin != null) {
-            return dcrawBin;
+        String dcrawEnv = System.getenv().get(DCRAW_ENV_VAR);
+        if (dcrawEnv != null) {
+            return dcrawEnv;
         }
 
         // Guess by OS
@@ -181,17 +181,7 @@ public class RawImageReader {
 
         @Override
         public String call() {
-            //String test = s.useDelimiter("\\A").next();
-            byte[] data = new byte[1048576];
-            try {
-                while (is.read(data) != -1) {
-                    System.out.print("asdf");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return "";
-            //return test;
+            return s.useDelimiter("\\A").next();
         }
 
         /**

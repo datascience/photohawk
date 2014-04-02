@@ -23,7 +23,7 @@ import at.ac.tuwien.photohawk.evaluation.operation.metric.PAEMetric;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.CheckEqualSizePreprocessor;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 /**
@@ -34,16 +34,14 @@ public class PaeQa implements Qa<Float, StaticColor> {
     @Override
     public TransientOperation<Float, StaticColor> evaluate(final BufferedImage left, final BufferedImage right) {
         // Check size
-        CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(
-                left, right);
+        CheckEqualSizePreprocessor equalSize = new CheckEqualSizePreprocessor(left, right);
         equalSize.process();
         equalSize = null;
 
         // Run metric
         PAEMetric metric = new PAEMetric(new SRGBColorConverter(new ConvenientBufferedImageWrapper(left)),
-                new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)),
-                new Point(0, 0), new Point(left.getWidth(), left.getHeight())
-        );
+                                         new SRGBColorConverter(new ConvenientBufferedImageWrapper(right)),
+                                         new Point(0, 0), new Point(left.getWidth(), left.getHeight()));
 
         // Evaluate
         return metric.execute();

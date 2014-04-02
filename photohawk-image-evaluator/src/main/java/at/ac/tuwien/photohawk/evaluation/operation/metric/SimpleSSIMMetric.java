@@ -23,7 +23,8 @@ import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -58,31 +59,7 @@ public class SimpleSSIMMetric extends Metric {
     private static final double K1 = 0.01d;
     private static final double K2 = 0.03d;
     // Gaussian window 11x11 with std 1.5
-    private static final double[] WINDOW = new double[]{1.05756559815326e-06, 7.81441153305360e-06,
-            3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017,
-            0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06, 7.81441153305360e-06,
-            5.77411251978637e-05, 0.000273561160085806, 0.000831005429087199, 0.00161857756253439, 0.00202135875836257,
-            0.00161857756253439, 0.000831005429087199, 0.000273561160085806, 5.77411251978637e-05, 7.81441153305360e-06,
-            3.70224770827489e-05, 0.000273561160085806, 0.00129605559384320, 0.00393706926284679, 0.00766836382523672,
-            0.00957662749024029, 0.00766836382523672, 0.00393706926284679, 0.00129605559384320, 0.000273561160085806,
-            3.70224770827489e-05, 0.000112464355116679, 0.000831005429087199, 0.00393706926284679, 0.0119597604100370,
-            0.0232944324734871, 0.0290912256485504, 0.0232944324734871, 0.0119597604100370, 0.00393706926284679,
-            0.000831005429087199, 0.000112464355116679, 0.000219050652866017, 0.00161857756253439, 0.00766836382523672,
-            0.0232944324734871, 0.0453713590956603, 0.0566619704916846, 0.0453713590956603, 0.0232944324734871,
-            0.00766836382523672, 0.00161857756253439, 0.000219050652866017, 0.000273561160085806, 0.00202135875836257,
-            0.00957662749024029, 0.0290912256485504, 0.0566619704916846, 0.0707622377639470, 0.0566619704916846,
-            0.0290912256485504, 0.00957662749024029, 0.00202135875836257, 0.000273561160085806, 0.000219050652866017,
-            0.00161857756253439, 0.00766836382523672, 0.0232944324734871, 0.0453713590956603, 0.0566619704916846,
-            0.0453713590956603, 0.0232944324734871, 0.00766836382523672, 0.00161857756253439, 0.000219050652866017,
-            0.000112464355116679, 0.000831005429087199, 0.00393706926284679, 0.0119597604100370, 0.0232944324734871,
-            0.0290912256485504, 0.0232944324734871, 0.0119597604100370, 0.00393706926284679, 0.000831005429087199,
-            0.000112464355116679, 3.70224770827489e-05, 0.000273561160085806, 0.00129605559384320, 0.00393706926284679,
-            0.00766836382523672, 0.00957662749024029, 0.00766836382523672, 0.00393706926284679, 0.00129605559384320,
-            0.000273561160085806, 3.70224770827489e-05, 7.81441153305360e-06, 5.77411251978637e-05, 0.000273561160085806,
-            0.000831005429087199, 0.00161857756253439, 0.00202135875836257, 0.00161857756253439, 0.000831005429087199,
-            0.000273561160085806, 5.77411251978637e-05, 7.81441153305360e-06, 1.05756559815326e-06, 7.81441153305360e-06,
-            3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017,
-            0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06};
+    private static final double[] WINDOW = new double[]{1.05756559815326e-06, 7.81441153305360e-06, 3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017, 0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06, 7.81441153305360e-06, 5.77411251978637e-05, 0.000273561160085806, 0.000831005429087199, 0.00161857756253439, 0.00202135875836257, 0.00161857756253439, 0.000831005429087199, 0.000273561160085806, 5.77411251978637e-05, 7.81441153305360e-06, 3.70224770827489e-05, 0.000273561160085806, 0.00129605559384320, 0.00393706926284679, 0.00766836382523672, 0.00957662749024029, 0.00766836382523672, 0.00393706926284679, 0.00129605559384320, 0.000273561160085806, 3.70224770827489e-05, 0.000112464355116679, 0.000831005429087199, 0.00393706926284679, 0.0119597604100370, 0.0232944324734871, 0.0290912256485504, 0.0232944324734871, 0.0119597604100370, 0.00393706926284679, 0.000831005429087199, 0.000112464355116679, 0.000219050652866017, 0.00161857756253439, 0.00766836382523672, 0.0232944324734871, 0.0453713590956603, 0.0566619704916846, 0.0453713590956603, 0.0232944324734871, 0.00766836382523672, 0.00161857756253439, 0.000219050652866017, 0.000273561160085806, 0.00202135875836257, 0.00957662749024029, 0.0290912256485504, 0.0566619704916846, 0.0707622377639470, 0.0566619704916846, 0.0290912256485504, 0.00957662749024029, 0.00202135875836257, 0.000273561160085806, 0.000219050652866017, 0.00161857756253439, 0.00766836382523672, 0.0232944324734871, 0.0453713590956603, 0.0566619704916846, 0.0453713590956603, 0.0232944324734871, 0.00766836382523672, 0.00161857756253439, 0.000219050652866017, 0.000112464355116679, 0.000831005429087199, 0.00393706926284679, 0.0119597604100370, 0.0232944324734871, 0.0290912256485504, 0.0232944324734871, 0.0119597604100370, 0.00393706926284679, 0.000831005429087199, 0.000112464355116679, 3.70224770827489e-05, 0.000273561160085806, 0.00129605559384320, 0.00393706926284679, 0.00766836382523672, 0.00957662749024029, 0.00766836382523672, 0.00393706926284679, 0.00129605559384320, 0.000273561160085806, 3.70224770827489e-05, 7.81441153305360e-06, 5.77411251978637e-05, 0.000273561160085806, 0.000831005429087199, 0.00161857756253439, 0.00202135875836257, 0.00161857756253439, 0.000831005429087199, 0.000273561160085806, 5.77411251978637e-05, 7.81441153305360e-06, 1.05756559815326e-06, 7.81441153305360e-06, 3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017, 0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06};
 
     /**
      * Creates a new SimpleSSIMMetric with the provided parameters and a
@@ -101,10 +78,11 @@ public class SimpleSSIMMetric extends Metric {
      * Creates a new SimpleSSIMMetric with the provided parameters and a
      * blocksize of {@link #BLOCK_SIZE}.
      *
-     * @param img1  color converter of image 1
-     * @param img2  color converter of image 2
-     * @param start start of comparison
-     * @param end   end of comparison
+     * @param img1           color converter of image 1
+     * @param img2           color converter of image 2
+     * @param start          start of comparison
+     * @param end            end of comparison
+     * @param threadPoolSize number of threads to use
      */
     public SimpleSSIMMetric(final ColorConverter<?> img1, final ColorConverter<?> img2, final Point start,
                             final Point end, final int threadPoolSize) {
@@ -156,11 +134,18 @@ public class SimpleSSIMMetric extends Metric {
 
         if (img.getWidth() > width || img.getHeight() > height) {
             LOGGER.info("Scaling image to width {}, height {}.", width, height);
-            AffineTransformOp temp = new AffineTransformOp(AffineTransform.getScaleInstance(
-                    width / (double) img.getWidth(), height / (double) img.getHeight()), AffineTransformOp.TYPE_BICUBIC);
-            BufferedImage result1 = temp.createCompatibleDestImage(img, new ComponentColorModel(img.getColorModel()
-                    .getColorSpace(), SIGNIFICANT_BITS_PER_COMPONENT, img.getColorModel().hasAlpha(), img.getColorModel()
-                    .isAlphaPremultiplied(), img.getColorModel().getTransparency(), DataBuffer.TYPE_INT));
+            AffineTransformOp temp = new AffineTransformOp(
+                    AffineTransform.getScaleInstance(width / (double) img.getWidth(),
+                                                     height / (double) img.getHeight()), AffineTransformOp.TYPE_BICUBIC
+            );
+            BufferedImage result1 = temp.createCompatibleDestImage(img, new ComponentColorModel(
+                                                                           img.getColorModel().getColorSpace(),
+                                                                           SIGNIFICANT_BITS_PER_COMPONENT,
+                                                                           img.getColorModel().hasAlpha(),
+                                                                           img.getColorModel().isAlphaPremultiplied(),
+                                                                           img.getColorModel().getTransparency(),
+                                                                           DataBuffer.TYPE_INT)
+            );
 
             Graphics2D graphics1 = result1.createGraphics();
             graphics1.drawImage(img, -(img.getWidth() - width) / 2, -(img.getHeight() - height) / 2, null);
@@ -187,12 +172,15 @@ public class SimpleSSIMMetric extends Metric {
              */
 
             AffineTransformOp op = new AffineTransformOp(AffineTransform.getScaleInstance(factor, factor),
-                    AffineTransformOp.TYPE_BICUBIC);
-            BufferedImage result2 = op
-                    .createCompatibleDestImage(result, new ComponentColorModel(result.getColorModel().getColorSpace(),
-                            SIGNIFICANT_BITS_PER_COMPONENT, result.getColorModel().hasAlpha(), result.getColorModel()
-                            .isAlphaPremultiplied(), result.getColorModel().getTransparency(), DataBuffer.TYPE_INT
-                    ));
+                                                         AffineTransformOp.TYPE_BICUBIC);
+            BufferedImage result2 = op.createCompatibleDestImage(result, new ComponentColorModel(
+                                                                         result.getColorModel().getColorSpace(),
+                                                                         SIGNIFICANT_BITS_PER_COMPONENT,
+                                                                         result.getColorModel().hasAlpha(),
+                                                                         result.getColorModel().isAlphaPremultiplied(),
+                                                                         result.getColorModel().getTransparency(),
+                                                                         DataBuffer.TYPE_INT)
+            );
 
             // result = op.filter(img, result);
 
@@ -333,7 +321,6 @@ public class SimpleSSIMMetric extends Metric {
         }
 
         public Float getAggregatedResult() {
-            // TODO: Consider changing this
             return realssimTotal.getChannelValue(0);
         }
 
@@ -512,12 +499,9 @@ public class SimpleSSIMMetric extends Metric {
                     if (img1 instanceof HSBColorConverter && counter == 2) {
                         double varProd = Math.sqrt(varX[counter]) * Math.sqrt(varY[counter]);
 
-                        uf1 = 1 - (Math.hypot(hueXCartX - hueYCartX, hueXCartY - hueYCartY) * HSBColorConverter
-                                .normalizeHueDifference(Math.abs(avgX[counter] - avgY[counter])));
-                        // uf1 = 1 - (2 *
-                        // HSBColorConverter.normalizeHueDifference(Math.abs(avgX[counter]
-                        // -
-                        // avgY[counter])));
+                        uf1 = 1 - (Math.hypot(hueXCartX - hueYCartX, hueXCartY - hueYCartY) *
+                                HSBColorConverter.normalizeHueDifference(Math.abs(avgX[counter] - avgY[counter])));
+                        // uf1 = 1 - (2 * HSBColorConverter.normalizeHueDifference(Math.abs(avgX[counter] - avgY[counter])));
                         lf1 = 1;
 
                         uf2 = 2 * varProd + c2[counter];

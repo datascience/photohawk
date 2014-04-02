@@ -38,7 +38,7 @@ public class ParameterReader {
      * @return a list of parameters or an empty list if no parameters were found
      * @throws DcrawException if an error occurred during read
      */
-    public List<String> readParameters(final String baseKey, final boolean otherRaw) throws DcrawException {
+    public List<String> readParameters(final String baseKey, final boolean otherRaw) {
         if (otherRaw) {
             return readParameters(baseKey + RAW_KEY);
         } else {
@@ -53,7 +53,7 @@ public class ParameterReader {
      * @return a list of parameters or an empty list if not paramaeters were found
      * @throws DcrawException if an error occurred during read
      */
-    private List<String> readParameters(final String key) throws DcrawException {
+    private List<String> readParameters(final String key) {
         List<String> parameters = new ArrayList<String>();
         String p = null;
         try {

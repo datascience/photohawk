@@ -24,7 +24,7 @@ import at.ac.tuwien.photohawk.evaluation.preprocessing.ScaleToNearestFactorPrepr
 import at.ac.tuwien.photohawk.evaluation.preprocessing.ShrinkResizePreprocessor;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 /**
@@ -69,33 +69,32 @@ public class SsimQa implements Qa<Float, StaticColor> {
     public TransientOperation<Float, StaticColor> evaluate(final BufferedImage left, final BufferedImage right) {
         // Convert to SRGB
         BufferedImage leftImg = new SRGBColorConverter(
-                new ConvenientBufferedImageWrapper(left)).getImage()
-                .getBufferedImage();
+                new ConvenientBufferedImageWrapper(left)).getImage().getBufferedImage();
         BufferedImage rightImg = new SRGBColorConverter(
-                new ConvenientBufferedImageWrapper(right)).getImage()
-                .getBufferedImage();
+                new ConvenientBufferedImageWrapper(right)).getImage().getBufferedImage();
 
         // Resize
-        ShrinkResizePreprocessor shrink = new ShrinkResizePreprocessor(
-                leftImg, rightImg);
+        ShrinkResizePreprocessor shrink = new ShrinkResizePreprocessor(leftImg, rightImg);
         shrink.process();
         leftImg = shrink.getResult1();
         rightImg = shrink.getResult2();
         shrink = null;
 
         // Scale
-        ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(
-                leftImg, rightImg, targetSize);
+        ScaleToNearestFactorPreprocessor scale = new ScaleToNearestFactorPreprocessor(leftImg, rightImg, targetSize);
         scale.process();
         leftImg = scale.getResult1();
         rightImg = scale.getResult2();
         scale = null;
 
         // Evaluate
-        HSBColorConverter c1 = new HSBColorConverter(new SRGBColorConverter(new ConvenientBufferedImageWrapper(leftImg)));
-        HSBColorConverter c2 = new HSBColorConverter(new SRGBColorConverter(new ConvenientBufferedImageWrapper(rightImg)));
+        HSBColorConverter c1 = new HSBColorConverter(
+                new SRGBColorConverter(new ConvenientBufferedImageWrapper(leftImg)));
+        HSBColorConverter c2 = new HSBColorConverter(
+                new SRGBColorConverter(new ConvenientBufferedImageWrapper(rightImg)));
 
-        SimpleSSIMMetric metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(leftImg.getWidth(), leftImg.getHeight()), numThreads);
+        SimpleSSIMMetric metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0),
+                                                       new Point(leftImg.getWidth(), leftImg.getHeight()), numThreads);
 
         // Evaluate
         return metric.execute();

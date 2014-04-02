@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2013 Vienna University of Technology
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,30 +15,26 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.evaluation.operation;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import at.ac.tuwien.photohawk.evaluation.colorconverter.ColorConverter;
+import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBStaticColor;
 
 import java.util.Arrays;
 
-import at.ac.tuwien.photohawk.evaluation.colorconverter.ColorConverter;
-import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBStaticColor;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Helper class for mocking color converters.
  */
 public final class ColorConverterHelper {
 
-    public static final int[][] DIAGONAL_ONE_PATTERN1 = new int[][] { {1, 0, 0, 0, 0}, {0, 1, 0, 0, 0},
-        {0, 0, 1, 0, 0}, {0, 0, 0, 1, 0}, {0, 0, 0, 0, 1}};
+    public static final int[][] DIAGONAL_ONE_PATTERN1 = new int[][]{{1, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 1, 0, 0}, {0, 0, 0, 1, 0}, {0, 0, 0, 0, 1}};
 
-    public static final int[][] DIAGONAL_ONE_PATTERN2 = new int[][] { {0, 0, 0, 0, 1}, {0, 0, 0, 1, 0},
-        {0, 0, 1, 0, 0}, {0, 1, 0, 0, 0}, {1, 0, 0, 0, 0}};
+    public static final int[][] DIAGONAL_ONE_PATTERN2 = new int[][]{{0, 0, 0, 0, 1}, {0, 0, 0, 1, 0}, {0, 0, 1, 0, 0}, {0, 1, 0, 0, 0}, {1, 0, 0, 0, 0}};
 
-    public static final int[][] TOP2_ONE_PATTERN = new int[][] { {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
+    public static final int[][] TOP2_ONE_PATTERN = new int[][]{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
 
-    public static final int[][] BOTTOM2_ONE_PATTERN = new int[][] { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0},
-        {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}};
+    public static final int[][] BOTTOM2_ONE_PATTERN = new int[][]{{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}};
 
     /**
      * Constructor to avoid class instantiation.
@@ -48,14 +44,12 @@ public final class ColorConverterHelper {
 
     /**
      * Creates an (incomplete) mock for a ColorConverter with 1 pixel.
-     * 
-     * @param values
-     *            values of the pixel
+     *
+     * @param values values of the pixel
      * @return the mocked color converter
      */
     public static ColorConverter<SRGBStaticColor> mockColorConverter(float[] values) {
-        @SuppressWarnings("unchecked")
-        ColorConverter<SRGBStaticColor> img = mock(ColorConverter.class);
+        @SuppressWarnings("unchecked") ColorConverter<SRGBStaticColor> img = mock(ColorConverter.class);
         when(img.getNumberOfChannels()).thenReturn(values.length);
         when(img.getNullColor()).thenReturn(new SRGBStaticColor(0, 0, 0));
         when(img.getColorChannels(0, 0)).thenReturn(new SRGBStaticColor(values));
@@ -64,16 +58,13 @@ public final class ColorConverterHelper {
 
     /**
      * Mocks an (incomplete) ColorConverter.
-     * 
-     * @param colors
-     *            the colors to use
-     * @param pattern
-     *            pattern of colors
+     *
+     * @param colors  the colors to use
+     * @param pattern pattern of colors
      * @return the mocked color converter
      */
     public static ColorConverter<SRGBStaticColor> mockColorConverter(SRGBStaticColor[] colors, int[][] pattern) {
-        @SuppressWarnings("unchecked")
-        ColorConverter<SRGBStaticColor> img = mock(ColorConverter.class);
+        @SuppressWarnings("unchecked") ColorConverter<SRGBStaticColor> img = mock(ColorConverter.class);
         when(img.getNumberOfChannels()).thenReturn(3);
         when(img.getNullColor()).thenReturn(new SRGBStaticColor(0, 0, 0));
 
@@ -87,7 +78,7 @@ public final class ColorConverterHelper {
 
     /**
      * Returns a set of predefined colors.
-     * 
+     *
      * @return an array of colors
      */
     public static SRGBStaticColor[] getColors() {
@@ -109,11 +100,9 @@ public final class ColorConverterHelper {
     /**
      * Returns a pattern of specified size with the specified value set for all
      * elements.
-     * 
-     * @param size
-     *            size of the pattern
-     * @param value
-     *            value
+     *
+     * @param size  size of the pattern
+     * @param value value
      * @return an array of values
      */
     public static int[][] getUniformPattern(int size, int value) {

@@ -19,7 +19,7 @@ import at.ac.tuwien.photohawk.evaluation.BufferedImageHelper;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 /**
@@ -42,7 +42,9 @@ public class ScaleToNearestFactorPreprocessorTest {
     public void executeTest_ltSize() {
         BufferedImage img1 = BufferedImageHelper.createSolidImage(new Color(0, 0, 0));
         BufferedImage img2 = BufferedImageHelper.createSolidImage(new Color(0, 0, 0));
-        ScaleToNearestFactorPreprocessor pp = new ScaleToNearestFactorPreprocessor(img1, img2, BufferedImageHelper.DEFAULT_WIDTH / 2);
+        ScaleToNearestFactorPreprocessor pp = new ScaleToNearestFactorPreprocessor(img1, img2,
+                                                                                   BufferedImageHelper.DEFAULT_WIDTH /
+                                                                                           2);
         pp.process();
 
         Assert.assertEquals(BufferedImageHelper.DEFAULT_WIDTH / 2, pp.getResult1().getWidth());

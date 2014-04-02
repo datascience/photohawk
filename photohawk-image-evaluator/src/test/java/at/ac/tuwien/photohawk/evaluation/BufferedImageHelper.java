@@ -15,7 +15,8 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.evaluation;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**

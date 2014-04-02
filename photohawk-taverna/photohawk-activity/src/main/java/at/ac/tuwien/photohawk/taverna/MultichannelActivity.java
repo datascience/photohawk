@@ -68,7 +68,7 @@ public abstract class MultichannelActivity<T> extends QaActivity<T> {
      * @param image2   the right image to process
      * @param callback the callback to use
      */
-    protected void executeQa(final Qa qa, final BufferedImage image1, final BufferedImage image2, final AsynchronousActivityCallback callback) {
+    protected void executeQa(final Qa<Float, StaticColor> qa, final BufferedImage image1, final BufferedImage image2, final AsynchronousActivityCallback callback) {
         try {
             // Evaluate
             TransientOperation<Float, StaticColor> op = qa.evaluate(image1, image2);

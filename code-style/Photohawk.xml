@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<code_scheme name="Photohawk">
+  <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
+    <value>
+      <package name="javax.swing" withSubpackages="false" static="false" />
+    </value>
+  </option>
+  <XML>
+    <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
+  </XML>
+  <codeStyleSettings language="JAVA">
+    <option name="KEEP_LINE_BREAKS" value="false" />
+    <option name="KEEP_CONTROL_STATEMENT_IN_ONE_LINE" value="false" />
+    <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
+    <option name="CALL_PARAMETERS_WRAP" value="1" />
+    <option name="METHOD_PARAMETERS_WRAP" value="1" />
+    <option name="BINARY_OPERATION_WRAP" value="1" />
+  </codeStyleSettings>
+</code_scheme>
+

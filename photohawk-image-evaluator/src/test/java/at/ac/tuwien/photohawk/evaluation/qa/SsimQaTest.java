@@ -21,7 +21,7 @@ import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 /**
@@ -93,8 +93,10 @@ public class SsimQaTest extends AbstractOperationTest {
      */
     @Test
     public void evaluateTest_size_half000000_111111_half000000_111111() {
-        BufferedImage left = BufferedImageHelper.createSolidHalfImage(new Color(0, 0, 0), new Color(255, 255, 255), 100, 100);
-        BufferedImage right = BufferedImageHelper.createSolidHalfImage(new Color(0, 0, 0), new Color(255, 255, 255), 50, 50);
+        BufferedImage left = BufferedImageHelper.createSolidHalfImage(new Color(0, 0, 0), new Color(255, 255, 255), 100,
+                                                                      100);
+        BufferedImage right = BufferedImageHelper.createSolidHalfImage(new Color(0, 0, 0), new Color(255, 255, 255), 50,
+                                                                       50);
 
         SsimQa ssimQa = new SsimQa();
         TransientOperation<Float, StaticColor> op = ssimQa.evaluate(left, right);
