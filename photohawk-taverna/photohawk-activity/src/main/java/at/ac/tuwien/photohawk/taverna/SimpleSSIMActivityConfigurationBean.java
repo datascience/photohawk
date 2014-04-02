@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2013 Vienna University of Technology
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +15,9 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.taverna;
 
-import java.io.Serializable;
-
 import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
+
+import java.io.Serializable;
 
 /**
  * Activity configuration bean for SimpleSSIMActivity.
@@ -27,9 +27,9 @@ public class SimpleSSIMActivityConfigurationBean implements Serializable {
 
     private int targetSize = SimpleSSIMMetric.DEFAULT_TARGET_SIZE;
 
-    private boolean doThreaded = SimpleSSIMMetric.DEFAULT_DO_THREADED;
+    private boolean doThreaded = false;
 
-    private int threadPoolSize = SimpleSSIMMetric.DEFAULT_THREADPOOL_SIZE;
+    private int threadPoolSize = 4;
 
     public int getTargetSize() {
         return targetSize;

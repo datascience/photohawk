@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2010-2013 Vienna University of Technology
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,27 +15,21 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.evaluation.operation.metric;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.awt.image.ComponentColorModel;
-import java.awt.image.DataBuffer;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import at.ac.tuwien.photohawk.evaluation.colorconverter.ColorConverter;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.hsb.HSBColorConverter;
 import at.ac.tuwien.photohawk.evaluation.operation.OperationException;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.awt.image.ComponentColorModel;
+import java.awt.image.DataBuffer;
+import java.util.concurrent.*;
 
 /**
  * This class implements a simple SSIM Metric. Based on: Z. Wang, A. C. Bovik,
@@ -43,7 +37,7 @@ import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
  * "Image quality assessment: From error visibility to structural similarity,"
  * IEEE Transactions on Image Processing, vol. 13, no. 4, pp. 600-612, Apr.
  * 2004.
- * 
+ *
  * @author Stephan Bauer (stephan.bauer@student.tuwien.ac.at)
  */
 public class SimpleSSIMMetric extends Metric {
@@ -54,67 +48,81 @@ public class SimpleSSIMMetric extends Metric {
     public static final int DEFAULT_TARGET_SIZE = 256;
 
     /**
-     * Default state whether the operation is executed with multiple threads.
-     */
-    public static final boolean DEFAULT_DO_THREADED = false;
-
-    /**
      * Default thread pool size.
      */
-    public static final int DEFAULT_THREADPOOL_SIZE = 20;
-
+    public static final int DEFAULT_THREADPOOL_SIZE = 0;
+    private int threadPoolSize = DEFAULT_THREADPOOL_SIZE;
     private static final int BLOCK_SIZE = 11;
-
     private static final Logger LOGGER = LogManager.getLogger(SimpleSSIMMetric.class);
-
-    private static final int[] SIGNIFICANT_BITS_PER_COMPONENT = new int[] {16, 16, 16};
-
+    private static final int[] SIGNIFICANT_BITS_PER_COMPONENT = new int[]{16, 16, 16};
     private static final double K1 = 0.01d;
     private static final double K2 = 0.03d;
-
     // Gaussian window 11x11 with std 1.5
-    private static final double[] WINDOW = new double[] {1.05756559815326e-06, 7.81441153305360e-06,
-        3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017,
-        0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06, 7.81441153305360e-06,
-        5.77411251978637e-05, 0.000273561160085806, 0.000831005429087199, 0.00161857756253439, 0.00202135875836257,
-        0.00161857756253439, 0.000831005429087199, 0.000273561160085806, 5.77411251978637e-05, 7.81441153305360e-06,
-        3.70224770827489e-05, 0.000273561160085806, 0.00129605559384320, 0.00393706926284679, 0.00766836382523672,
-        0.00957662749024029, 0.00766836382523672, 0.00393706926284679, 0.00129605559384320, 0.000273561160085806,
-        3.70224770827489e-05, 0.000112464355116679, 0.000831005429087199, 0.00393706926284679, 0.0119597604100370,
-        0.0232944324734871, 0.0290912256485504, 0.0232944324734871, 0.0119597604100370, 0.00393706926284679,
-        0.000831005429087199, 0.000112464355116679, 0.000219050652866017, 0.00161857756253439, 0.00766836382523672,
-        0.0232944324734871, 0.0453713590956603, 0.0566619704916846, 0.0453713590956603, 0.0232944324734871,
-        0.00766836382523672, 0.00161857756253439, 0.000219050652866017, 0.000273561160085806, 0.00202135875836257,
-        0.00957662749024029, 0.0290912256485504, 0.0566619704916846, 0.0707622377639470, 0.0566619704916846,
-        0.0290912256485504, 0.00957662749024029, 0.00202135875836257, 0.000273561160085806, 0.000219050652866017,
-        0.00161857756253439, 0.00766836382523672, 0.0232944324734871, 0.0453713590956603, 0.0566619704916846,
-        0.0453713590956603, 0.0232944324734871, 0.00766836382523672, 0.00161857756253439, 0.000219050652866017,
-        0.000112464355116679, 0.000831005429087199, 0.00393706926284679, 0.0119597604100370, 0.0232944324734871,
-        0.0290912256485504, 0.0232944324734871, 0.0119597604100370, 0.00393706926284679, 0.000831005429087199,
-        0.000112464355116679, 3.70224770827489e-05, 0.000273561160085806, 0.00129605559384320, 0.00393706926284679,
-        0.00766836382523672, 0.00957662749024029, 0.00766836382523672, 0.00393706926284679, 0.00129605559384320,
-        0.000273561160085806, 3.70224770827489e-05, 7.81441153305360e-06, 5.77411251978637e-05, 0.000273561160085806,
-        0.000831005429087199, 0.00161857756253439, 0.00202135875836257, 0.00161857756253439, 0.000831005429087199,
-        0.000273561160085806, 5.77411251978637e-05, 7.81441153305360e-06, 1.05756559815326e-06, 7.81441153305360e-06,
-        3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017,
-        0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06};
+    private static final double[] WINDOW = new double[]{1.05756559815326e-06, 7.81441153305360e-06,
+            3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017,
+            0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06, 7.81441153305360e-06,
+            5.77411251978637e-05, 0.000273561160085806, 0.000831005429087199, 0.00161857756253439, 0.00202135875836257,
+            0.00161857756253439, 0.000831005429087199, 0.000273561160085806, 5.77411251978637e-05, 7.81441153305360e-06,
+            3.70224770827489e-05, 0.000273561160085806, 0.00129605559384320, 0.00393706926284679, 0.00766836382523672,
+            0.00957662749024029, 0.00766836382523672, 0.00393706926284679, 0.00129605559384320, 0.000273561160085806,
+            3.70224770827489e-05, 0.000112464355116679, 0.000831005429087199, 0.00393706926284679, 0.0119597604100370,
+            0.0232944324734871, 0.0290912256485504, 0.0232944324734871, 0.0119597604100370, 0.00393706926284679,
+            0.000831005429087199, 0.000112464355116679, 0.000219050652866017, 0.00161857756253439, 0.00766836382523672,
+            0.0232944324734871, 0.0453713590956603, 0.0566619704916846, 0.0453713590956603, 0.0232944324734871,
+            0.00766836382523672, 0.00161857756253439, 0.000219050652866017, 0.000273561160085806, 0.00202135875836257,
+            0.00957662749024029, 0.0290912256485504, 0.0566619704916846, 0.0707622377639470, 0.0566619704916846,
+            0.0290912256485504, 0.00957662749024029, 0.00202135875836257, 0.000273561160085806, 0.000219050652866017,
+            0.00161857756253439, 0.00766836382523672, 0.0232944324734871, 0.0453713590956603, 0.0566619704916846,
+            0.0453713590956603, 0.0232944324734871, 0.00766836382523672, 0.00161857756253439, 0.000219050652866017,
+            0.000112464355116679, 0.000831005429087199, 0.00393706926284679, 0.0119597604100370, 0.0232944324734871,
+            0.0290912256485504, 0.0232944324734871, 0.0119597604100370, 0.00393706926284679, 0.000831005429087199,
+            0.000112464355116679, 3.70224770827489e-05, 0.000273561160085806, 0.00129605559384320, 0.00393706926284679,
+            0.00766836382523672, 0.00957662749024029, 0.00766836382523672, 0.00393706926284679, 0.00129605559384320,
+            0.000273561160085806, 3.70224770827489e-05, 7.81441153305360e-06, 5.77411251978637e-05, 0.000273561160085806,
+            0.000831005429087199, 0.00161857756253439, 0.00202135875836257, 0.00161857756253439, 0.000831005429087199,
+            0.000273561160085806, 5.77411251978637e-05, 7.81441153305360e-06, 1.05756559815326e-06, 7.81441153305360e-06,
+            3.70224770827489e-05, 0.000112464355116679, 0.000219050652866017, 0.000273561160085806, 0.000219050652866017,
+            0.000112464355116679, 3.70224770827489e-05, 7.81441153305360e-06, 1.05756559815326e-06};
 
-    private boolean doThreaded = DEFAULT_DO_THREADED;
+    /**
+     * Creates a new SimpleSSIMMetric with the provided parameters and a
+     * blocksize of {@link #BLOCK_SIZE}.
+     *
+     * @param img1  color converter of image 1
+     * @param img2  color converter of image 2
+     * @param start start of comparison
+     * @param end   end of comparison
+     */
+    public SimpleSSIMMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
+        super(img1, img2, start, end);
+    }
 
-    private int threadPoolSize = DEFAULT_THREADPOOL_SIZE;
+    /**
+     * Creates a new SimpleSSIMMetric with the provided parameters and a
+     * blocksize of {@link #BLOCK_SIZE}.
+     *
+     * @param img1  color converter of image 1
+     * @param img2  color converter of image 2
+     * @param start start of comparison
+     * @param end   end of comparison
+     */
+    public SimpleSSIMMetric(final ColorConverter<?> img1, final ColorConverter<?> img2, final Point start,
+                            final Point end, final int threadPoolSize) {
+        this(img1, img2, start, end);
+        this.threadPoolSize = threadPoolSize;
+    }
 
     /**
      * Prepares the provided image for this metric.
-     * 
+     * <p/>
      * Uses
      * {@link SimpleSSIMMetric#prepare(BufferedImage, int, int, int, int, int)}
      * with the current image width and height and a target size of
      * {@link #DEFAULT_TARGET_SIZE}.
-     * 
-     * @param img
-     *            the image to prepare
+     *
+     * @param img the image to prepare
      * @return the original image if no transformation was done or a new
-     *         transformed image otherwise
+     * transformed image otherwise
      */
     @Deprecated
     public static BufferedImage prepare(BufferedImage img) {
@@ -123,28 +131,24 @@ public class SimpleSSIMMetric extends Metric {
 
     /**
      * Prepares the provided image for structured similarity metric.
-     * 
+     * <p/>
      * If the image width or height is larger than the provided width or height,
      * creates a new image with the specified width and height and positions the
      * image in the center.
-     * 
+     * <p/>
      * Then scales the image's smaller side to the provided targetSize keeping
      * the aspect ratio using
      * {@link java.awt.image.AffineTransformOp#TYPE_BICUBIC bicubic
      * interpolation}.
-     * 
-     * @param img
-     *            the image to prepare
+     *
+     * @param img        the image to prepare
      * @param x
      * @param y
-     * @param width
-     *            the maximum image width
-     * @param height
-     *            the maximum image height
-     * @param targetSize
-     *            the maximum size of the smaller image side.
+     * @param width      the maximum image width
+     * @param height     the maximum image height
+     * @param targetSize the maximum size of the smaller image side.
      * @return the original image if no transformation was done or a new
-     *         transformed image otherwise
+     * transformed image otherwise
      */
     @Deprecated
     public static BufferedImage prepare(BufferedImage img, int x, int y, int width, int height, int targetSize) {
@@ -153,10 +157,10 @@ public class SimpleSSIMMetric extends Metric {
         if (img.getWidth() > width || img.getHeight() > height) {
             LOGGER.info("Scaling image to width {}, height {}.", width, height);
             AffineTransformOp temp = new AffineTransformOp(AffineTransform.getScaleInstance(
-                width / (double) img.getWidth(), height / (double) img.getHeight()), AffineTransformOp.TYPE_BICUBIC);
+                    width / (double) img.getWidth(), height / (double) img.getHeight()), AffineTransformOp.TYPE_BICUBIC);
             BufferedImage result1 = temp.createCompatibleDestImage(img, new ComponentColorModel(img.getColorModel()
-                .getColorSpace(), SIGNIFICANT_BITS_PER_COMPONENT, img.getColorModel().hasAlpha(), img.getColorModel()
-                .isAlphaPremultiplied(), img.getColorModel().getTransparency(), DataBuffer.TYPE_INT));
+                    .getColorSpace(), SIGNIFICANT_BITS_PER_COMPONENT, img.getColorModel().hasAlpha(), img.getColorModel()
+                    .isAlphaPremultiplied(), img.getColorModel().getTransparency(), DataBuffer.TYPE_INT));
 
             Graphics2D graphics1 = result1.createGraphics();
             graphics1.drawImage(img, -(img.getWidth() - width) / 2, -(img.getHeight() - height) / 2, null);
@@ -183,11 +187,12 @@ public class SimpleSSIMMetric extends Metric {
              */
 
             AffineTransformOp op = new AffineTransformOp(AffineTransform.getScaleInstance(factor, factor),
-                AffineTransformOp.TYPE_BICUBIC);
+                    AffineTransformOp.TYPE_BICUBIC);
             BufferedImage result2 = op
-                .createCompatibleDestImage(result, new ComponentColorModel(result.getColorModel().getColorSpace(),
-                    SIGNIFICANT_BITS_PER_COMPONENT, result.getColorModel().hasAlpha(), result.getColorModel()
-                        .isAlphaPremultiplied(), result.getColorModel().getTransparency(), DataBuffer.TYPE_INT));
+                    .createCompatibleDestImage(result, new ComponentColorModel(result.getColorModel().getColorSpace(),
+                            SIGNIFICANT_BITS_PER_COMPONENT, result.getColorModel().hasAlpha(), result.getColorModel()
+                            .isAlphaPremultiplied(), result.getColorModel().getTransparency(), DataBuffer.TYPE_INT
+                    ));
 
             // result = op.filter(img, result);
 
@@ -199,61 +204,6 @@ public class SimpleSSIMMetric extends Metric {
             result = result2;
         }
         return result;
-    }
-
-    /**
-     * Creates a new SimpleSSIMMetric with the provided parameters and a
-     * blocksize of {@link #BLOCK_SIZE2}.
-     * 
-     * @param img1
-     *            color converter of image 1
-     * @param img2
-     *            color converter of image 2
-     * @param start
-     *            start of comparison
-     * @param end
-     *            end of comparison
-     */
-    public SimpleSSIMMetric(ColorConverter<?> img1, ColorConverter<?> img2, Point start, Point end) {
-        super(img1, img2, start, end);
-    }
-
-    /**
-     * Creates a new SimpleSSIMMetric with the provided parameters and a
-     * blocksize of {@link #BLOCK_SIZE2}.
-     * 
-     * @param img1
-     *            color converter of image 1
-     * @param img2
-     *            color converter of image 2
-     * @param start
-     *            start of comparison
-     * @param end
-     *            end of comparison
-     */
-    public SimpleSSIMMetric(final ColorConverter<?> img1, final ColorConverter<?> img2, final Point start,
-        final Point end, final boolean doThreaded) {
-        this(img1, img2, start, end);
-        this.doThreaded = doThreaded;
-    }
-
-    /**
-     * Creates a new SimpleSSIMMetric with the provided parameters and a
-     * blocksize of {@link #BLOCK_SIZE2}.
-     * 
-     * @param img1
-     *            color converter of image 1
-     * @param img2
-     *            color converter of image 2
-     * @param start
-     *            start of comparison
-     * @param end
-     *            end of comparison
-     */
-    public SimpleSSIMMetric(final ColorConverter<?> img1, final ColorConverter<?> img2, final Point start,
-        final Point end, final boolean doThreaded, final int threadPoolSize) {
-        this(img1, img2, start, end, doThreaded);
-        this.threadPoolSize = threadPoolSize;
     }
 
     @Override
@@ -292,6 +242,15 @@ public class SimpleSSIMMetric extends Metric {
     }
 
     /**
+     * Checks if the execution should be threaded.
+     *
+     * @return true if threaded, false otherwise
+     */
+    private boolean doThreaded() {
+        return threadPoolSize > 0;
+    }
+
+    /**
      * Transient operation that implements a simple Structured Similarity
      * Metric.
      */
@@ -304,7 +263,7 @@ public class SimpleSSIMMetric extends Metric {
 
         @Override
         public void init() {
-            if (doThreaded) {
+            if (doThreaded()) {
                 LOGGER.debug("Threaded execution enabled, creating pool");
                 this.pool = Executors.newFixedThreadPool(threadPoolSize);
                 this.service = new ExecutorCompletionService<Double[]>(pool);
@@ -318,7 +277,7 @@ public class SimpleSSIMMetric extends Metric {
 
         @Override
         public void complete() {
-            if (doThreaded) {
+            if (doThreaded()) {
                 LOGGER.debug("Shutting down thread pool");
                 pool.shutdown();
 
@@ -355,11 +314,10 @@ public class SimpleSSIMMetric extends Metric {
 
             blocks++;
 
-            if (doThreaded) {
+            if (doThreaded()) {
                 LOGGER.debug("Threaded execution enabled, submitting callable.");
                 service.submit(new ThreadedSSIM(x, y));
             } else {
-
                 Double[] data;
                 try {
                     data = new ThreadedSSIM(x, y).call();
@@ -401,11 +359,9 @@ public class SimpleSSIMMetric extends Metric {
 
             /**
              * Creates a ThreadedSSIM with the provided block coordinates.
-             * 
-             * @param x
-             *            x coordinates of the block to check
-             * @param y
-             *            x coordinates of the block to check
+             *
+             * @param x x coordinates of the block to check
+             * @param y x coordinates of the block to check
              */
             private ThreadedSSIM(int[] x, int[] y) {
                 this.x = x;
@@ -415,28 +371,24 @@ public class SimpleSSIMMetric extends Metric {
             /**
              * Converts polar coordinates to Cartesian coordinates for a hue
              * channel.
-             * 
-             * @param hue
-             *            the hue
-             * @param saturation
-             *            the saturation
+             *
+             * @param hue        the hue
+             * @param saturation the saturation
              * @return an array representing the Cartesian coordinates
              */
             private double[] convertPolToCart(double hue, double saturation) {
                 float cartX, cartY;
                 cartX = (float) (saturation * Math.cos(2 * Math.PI * hue));
                 cartY = (float) (saturation * Math.sin(2 * Math.PI * hue));
-                return new double[] {cartX, cartY};
+                return new double[]{cartX, cartY};
             }
 
             /**
              * Converts Cartesian coordinates to polar coordinates for a hue
              * channel.
-             * 
-             * @param x
-             *            x value
-             * @param y
-             *            y value
+             *
+             * @param x x value
+             * @param y y value
              * @return an array representing the polar coordinates
              */
             private double[] convertCartToPol(double x, double y) {
@@ -561,7 +513,7 @@ public class SimpleSSIMMetric extends Metric {
                         double varProd = Math.sqrt(varX[counter]) * Math.sqrt(varY[counter]);
 
                         uf1 = 1 - (Math.hypot(hueXCartX - hueYCartX, hueXCartY - hueYCartY) * HSBColorConverter
-                            .normalizeHueDifference(Math.abs(avgX[counter] - avgY[counter])));
+                                .normalizeHueDifference(Math.abs(avgX[counter] - avgY[counter])));
                         // uf1 = 1 - (2 *
                         // HSBColorConverter.normalizeHueDifference(Math.abs(avgX[counter]
                         // -

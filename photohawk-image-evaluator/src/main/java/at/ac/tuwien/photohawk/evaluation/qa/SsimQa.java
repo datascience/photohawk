@@ -33,7 +33,6 @@ import java.awt.image.BufferedImage;
 public class SsimQa implements Qa<Float, StaticColor> {
 
     private int targetSize;
-    private boolean doThreaded;
     private int numThreads;
 
     /**
@@ -41,19 +40,29 @@ public class SsimQa implements Qa<Float, StaticColor> {
      */
     public SsimQa() {
         this.targetSize = SimpleSSIMMetric.DEFAULT_TARGET_SIZE;
-        this.doThreaded = SimpleSSIMMetric.DEFAULT_DO_THREADED;
         this.numThreads = SimpleSSIMMetric.DEFAULT_THREADPOOL_SIZE;
     }
 
     /**
-     * Create a new SSIM QA with the provided parameters.
+     * Sets the target size.
      *
-     * @param targetSize SSIM target size
+     * @param targetSize the target size to set
+     * @return this Qa object
      */
-    public SsimQa(final int targetSize, final boolean doThreaded, final int numThreads) {
+    public SsimQa targetSize(int targetSize) {
         this.targetSize = targetSize;
-        this.doThreaded = doThreaded;
+        return this;
+    }
+
+    /**
+     * Sets the number of threads, if numThreads is < 0 no threads will be used.
+     *
+     * @param numThreads the number of threads to use
+     * @return this Qa object
+     */
+    public SsimQa numThreads(int numThreads) {
         this.numThreads = numThreads;
+        return this;
     }
 
     @Override
@@ -86,13 +95,7 @@ public class SsimQa implements Qa<Float, StaticColor> {
         HSBColorConverter c1 = new HSBColorConverter(new SRGBColorConverter(new ConvenientBufferedImageWrapper(leftImg)));
         HSBColorConverter c2 = new HSBColorConverter(new SRGBColorConverter(new ConvenientBufferedImageWrapper(rightImg)));
 
-        // TODO: What happens if one image is smaller than the SCALE_TARGET_SIZE?
-        SimpleSSIMMetric metric = null;
-        if (!doThreaded || numThreads <= 0) {
-            metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(leftImg.getWidth(), leftImg.getHeight()), doThreaded);
-        } else {
-            metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(leftImg.getWidth(), leftImg.getHeight()), doThreaded, numThreads);
-        }
+        SimpleSSIMMetric metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0), new Point(leftImg.getWidth(), leftImg.getHeight()), numThreads);
 
         // Evaluate
         return metric.execute();

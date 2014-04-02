@@ -77,4 +77,27 @@ public class SsimQaTest extends AbstractOperationTest {
         TransientOperation<Float, StaticColor> op = ssimQa.evaluate(left, right);
         checkOperationEqual(op, 1.0f);
     }
+
+    @Test
+    public void evaluateTest_size_equal() {
+        BufferedImage left = BufferedImageHelper.createSolidImage(new Color(0, 0, 0), 100, 100);
+        BufferedImage right = BufferedImageHelper.createSolidImage(new Color(0, 0, 0), 50, 50);
+
+        SsimQa ssimQa = new SsimQa();
+        TransientOperation<Float, StaticColor> op = ssimQa.evaluate(left, right);
+        checkOperationEqual(op, 1.0f);
+    }
+
+    /*
+     * Left image is resized to size of right image, making both the same.
+     */
+    @Test
+    public void evaluateTest_size_half000000_111111_half000000_111111() {
+        BufferedImage left = BufferedImageHelper.createSolidHalfImage(new Color(0, 0, 0), new Color(255, 255, 255), 100, 100);
+        BufferedImage right = BufferedImageHelper.createSolidHalfImage(new Color(0, 0, 0), new Color(255, 255, 255), 50, 50);
+
+        SsimQa ssimQa = new SsimQa();
+        TransientOperation<Float, StaticColor> op = ssimQa.evaluate(left, right);
+        checkOperationEqual(op, 1.0f);
+    }
 }

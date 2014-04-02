@@ -15,6 +15,7 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.evaluation.colorconverter;
 
+
 import at.ac.tuwien.photohawk.evaluation.colorconverter.ciexyz.CIEXYZColorConverter;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.noconversion.NoConversionColorConverter;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBColorConverter;
@@ -110,6 +111,9 @@ public class AutoColorConverter implements ColorConverter<StaticColor> {
         return converter.getNullColor();
     }
 
+    /**
+     * Color converters.
+     */
     public enum AlternativeColorConverter {
         CIEXYZ,
         SRGB

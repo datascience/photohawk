@@ -21,6 +21,7 @@ import at.ac.tuwien.photohawk.commandline.result.ResultPrinter;
 import at.ac.tuwien.photohawk.commandline.util.ImageReader;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.operation.TransientOperation;
+import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.PreprocessingException;
 import at.ac.tuwien.photohawk.evaluation.qa.SsimQa;
 import net.sourceforge.argparse4j.impl.Arguments;
@@ -40,6 +41,12 @@ class Ssim implements Command {
     private static final String LEFT = "left";
     private static final String RIGHT = "right";
     private static final String BASE_KEY = "dcraw.ssim";
+    private static final String TARGET_SIZE = "--target-size";
+    private static final String TARGET_SIZE_SHORT = "-ts";
+    private static final String TARGET_SIZE_KEY = "target_size";
+    private static final String THREADS = "--threads";
+    private static final String THREADS_SHORT = "-t";
+    private static final String THREADS_KEY = "threads";
 
     private Namespace n = null;
 
@@ -52,6 +59,10 @@ class Ssim implements Command {
     private ResultPrinter<Float, StaticColor> resultPrinter;
 
     private ImageReader ir;
+
+    private int targetSize;
+
+    private int threads;
 
     /**
      * Creates a new SSIM command.
@@ -68,6 +79,11 @@ class Ssim implements Command {
                 .help("Structured similarity metric")
                 .setDefault("command", this);
 
+        subparser.addArgument(TARGET_SIZE_SHORT, TARGET_SIZE).type(Integer.class).choices(Arguments.range(1, Integer.MAX_VALUE))
+                .setDefault(SimpleSSIMMetric.DEFAULT_TARGET_SIZE).help("Target size of image before comparison").metavar("SIZE");
+        subparser.addArgument(THREADS_SHORT, THREADS).type(Integer.class).choices(Arguments.range(0, Integer.MAX_VALUE))
+                .setDefault(SimpleSSIMMetric.DEFAULT_THREADPOOL_SIZE).help("Number of threads to use").metavar("THREADS");
+
         subparser.addArgument(LEFT).type(Arguments.fileType().verifyCanRead())
                 .help("Left file for comparison");
         subparser.addArgument(RIGHT).type(Arguments.fileType().verifyCanRead())
@@ -79,7 +95,16 @@ class Ssim implements Command {
         this.n = n;
         resultPrinter = new HRFloatResultPrinter(System.out);
         ir = new ImageReader(BASE_KEY);
+
         ssimQa = new SsimQa();
+        Integer targetSize = n.getInt(TARGET_SIZE_KEY);
+        if (targetSize != null) {
+            ssimQa.targetSize(targetSize);
+        }
+        Integer threads = n.getInt(THREADS_KEY);
+        if (threads != null) {
+            ssimQa.numThreads(threads);
+        }
     }
 
     @Override

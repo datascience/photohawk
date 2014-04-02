@@ -15,12 +15,8 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.evaluation;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.jar.Manifest;
 
 /**
  * Helper class for creating test images.
@@ -61,7 +57,7 @@ public final class BufferedImageHelper {
         g.setColor(color);
         g.fillRect(0, 0, width, height);
         g.dispose();
-        
+
         return img;
     }
 
@@ -73,12 +69,25 @@ public final class BufferedImageHelper {
      * @return the image
      */
     public static BufferedImage createSolidHalfImage(Color topColor, Color bottomColor) {
-        BufferedImage img = new BufferedImage(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_TYPE);
+        return createSolidHalfImage(topColor, bottomColor, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    }
+
+    /**
+     * Creates a new image with the top and bottom half containing a different color.
+     *
+     * @param topColor    the color of the top half of the image
+     * @param bottomColor the color of the bottom half of the image
+     * @param width       the image width
+     * @param height      the image height
+     * @return the image
+     */
+    public static BufferedImage createSolidHalfImage(Color topColor, Color bottomColor, int width, int height) {
+        BufferedImage img = new BufferedImage(width, height, DEFAULT_TYPE);
         Graphics2D g = img.createGraphics();
         g.setColor(topColor);
-        g.fillRect(0, 0, DEFAULT_HEIGHT, DEFAULT_WIDTH / 2);
+        g.fillRect(0, 0, height, width / 2);
         g.setColor(bottomColor);
-        g.fillRect(0, DEFAULT_WIDTH / 2, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        g.fillRect(0, width / 2, width, height);
         g.dispose();
 
         return img;

@@ -23,7 +23,7 @@ import at.ac.tuwien.photohawk.evaluation.operation.metric.AEMetric;
 import at.ac.tuwien.photohawk.evaluation.preprocessing.CheckEqualSizePreprocessor;
 import at.ac.tuwien.photohawk.evaluation.util.ConvenientBufferedImageWrapper;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 /**
@@ -41,12 +41,14 @@ public class AeQa implements Qa<Float, StaticColor> {
     }
 
     /**
-     * Creates a new QA object with the provided threshold.
+     * Sets the threshold.
      *
      * @param threshold the threshold to use
+     * @return this Qa object
      */
-    public AeQa(final StaticColor threshold) {
+    public AeQa threshold(final StaticColor threshold) {
         this.threshold = threshold;
+        return this;
     }
 
     @Override

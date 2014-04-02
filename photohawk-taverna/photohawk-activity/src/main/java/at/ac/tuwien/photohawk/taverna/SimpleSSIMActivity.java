@@ -54,7 +54,16 @@ public class SimpleSSIMActivity extends MultichannelActivity<SimpleSSIMActivityC
                     return;
                 }
 
-                SsimQa ssimQa = new SsimQa(getConfiguration().getTargetSize(), getConfiguration().isDoThreaded(), getConfiguration().getThreadPoolSize());
+                SsimQa ssimQa = new SsimQa();
+                if (getConfiguration().getTargetSize() > 0) {
+                    ssimQa.targetSize(getConfiguration().getTargetSize());
+                }
+                if (!getConfiguration().isDoThreaded()) {
+                    ssimQa.numThreads(0);
+                } else {
+                    ssimQa.numThreads(getConfiguration().getThreadPoolSize());
+                }
+
                 executeQa(new SsimQa(), images[0], images[1], callback);
             }
         });

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2013 Vienna University of Technology
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,19 +15,16 @@
  ******************************************************************************/
 package at.ac.tuwien.photohawk.evaluation.operation;
 
-import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.getColors;
-import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.getUniformPattern;
-import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.mockColorConverter;
-
-import java.awt.Point;
-
 import at.ac.tuwien.photohawk.evaluation.AbstractOperationTest;
-import org.junit.Test;
-
 import at.ac.tuwien.photohawk.evaluation.colorconverter.ColorConverter;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.StaticColor;
 import at.ac.tuwien.photohawk.evaluation.colorconverter.srgb.SRGBStaticColor;
 import at.ac.tuwien.photohawk.evaluation.operation.metric.SimpleSSIMMetric;
+import org.junit.Test;
+
+import java.awt.*;
+
+import static at.ac.tuwien.photohawk.evaluation.operation.ColorConverterHelper.*;
 
 /**
  * Unit tests for SSIM metric.
@@ -91,7 +88,7 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
 
     /**
      * Tests if the metric for the patterns provides the correct result.
-     * 
+     * <p/>
      * Note: The result was checked against ssim.m available at
      * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
      */
@@ -113,7 +110,7 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
 
     /**
      * Tests if the metric for the patterns provides the correct result.
-     * 
+     * <p/>
      * Note: The result was checked against ssim.m available at
      * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
      */
@@ -135,7 +132,7 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
 
     /**
      * Tests if the metric for the patterns provides the correct result.
-     * 
+     * <p/>
      * Note: The result was checked against ssim.m available at
      * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
      */
@@ -157,7 +154,7 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
 
     /**
      * Tests if the metric for the patterns provides the correct result.
-     * 
+     * <p/>
      * Note: The result was checked against ssim.m available at
      * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
      */
@@ -187,7 +184,7 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 0));
 
-        SimpleSSIMMetric metric = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, LARGE_ENDPOINT, true);
+        SimpleSSIMMetric metric = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, LARGE_ENDPOINT, 4);
         TransientOperation<Float, StaticColor> op = metric.execute();
 
         checkOperationEqual(op, 1.0f);
@@ -201,7 +198,7 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 1));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 1));
 
-        SimpleSSIMMetric metric = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, LARGE_ENDPOINT, true);
+        SimpleSSIMMetric metric = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, LARGE_ENDPOINT, 4);
         TransientOperation<Float, StaticColor> op = metric.execute();
 
         checkOperationEqual(op, 1.0f);
@@ -209,7 +206,7 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
 
     /**
      * Tests if the metric for the patterns provides the correct result.
-     * 
+     * <p/>
      * Note: The result was checked against ssim.m available at
      * https://ece.uwaterloo.ca/~z70wang/research/ssim/ssim.m
      */
@@ -218,12 +215,12 @@ public class SimpleSSIMMetricTest extends AbstractOperationTest {
         ColorConverter<SRGBStaticColor> img1 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 0));
         ColorConverter<SRGBStaticColor> img2 = mockColorConverter(getColors(), getUniformPattern(LARGE_IMAGE_SIZE, 8));
 
-        SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, LARGE_ENDPOINT, true);
+        SimpleSSIMMetric metric1 = new SimpleSSIMMetric(img1, img2, DEFAULT_STARTPOINT, LARGE_ENDPOINT, 4);
         TransientOperation<Float, StaticColor> op1 = metric1.execute();
 
         checkOperationEqual(op1, 0.028088f);
 
-        SimpleSSIMMetric metric2 = new SimpleSSIMMetric(img2, img1, DEFAULT_STARTPOINT, LARGE_ENDPOINT, true);
+        SimpleSSIMMetric metric2 = new SimpleSSIMMetric(img2, img1, DEFAULT_STARTPOINT, LARGE_ENDPOINT, 4);
         TransientOperation<Float, StaticColor> op2 = metric2.execute();
 
         checkOperationEqual(op2, 0.028088f);
