@@ -1,5 +1,8 @@
 digital-preservation-qaobject-image-photohawk-changedetection (0.0.3) unstable; urgency=low
 
+  * Add parameters for SSIM [Issue #14]
+  * Unify commandline/Taverna QA execution [Issue #13]
+  * Add simple dpkg generation [Issue #8]
   * Add dcraw-callback, direct-mimetype readmodes [Issue #9]
   * Use channels of target colorspace instead of source colorspace [Issue #7]
   * Add ability to read images using dcraw [Issue #5]
