@@ -72,7 +72,7 @@
         <license name="Apache-2.0" type="FLOSS" uri="http://opensource.org/licenses/Apache-2.0"/>
         <acceptedMimetype>image/*</acceptedMimetype>
         <acceptedMimetype>image/*</acceptedMimetype>
-        <outputMeasure name="PAE" uri="http://purl.org/DP/quality/measures#6"
+        <outputMeasure name="PAE" uri="http://purl.org/DP/quality/measures#7"
                        typeOfProcessingInstruction="JAVA">
             import java.util.Scanner;
             String PAE = "";
