@@ -10,6 +10,6 @@ if [ -f "$JAVA_HOME/bin/java" ] && [ -x "$JAVA_HOME/bin/java" ]; then
 fi
 
 # Build photohawk command
-#PHOTOHAWK="$JAVA $JVM_OPTIONS -jar /usr/share/photohawk/lib/photohawk-commandline-*-jar-with-dependencies.jar"
+PHOTOHAWK="$JAVA $JVM_OPTIONS -jar /usr/share/photohawk/lib/photohawk-commandline-*-jar-with-dependencies.jar"
 
 exec $PHOTOHAWK "$@"
