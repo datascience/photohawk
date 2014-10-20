@@ -15,7 +15,7 @@ Photohawk commandline packages the Photohawk image evaluator into an easy to use
 
 1. Clone the repository
 2. Go into the repository folder
-3. Update the man page `photohawk-commandline/man/photohawk.1.ronn`
+3. Update the man page `photohawk-commandline/src/man/photohawk.1.ronn`
     1. Generate the man page using
       <pre>ronn photohawk.1.ronn</pre>
     2. Compress the man page using

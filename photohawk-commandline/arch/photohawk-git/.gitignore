@@ -1,0 +1,5 @@
+pkg/
+src/
+photohawk/
+photohawk-git-*.pkg.tar.xz
+photohawk-git-*.src.tar.gz

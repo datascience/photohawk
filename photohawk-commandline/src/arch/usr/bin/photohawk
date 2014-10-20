@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Set JVM options
+JVM_OPTIONS="-Xmx1G"
+
+# Build photohawk command
+PHOTOHAWK="$JAVA_HOME/bin/java $JVM_OPTIONS -jar /usr/share/java/photohawk/photohawk-commandline-*.jar"
+
+exec $PHOTOHAWK "$@"
