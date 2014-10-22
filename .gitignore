@@ -5,7 +5,6 @@ target/
 .DS_Store
 *~
 
-**/src/main/resources/git.properties
 **/man/*.1
 **/man/*.1.gz
 **/man/*.1.html

@@ -1,4 +1,1 @@
 language: java
-
-git:
-    depth: 100

@@ -118,8 +118,6 @@ public class Photohawk {
 
     /**
      * Reads git properties containing information about the current git status.
-     * <p/>
-     * See pl.project13.maven - git-commit-id-plugin maven plugin for details.
      *
      * @return properties with git information
      * @throws IOException if the properties could not be read
