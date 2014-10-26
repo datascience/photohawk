@@ -1,4 +1,7 @@
 # Photohawk
+
+[ ![Codeship Status for datascience/photohawk](https://codeship.io/projects/000f7b30-e816-0131-408e-02738d1648bc/status?branch=master)](https://codeship.io/projects/25995)
+
 Photohawk is a pure Java implementation of the following image comparison algorithms:
 
 * Absolute error
