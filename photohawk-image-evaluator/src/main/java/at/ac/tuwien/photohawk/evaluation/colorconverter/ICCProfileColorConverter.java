@@ -44,7 +44,7 @@ public abstract class ICCProfileColorConverter implements FullColorConverter {
     public ICCProfileColorConverter(ConvenientBufferedImageWrapper img, ColorSpace cs) {
         ColorConvertOp transform = new ColorConvertOp(null);
 
-        int[] bits = new int[cs.getNumComponents()];
+        int[] bits = new int[4];
         Arrays.fill(bits, SIGNIFICANT_BITS);
         BufferedImage temp = transform.createCompatibleDestImage(img.getBufferedImage(),
                                                                  new ComponentColorModel(cs, bits,
