@@ -90,7 +90,7 @@ class Pae implements Command {
 
             // Evaluate
             TransientOperation<Float, StaticColor> op = paeQa.evaluate(leftImg, rightImg);
-
+            System.gc();
             resultPrinter.print(op);
         } catch (PreprocessingException e) {
             subparser.printUsage();

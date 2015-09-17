@@ -96,7 +96,7 @@ public class SsimQa implements Qa<Float, StaticColor> {
         SimpleSSIMMetric metric = new SimpleSSIMMetric(c1, c2, new Point(0, 0),
                                                        new Point(leftImg.getWidth(), leftImg.getHeight()), numThreads);
 
-        // Evaluate
+        // Evaluategi
         return metric.execute();
     }
 }

@@ -114,7 +114,7 @@ class Ssim implements Command {
 
             // Evaluate
             TransientOperation<Float, StaticColor> op = ssimQa.evaluate(leftImg, rightImg);
-
+            System.gc();
             resultPrinter.print(op);
         } catch (PreprocessingException e) {
             subparser.printUsage();

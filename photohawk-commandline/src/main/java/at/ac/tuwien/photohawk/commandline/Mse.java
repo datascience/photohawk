@@ -91,6 +91,7 @@ public class Mse implements Command {
 
             // Evaluate
             TransientOperation<Float, StaticColor> op = mseQa.evaluate(leftImg, rightImg);
+            System.gc();
             resultPrinter.print(op);
         } catch (PreprocessingException e) {
             subparser.printUsage();

@@ -91,7 +91,7 @@ class Mae implements Command {
 
             // Evaluate
             TransientOperation<Float, StaticColor> op = maeQa.evaluate(leftImg, rightImg);
-
+            System.gc();
             resultPrinter.print(op);
         } catch (PreprocessingException e) {
             subparser.printUsage();

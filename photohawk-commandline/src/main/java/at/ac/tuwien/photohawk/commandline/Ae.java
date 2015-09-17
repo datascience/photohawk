@@ -91,7 +91,7 @@ class Ae implements Command {
 
             // Evaluate
             TransientOperation<Float, StaticColor> op = aeQa.evaluate(leftImg, rightImg);
-
+            System.gc();
             resultPrinter.print(op);
         } catch (PreprocessingException e) {
             subparser.printUsage();
